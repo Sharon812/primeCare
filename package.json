@@ -1,0 +1,31 @@
+{
+  "name": "primecare",
+  "version": "1.0.0",
+  "description": "\"PrimeCare is a healthcare web application that enables users to book doctors for online consultations or reserve tokens for in-clinic visits. It supports individual doctors, clinics, and hospitals with role-based access control (RBAC). The platform integrates passportJS for authentication, and follows Clean Architecture for maintainability",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Sharon812/primeCare.git"
+  },
+  "authors": [
+    {
+      "name": "Sharon P",
+      "email": "sharonp.dev.1@gmail.com",
+      "github": "https://github.com/Sharon812"
+    },
+    {
+      "name": "Aljo Joju",
+      "email": "aljojoju950@gmail.com",
+      "github": "https://github.com/Aljo00"
+    }
+  ],
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Sharon812/primeCare/issues"
+  },
+  "homepage": "https://github.com/Sharon812/primeCare#readme"
+}
