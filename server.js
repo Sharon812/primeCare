@@ -32,9 +32,9 @@ app.set("views", [path.join(__dirname, "src", "views/clinic")]);
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-//for clinic routes
-// import clinicRoute from "./src/interfaces/routes/clinic_routes.js";
-// app.use("/clinic", clinicRoute);
+// for clinic routes
+import clinicRoute from "./src/interfaces/routes/clinic_routes.js";
+app.use("/clinic", clinicRoute);
 
 //to listen to server
 app.listen(process.env.PORT, "0.0.0.0", () => {

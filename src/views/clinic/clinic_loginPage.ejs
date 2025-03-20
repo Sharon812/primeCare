@@ -8,150 +8,318 @@
       href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css"
       rel="stylesheet"
     />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+      rel="stylesheet"
+    />
     <style>
-      .bg-custom-blue {
-        background-color: #3d7bf1;
+      :root {
+        --primary-color: #2563eb;
+        --primary-hover: #1d4ed8;
+        --bg-color: #2563eb;
+        --text-color: #111827;
+        --input-bg: #f3f4f6;
+        --border-radius: 12px;
       }
+
+      body {
+        font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI",
+          Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+        background-color: var(--bg-color);
+        color: var(--text-color);
+      }
+
+      .page-container {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+      }
+
       .card {
-        border-radius: 1rem;
-        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        border: none;
+        border-radius: var(--border-radius);
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+        overflow: hidden;
       }
+
+      .card-body {
+        padding: 2.5rem;
+      }
+
+      .form-control,
+      .btn {
+        border-radius: 8px;
+        padding: 0.75rem 1rem;
+      }
+
+      .form-control {
+        background-color: var(--input-bg);
+        border: 1px solid #e5e7eb;
+        transition: all 0.2s;
+      }
+
+      .form-control:focus {
+        border-color: var(--primary-color);
+        box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.2);
+      }
+
       .form-label {
         font-weight: 500;
+        margin-bottom: 0.5rem;
+        color: #4b5563;
       }
+
       .btn-primary {
-        background-color: #2c5bb7;
-        border-color: #2c5bb7;
+        background-color: var(--primary-color);
+        border-color: var(--primary-color);
+        font-weight: 500;
+        transition: all 0.2s;
       }
+
       .btn-primary:hover {
-        background-color: #214a9a;
-        border-color: #214a9a;
+        background-color: var(--primary-hover);
+        border-color: var(--primary-hover);
+        transform: translateY(-1px);
+      }
+
+      .form-check-input:checked {
+        background-color: var(--primary-color);
+        border-color: var(--primary-color);
+      }
+
+      .text-primary {
+        color: var(--primary-color) !important;
+      }
+
+      .form-floating .form-control {
+        height: 60px;
+        padding-top: 1.625rem;
+        padding-bottom: 0.625rem;
+      }
+
+      .form-floating label {
+        padding: 1rem;
+      }
+
+      .header-icon {
+        height: 60px;
+        width: 60px;
+        background-color: rgba(37, 99, 235, 0.1);
+        color: var(--primary-color);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        margin-bottom: 1.5rem;
+        font-size: 1.5rem;
+      }
+
+      .card-title {
+        font-weight: 700;
+        font-size: 1.75rem;
+        margin-bottom: 0.5rem;
+      }
+
+      .input-group-text {
+        background-color: var(--input-bg);
+        border: 1px solid #e5e7eb;
+        border-right: none;
+      }
+
+      .password-input-group .form-control {
+        border-left: none;
+      }
+
+      .invalid-feedback {
+        font-size: 0.75rem;
+        display: block;
+        visibility: hidden;
+      }
+
+      input:invalid + .invalid-feedback,
+      input:invalid ~ .invalid-feedback {
+        visibility: visible;
+      }
+
+      .was-validated .form-control:invalid ~ .invalid-feedback,
+      .was-validated .form-control:invalid + .invalid-feedback,
+      .was-validated .form-check-input:invalid ~ .invalid-feedback {
+        visibility: visible;
+      }
+
+      .error-text {
+        color: #dc3545;
+        font-size: 0.75rem;
+        margin-top: 0.25rem;
       }
     </style>
   </head>
   <body>
-    <section class="bg-custom-blue py-5">
-      <div class="container py-4">
-        <div class="row d-flex justify-content-center align-items-center">
-          <div class="col-12 col-md-10 col-lg-8">
+    <div class="page-container py-5">
+      <div class="container">
+        <div class="row justify-content-center">
+          <div class="col-12 col-md-10 col-lg-8 col-xl-7">
             <div class="card">
-              <div class="card-body p-5">
-                <div class="text-center mb-5">
-                  <h2 class="fw-bold">Hospital/Clinic Registration</h2>
-                  <p class="text-muted">Join our healthcare network today</p>
+              <div class="card-body">
+                <div class="text-center mb-4">
+                  <div class="header-icon mx-auto">
+                    <i class="fas fa-hospital"></i>
+                  </div>
+                  <h2 class="card-title">Hospital/Clinic Registration</h2>
+                  <p class="text-muted">
+                    Join our healthcare network in just a few steps
+                  </p>
                 </div>
 
                 <form id="registrationForm" class="needs-validation" novalidate>
-                  <div class="row">
-                    <div class="col-12 mb-4">
-                      <div class="form-outline">
-                        <label class="form-label" for="clinicName"
-                          >Hospital/Clinic Name</label
-                        >
-                        <input
-                          type="text"
-                          id="clinicName"
-                          class="form-control"
-                          required
-                        />
-                        <div class="invalid-feedback">
-                          Please provide your hospital/clinic name.
-                        </div>
-                      </div>
+                  <div class="mb-4">
+                    <label class="form-label" for="clinicName"
+                      >Hospital/Clinic Name</label
+                    >
+                    <div class="input-group has-validation">
+                      <span class="input-group-text"
+                        ><i class="fas fa-building"></i
+                      ></span>
+                      <input
+                        type="text"
+                        id="clinicName"
+                        class="form-control"
+                        placeholder="Enter your facility name"
+                        required
+                      />
                     </div>
+                    <div class="invalid-feedback">
+                      Please provide your hospital/clinic name.
+                    </div>
+                    <div id="clinicNameError" class="error-text"></div>
                   </div>
 
-                  <div class="row">
-                    <div class="col-12 mb-4">
-                      <div class="form-outline">
-                        <label class="form-label" for="establishmentDate"
-                          >Date of Establishment</label
-                        >
-                        <input
-                          type="date"
-                          id="establishmentDate"
-                          class="form-control"
-                          required
-                        />
-                        <div class="invalid-feedback">
-                          Please select the date of establishment.
-                        </div>
-                      </div>
+                  <div class="mb-4">
+                    <label class="form-label" for="establishmentDate"
+                      >Date of Establishment</label
+                    >
+                    <div class="input-group has-validation">
+                      <span class="input-group-text"
+                        ><i class="fas fa-calendar-alt"></i
+                      ></span>
+                      <input
+                        type="date"
+                        id="establishmentDate"
+                        class="form-control"
+                        required
+                      />
                     </div>
+                    <div class="invalid-feedback">
+                      Please select the date of establishment.
+                    </div>
+                    <div id="establishmentDateError" class="error-text"></div>
                   </div>
 
                   <div class="row">
                     <div class="col-md-6 mb-4">
-                      <div class="form-outline">
-                        <label class="form-label" for="emailAddress"
-                          >Email Address</label
-                        >
+                      <label class="form-label" for="emailAddress"
+                        >Email Address</label
+                      >
+                      <div class="input-group has-validation">
+                        <span class="input-group-text"
+                          ><i class="fas fa-envelope"></i
+                        ></span>
                         <input
                           type="email"
                           id="emailAddress"
                           class="form-control"
+                          placeholder="email@example.com"
                           required
                         />
-                        <div class="invalid-feedback">
-                          Please provide a valid email address.
-                        </div>
                       </div>
+                      <div class="invalid-feedback">
+                        Please provide a valid email address.
+                      </div>
+                      <div id="emailAddressError" class="error-text"></div>
                     </div>
                     <div class="col-md-6 mb-4">
-                      <div class="form-outline">
-                        <label class="form-label" for="phoneNumber"
-                          >Phone Number</label
-                        >
+                      <label class="form-label" for="phoneNumber"
+                        >Phone Number</label
+                      >
+                      <div class="input-group has-validation">
+                        <span class="input-group-text"
+                          ><i class="fas fa-phone"></i
+                        ></span>
                         <input
                           type="tel"
                           id="phoneNumber"
                           class="form-control"
                           pattern="[0-9]{10}"
+                          placeholder="10-digit number"
                           required
                         />
-                        <div class="invalid-feedback">
-                          Please provide a valid 10-digit phone number.
-                        </div>
                       </div>
+                      <div class="invalid-feedback">
+                        Please enter a valid 10-digit phone number.
+                      </div>
+                      <div id="phoneNumberError" class="error-text"></div>
                     </div>
                   </div>
 
                   <div class="row">
                     <div class="col-md-6 mb-4">
-                      <div class="form-outline">
-                        <label class="form-label" for="password"
-                          >Password</label
-                        >
+                      <label class="form-label" for="password">Password</label>
+                      <div
+                        class="input-group has-validation password-input-group"
+                      >
+                        <span class="input-group-text"
+                          ><i class="fas fa-lock"></i
+                        ></span>
                         <input
                           type="password"
                           id="password"
                           class="form-control"
                           minlength="8"
+                          placeholder="Minimum 8 characters"
                           required
                         />
-                        <div class="invalid-feedback">
-                          Password must be at least 8 characters long.
-                        </div>
+                        <button
+                          class="btn btn-outline-secondary"
+                          type="button"
+                          id="togglePassword"
+                        >
+                          <i class="fas fa-eye"></i>
+                        </button>
                       </div>
+                      <div class="invalid-feedback">
+                        Password must be at least 8 characters long.
+                      </div>
+                      <div id="passwordError" class="error-text"></div>
                     </div>
                     <div class="col-md-6 mb-4">
-                      <div class="form-outline">
-                        <label class="form-label" for="confirmPassword"
-                          >Confirm Password</label
-                        >
+                      <label class="form-label" for="confirmPassword"
+                        >Confirm Password</label
+                      >
+                      <div
+                        class="input-group has-validation password-input-group"
+                      >
+                        <span class="input-group-text"
+                          ><i class="fas fa-lock"></i
+                        ></span>
                         <input
                           type="password"
                           id="confirmPassword"
                           class="form-control"
+                          placeholder="Re-enter password"
                           required
                         />
-                        <div
-                          class="invalid-feedback"
-                          id="password-match-feedback"
+                        <button
+                          class="btn btn-outline-secondary"
+                          type="button"
+                          id="toggleConfirmPassword"
                         >
-                          Passwords do not match.
-                        </div>
+                          <i class="fas fa-eye"></i>
+                        </button>
                       </div>
+                      <div class="invalid-feedback">
+                        Passwords do not match.
+                      </div>
+                      <div id="confirmPasswordError" class="error-text"></div>
                     </div>
                   </div>
 
@@ -164,24 +332,30 @@
                     />
                     <label class="form-check-label" for="termsCheck">
                       I agree to the
-                      <a href="#!" class="text-primary">Terms of Service</a> and
-                      <a href="#!" class="text-primary">Privacy Policy</a>
+                      <a href="#!" class="text-primary fw-medium"
+                        >Terms of Service</a
+                      >
+                      and
+                      <a href="#!" class="text-primary fw-medium"
+                        >Privacy Policy</a
+                      >
                     </label>
                     <div class="invalid-feedback">
                       You must agree to our terms and conditions.
                     </div>
+                    <div id="termsCheckError" class="error-text"></div>
                   </div>
 
                   <div class="d-grid">
                     <button type="submit" class="btn btn-primary btn-lg">
-                      Register
+                      Create Account
                     </button>
                   </div>
 
                   <div class="text-center mt-4">
                     <p class="mb-0">
                       Already have an account?
-                      <a href="#!" class="text-primary fw-bold">Login</a>
+                      <a href="#!" class="text-primary fw-medium">Sign in</a>
                     </p>
                   </div>
                 </form>
@@ -190,7 +364,7 @@
           </div>
         </div>
       </div>
-    </section>
+    </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
     <script>
@@ -201,37 +375,197 @@
         const form = document.getElementById("registrationForm");
         const password = document.getElementById("password");
         const confirmPassword = document.getElementById("confirmPassword");
+        const togglePassword = document.getElementById("togglePassword");
+        const toggleConfirmPassword = document.getElementById(
+          "toggleConfirmPassword"
+        );
+        const phoneNumber = document.getElementById("phoneNumber");
+
+        // Get all error elements
+        const clinicNameError = document.getElementById("clinicNameError");
+        const establishmentDateError = document.getElementById(
+          "establishmentDateError"
+        );
+        const emailAddressError = document.getElementById("emailAddressError");
+        const phoneNumberError = document.getElementById("phoneNumberError");
+        const passwordError = document.getElementById("passwordError");
+        const confirmPasswordError = document.getElementById(
+          "confirmPasswordError"
+        );
+        const termsCheckError = document.getElementById("termsCheckError");
 
         // Check if passwords match
         const validatePasswordMatch = () => {
           if (password.value !== confirmPassword.value) {
             confirmPassword.setCustomValidity("Passwords do not match");
+            confirmPasswordError.textContent = "Passwords do not match.";
           } else {
             confirmPassword.setCustomValidity("");
+            confirmPasswordError.textContent = "";
           }
         };
 
+        // Validate phone number
+        phoneNumber.addEventListener("input", () => {
+          if (phoneNumber.validity.patternMismatch) {
+            phoneNumberError.textContent =
+              "Please enter exactly 10 digits for your phone number.";
+          } else {
+            phoneNumberError.textContent = "";
+          }
+        });
+
+        // Validate each field individually
+        const validateField = (field, errorElement, message) => {
+          if (!field.validity.valid) {
+            if (field.validity.valueMissing) {
+              errorElement.textContent = `This field is required.`;
+            } else if (field.validity.typeMismatch && field.type === "email") {
+              errorElement.textContent = `Please enter a valid email address.`;
+            } else if (field.validity.tooShort) {
+              errorElement.textContent = `This field must be at least ${field.minLength} characters.`;
+            } else if (
+              field.validity.patternMismatch &&
+              field.id === "phoneNumber"
+            ) {
+              errorElement.textContent = `Please enter exactly 10 digits for your phone number.`;
+            } else {
+              errorElement.textContent = message;
+            }
+            return false;
+          } else {
+            errorElement.textContent = "";
+            return true;
+          }
+        };
+
+        // Toggle password visibility
+        togglePassword.addEventListener("click", () => {
+          const type =
+            password.getAttribute("type") === "password" ? "text" : "password";
+          password.setAttribute("type", type);
+          togglePassword.querySelector("i").classList.toggle("fa-eye");
+          togglePassword.querySelector("i").classList.toggle("fa-eye-slash");
+        });
+
+        toggleConfirmPassword.addEventListener("click", () => {
+          const type =
+            confirmPassword.getAttribute("type") === "password"
+              ? "text"
+              : "password";
+          confirmPassword.setAttribute("type", type);
+          toggleConfirmPassword.querySelector("i").classList.toggle("fa-eye");
+          toggleConfirmPassword
+            .querySelector("i")
+            .classList.toggle("fa-eye-slash");
+        });
+
         // Add event listeners for password fields
-        password.addEventListener("change", validatePasswordMatch);
-        confirmPassword.addEventListener("keyup", validatePasswordMatch);
+        password.addEventListener("input", () => {
+          validateField(
+            password,
+            passwordError,
+            "Password must be at least 8 characters long."
+          );
+          if (confirmPassword.value) validatePasswordMatch();
+        });
+
+        confirmPassword.addEventListener("input", validatePasswordMatch);
+
+        // Add input event listeners for real-time validation
+        document.getElementById("clinicName").addEventListener("input", () => {
+          validateField(
+            document.getElementById("clinicName"),
+            clinicNameError,
+            "Please provide your hospital/clinic name."
+          );
+        });
+
+        document
+          .getElementById("establishmentDate")
+          .addEventListener("input", () => {
+            validateField(
+              document.getElementById("establishmentDate"),
+              establishmentDateError,
+              "Please select the date of establishment."
+            );
+          });
+
+        document
+          .getElementById("emailAddress")
+          .addEventListener("input", () => {
+            validateField(
+              document.getElementById("emailAddress"),
+              emailAddressError,
+              "Please provide a valid email address."
+            );
+          });
+
+        document.getElementById("termsCheck").addEventListener("change", () => {
+          validateField(
+            document.getElementById("termsCheck"),
+            termsCheckError,
+            "You must agree to our terms and conditions."
+          );
+        });
 
         // Form submission validation
-        form.addEventListener(
-          "submit",
-          (event) => {
-            validatePasswordMatch();
+        form.addEventListener("submit", (event) => {
+          event.preventDefault();
+          event.stopPropagation();
 
-            if (!form.checkValidity()) {
-              event.preventDefault();
-              event.stopPropagation();
-            } else {
-              alert("Registration successful!"); // Replace with your submission logic
-            }
+          // Validate all fields
+          let isValid = true;
 
-            form.classList.add("was-validated");
-          },
-          false
-        );
+          isValid =
+            validateField(
+              document.getElementById("clinicName"),
+              clinicNameError,
+              "Please provide your hospital/clinic name."
+            ) && isValid;
+          isValid =
+            validateField(
+              document.getElementById("establishmentDate"),
+              establishmentDateError,
+              "Please select the date of establishment."
+            ) && isValid;
+          isValid =
+            validateField(
+              document.getElementById("emailAddress"),
+              emailAddressError,
+              "Please provide a valid email address."
+            ) && isValid;
+          isValid =
+            validateField(
+              document.getElementById("phoneNumber"),
+              phoneNumberError,
+              "Please enter a valid 10-digit phone number."
+            ) && isValid;
+          isValid =
+            validateField(
+              document.getElementById("password"),
+              passwordError,
+              "Password must be at least 8 characters long."
+            ) && isValid;
+          isValid =
+            validateField(
+              document.getElementById("termsCheck"),
+              termsCheckError,
+              "You must agree to our terms and conditions."
+            ) && isValid;
+
+          validatePasswordMatch();
+          if (password.value !== confirmPassword.value) {
+            isValid = false;
+          }
+
+          form.classList.add("was-validated");
+
+          if (isValid) {
+            alert("Registration successful!"); // Replace with your submission logic
+            // form.submit(); - would be used in production
+          }
+        });
       })();
     </script>
   </body>
