@@ -1,0 +1,832 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Registration - Step 3</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css"
+    />
+    <style>
+      :root {
+        --primary-blue: #0d6efd;
+        --light-blue: #e6f0ff;
+        --dark-blue: #0a58ca;
+      }
+
+      body {
+        background-color: #f8f9fa;
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      }
+
+      .registration-container {
+        max-width: 800px;
+        margin: 40px auto;
+        background-color: white;
+        border-radius: 10px;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+        padding: 30px;
+      }
+
+      .registration-header {
+        text-align: center;
+        margin-bottom: 30px;
+        color: var(--primary-blue);
+      }
+
+      .section-header {
+        color: var(--primary-blue);
+        margin-bottom: 20px;
+        font-weight: 600;
+      }
+
+      .form-label {
+        font-weight: 600;
+        color: #495057;
+      }
+
+      .form-check-label {
+        font-weight: normal;
+      }
+
+      .timing-row {
+        background-color: var(--light-blue);
+        border-radius: 8px;
+        padding: 15px;
+        margin-bottom: 15px;
+      }
+
+      .day-label {
+        font-weight: 600;
+        min-width: 100px;
+      }
+
+      .agreement-section {
+        margin-top: 30px;
+        margin-bottom: 30px;
+      }
+
+      .agreement-box {
+        max-height: 300px;
+        overflow-y: auto;
+        padding: 20px;
+        border: 1px solid #dee2e6;
+        border-radius: 8px;
+        background-color: #f8f9fa;
+        margin-bottom: 20px;
+      }
+
+      .finish-btn {
+        background-color: var(--primary-blue);
+        color: white;
+        padding: 10px 30px;
+        border: none;
+        border-radius: 6px;
+        font-weight: 600;
+        margin-top: 20px;
+        transition: all 0.3s;
+      }
+
+      .finish-btn:hover {
+        background-color: var(--dark-blue);
+        transform: translateY(-2px);
+      }
+
+      .step-indicator {
+        display: flex;
+        justify-content: center;
+        margin-bottom: 30px;
+      }
+
+      .step {
+        width: 35px;
+        height: 35px;
+        border-radius: 50%;
+        background-color: #dee2e6;
+        color: #6c757d;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 10px;
+        font-weight: bold;
+      }
+
+      .step.active {
+        background-color: var(--primary-blue);
+        color: white;
+      }
+
+      .step-line {
+        height: 3px;
+        width: 50px;
+        background-color: #dee2e6;
+        margin-top: 17px;
+      }
+
+      .step-line.active {
+        background-color: var(--primary-blue);
+      }
+
+      .time-inputs {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .error-message {
+        color: #dc3545;
+        font-size: 0.875rem;
+        margin-top: 5px;
+        font-weight: 500;
+        display: none;
+      }
+
+      .invalid-field {
+        border-color: #dc3545 !important;
+      }
+
+      .invalid-field ~ .error-message {
+        display: block;
+      }
+
+      @media (max-width: 768px) {
+        .registration-container {
+          margin: 20px;
+          padding: 20px;
+        }
+
+        .step-indicator {
+          margin-bottom: 20px;
+        }
+
+        .step {
+          width: 30px;
+          height: 30px;
+          margin: 0 5px;
+        }
+
+        .step-line {
+          width: 30px;
+        }
+
+        .time-inputs {
+          flex-direction: column;
+          align-items: flex-start;
+          gap: 5px;
+        }
+
+        .time-label {
+          margin-top: 10px;
+        }
+
+        .day-timing-controls {
+          flex-direction: column;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container registration-container">
+      <!-- Steps indicator -->
+      <div class="step-indicator">
+        <div class="step active">1</div>
+        <div class="step-line active"></div>
+        <div class="step active">2</div>
+        <div class="step-line active"></div>
+        <div class="step active">3</div>
+      </div>
+
+      <div class="registration-header">
+        <h2>Final Registration Step</h2>
+        <p class="text-muted">
+          Please specify your clinic hours and accept the agreement
+        </p>
+      </div>
+
+      <form id="final-registration-form">
+        <!-- Operation Timings Section -->
+        <div class="timing-section">
+          <h4 class="section-header">Clinic Operation Hours</h4>
+
+          <!-- 24x7 Option -->
+          <div class="form-check mb-4">
+            <input
+              class="form-check-input"
+              type="radio"
+              name="operationHours"
+              id="hours24x7"
+              value="24x7"
+            />
+            <label class="form-check-label" for="hours24x7">
+              <span class="fw-bold">24x7 Operation</span> - Clinic is open all
+              days, all hours
+            </label>
+          </div>
+
+          <!-- Custom Hours Option -->
+          <div class="form-check mb-4">
+            <input
+              class="form-check-input"
+              type="radio"
+              name="operationHours"
+              id="hoursCustom"
+              value="custom"
+              checked
+            />
+            <label class="form-check-label" for="hoursCustom">
+              <span class="fw-bold">Custom Hours</span> - Specify opening and
+              closing times for each day
+            </label>
+          </div>
+
+          <!-- Day-wise Timing Controls -->
+          <div id="customHoursSection">
+            <!-- Monday -->
+            <div class="timing-row">
+              <div
+                class="d-flex flex-wrap align-items-center day-timing-controls"
+              >
+                <div class="day-label col-md-2">Monday</div>
+                <div class="col-md-3">
+                  <div class="form-check form-switch">
+                    <input
+                      class="form-check-input day-toggle"
+                      type="checkbox"
+                      id="mondayOpen"
+                      checked
+                      data-day="monday"
+                    />
+                    <label class="form-check-label" for="mondayOpen"
+                      >Open</label
+                    >
+                  </div>
+                </div>
+                <div class="day-hours col-md-7" id="mondayHours">
+                  <div class="row g-2">
+                    <div class="col-md-5">
+                      <label class="form-label time-label">From</label>
+                      <input
+                        type="time"
+                        class="form-control"
+                        id="mondayFrom"
+                        value="09:00"
+                      />
+                    </div>
+                    <div class="col-md-5">
+                      <label class="form-label time-label">To</label>
+                      <input
+                        type="time"
+                        class="form-control"
+                        id="mondayTo"
+                        value="18:00"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Tuesday -->
+            <div class="timing-row">
+              <div
+                class="d-flex flex-wrap align-items-center day-timing-controls"
+              >
+                <div class="day-label col-md-2">Tuesday</div>
+                <div class="col-md-3">
+                  <div class="form-check form-switch">
+                    <input
+                      class="form-check-input day-toggle"
+                      type="checkbox"
+                      id="tuesdayOpen"
+                      checked
+                      data-day="tuesday"
+                    />
+                    <label class="form-check-label" for="tuesdayOpen"
+                      >Open</label
+                    >
+                  </div>
+                </div>
+                <div class="day-hours col-md-7" id="tuesdayHours">
+                  <div class="row g-2">
+                    <div class="col-md-5">
+                      <label class="form-label time-label">From</label>
+                      <input
+                        type="time"
+                        class="form-control"
+                        id="tuesdayFrom"
+                        value="09:00"
+                      />
+                    </div>
+                    <div class="col-md-5">
+                      <label class="form-label time-label">To</label>
+                      <input
+                        type="time"
+                        class="form-control"
+                        id="tuesdayTo"
+                        value="18:00"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Wednesday -->
+            <div class="timing-row">
+              <div
+                class="d-flex flex-wrap align-items-center day-timing-controls"
+              >
+                <div class="day-label col-md-2">Wednesday</div>
+                <div class="col-md-3">
+                  <div class="form-check form-switch">
+                    <input
+                      class="form-check-input day-toggle"
+                      type="checkbox"
+                      id="wednesdayOpen"
+                      checked
+                      data-day="wednesday"
+                    />
+                    <label class="form-check-label" for="wednesdayOpen"
+                      >Open</label
+                    >
+                  </div>
+                </div>
+                <div class="day-hours col-md-7" id="wednesdayHours">
+                  <div class="row g-2">
+                    <div class="col-md-5">
+                      <label class="form-label time-label">From</label>
+                      <input
+                        type="time"
+                        class="form-control"
+                        id="wednesdayFrom"
+                        value="09:00"
+                      />
+                    </div>
+                    <div class="col-md-5">
+                      <label class="form-label time-label">To</label>
+                      <input
+                        type="time"
+                        class="form-control"
+                        id="wednesdayTo"
+                        value="18:00"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Thursday -->
+            <div class="timing-row">
+              <div
+                class="d-flex flex-wrap align-items-center day-timing-controls"
+              >
+                <div class="day-label col-md-2">Thursday</div>
+                <div class="col-md-3">
+                  <div class="form-check form-switch">
+                    <input
+                      class="form-check-input day-toggle"
+                      type="checkbox"
+                      id="thursdayOpen"
+                      checked
+                      data-day="thursday"
+                    />
+                    <label class="form-check-label" for="thursdayOpen"
+                      >Open</label
+                    >
+                  </div>
+                </div>
+                <div class="day-hours col-md-7" id="thursdayHours">
+                  <div class="row g-2">
+                    <div class="col-md-5">
+                      <label class="form-label time-label">From</label>
+                      <input
+                        type="time"
+                        class="form-control"
+                        id="thursdayFrom"
+                        value="09:00"
+                      />
+                    </div>
+                    <div class="col-md-5">
+                      <label class="form-label time-label">To</label>
+                      <input
+                        type="time"
+                        class="form-control"
+                        id="thursdayTo"
+                        value="18:00"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Friday -->
+            <div class="timing-row">
+              <div
+                class="d-flex flex-wrap align-items-center day-timing-controls"
+              >
+                <div class="day-label col-md-2">Friday</div>
+                <div class="col-md-3">
+                  <div class="form-check form-switch">
+                    <input
+                      class="form-check-input day-toggle"
+                      type="checkbox"
+                      id="fridayOpen"
+                      checked
+                      data-day="friday"
+                    />
+                    <label class="form-check-label" for="fridayOpen"
+                      >Open</label
+                    >
+                  </div>
+                </div>
+                <div class="day-hours col-md-7" id="fridayHours">
+                  <div class="row g-2">
+                    <div class="col-md-5">
+                      <label class="form-label time-label">From</label>
+                      <input
+                        type="time"
+                        class="form-control"
+                        id="fridayFrom"
+                        value="09:00"
+                      />
+                    </div>
+                    <div class="col-md-5">
+                      <label class="form-label time-label">To</label>
+                      <input
+                        type="time"
+                        class="form-control"
+                        id="fridayTo"
+                        value="18:00"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Saturday -->
+            <div class="timing-row">
+              <div
+                class="d-flex flex-wrap align-items-center day-timing-controls"
+              >
+                <div class="day-label col-md-2">Saturday</div>
+                <div class="col-md-3">
+                  <div class="form-check form-switch">
+                    <input
+                      class="form-check-input day-toggle"
+                      type="checkbox"
+                      id="saturdayOpen"
+                      checked
+                      data-day="saturday"
+                    />
+                    <label class="form-check-label" for="saturdayOpen"
+                      >Open</label
+                    >
+                  </div>
+                </div>
+                <div class="day-hours col-md-7" id="saturdayHours">
+                  <div class="row g-2">
+                    <div class="col-md-5">
+                      <label class="form-label time-label">From</label>
+                      <input
+                        type="time"
+                        class="form-control"
+                        id="saturdayFrom"
+                        value="09:00"
+                      />
+                    </div>
+                    <div class="col-md-5">
+                      <label class="form-label time-label">To</label>
+                      <input
+                        type="time"
+                        class="form-control"
+                        id="saturdayTo"
+                        value="14:00"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Sunday -->
+            <div class="timing-row">
+              <div
+                class="d-flex flex-wrap align-items-center day-timing-controls"
+              >
+                <div class="day-label col-md-2">Sunday</div>
+                <div class="col-md-3">
+                  <div class="form-check form-switch">
+                    <input
+                      class="form-check-input day-toggle"
+                      type="checkbox"
+                      id="sundayOpen"
+                      data-day="sunday"
+                    />
+                    <label class="form-check-label" for="sundayOpen"
+                      >Open</label
+                    >
+                  </div>
+                </div>
+                <div
+                  class="day-hours col-md-7"
+                  id="sundayHours"
+                  style="display: none"
+                >
+                  <div class="row g-2">
+                    <div class="col-md-5">
+                      <label class="form-label time-label">From</label>
+                      <input
+                        type="time"
+                        class="form-control"
+                        id="sundayFrom"
+                        value="09:00"
+                      />
+                    </div>
+                    <div class="col-md-5">
+                      <label class="form-label time-label">To</label>
+                      <input
+                        type="time"
+                        class="form-control"
+                        id="sundayTo"
+                        value="14:00"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Agreement Section -->
+        <div class="agreement-section">
+          <h4 class="section-header">Terms and Conditions</h4>
+
+          <div class="agreement-box">
+            <h5>CLINIC REGISTRATION AGREEMENT</h5>
+            <p>
+              This Clinic Registration Agreement ("Agreement") is entered into
+              as of the date of electronic acceptance by the undersigned
+              healthcare provider or facility ("Provider") and the Healthcare
+              Platform ("Platform").
+            </p>
+
+            <h6>1. REGISTRATION AND SERVICES</h6>
+            <p>
+              1.1 The Platform provides an online marketplace connecting
+              healthcare providers with patients seeking healthcare services.
+            </p>
+            <p>
+              1.2 By completing registration, Provider agrees to be listed on
+              the Platform and to provide healthcare services to patients who
+              book appointments through the Platform.
+            </p>
+            <p>
+              1.3 Provider acknowledges that the Platform is not a healthcare
+              provider and does not provide medical advice, diagnosis, or
+              treatment.
+            </p>
+
+            <h6>2. PROVIDER OBLIGATIONS</h6>
+            <p>
+              2.1 Provider represents and warrants that all information provided
+              during registration is accurate, complete, and up-to-date.
+            </p>
+            <p>
+              2.2 Provider shall maintain all necessary licenses,
+              certifications, and permits required to provide healthcare
+              services in their jurisdiction.
+            </p>
+            <p>
+              2.3 Provider agrees to maintain professional liability insurance
+              with coverage limits that meet industry standards.
+            </p>
+            <p>
+              2.4 Provider shall adhere to all applicable laws, regulations, and
+              professional standards governing the provision of healthcare
+              services.
+            </p>
+            <p>
+              2.5 Provider agrees to maintain accurate hours of operation on the
+              Platform and to be available during such hours.
+            </p>
+
+            <h6>3. FEES AND PAYMENT</h6>
+            <p>
+              3.1 Provider agrees to pay the Platform a service fee for each
+              appointment booked through the Platform.
+            </p>
+            <p>
+              3.2 The service fee shall be a percentage of the Provider's
+              standard fee for the service provided, as set forth in the fee
+              schedule.
+            </p>
+            <p>
+              3.3 Platform will remit payment to Provider for services rendered,
+              less the service fee, within 14 days of the appointment.
+            </p>
+
+            <h6>4. TERM AND TERMINATION</h6>
+            <p>
+              4.1 This Agreement shall commence on the date of electronic
+              acceptance and shall continue until terminated by either party.
+            </p>
+            <p>
+              4.2 Either party may terminate this Agreement upon 30 days'
+              written notice to the other party.
+            </p>
+            <p>
+              4.3 Platform may immediately terminate this Agreement if Provider
+              breaches any obligation under this Agreement or if Platform
+              determines, in its sole discretion, that Provider has engaged in
+              conduct that could harm the reputation of the Platform.
+            </p>
+
+            <h6>5. CONFIDENTIALITY AND DATA PRIVACY</h6>
+            <p>
+              5.1 Provider shall maintain the confidentiality of all patient
+              information and shall comply with all applicable privacy laws,
+              including but not limited to HIPAA.
+            </p>
+            <p>
+              5.2 Provider acknowledges that the Platform may collect and use
+              aggregated, de-identified data for analytical purposes.
+            </p>
+
+            <h6>6. INDEMNIFICATION</h6>
+            <p>
+              6.1 Provider shall indemnify, defend, and hold harmless the
+              Platform and its officers, directors, employees, and agents from
+              any claims, damages, liabilities, costs, and expenses arising from
+              Provider's provision of healthcare services or breach of this
+              Agreement.
+            </p>
+
+            <h6>7. LIMITATION OF LIABILITY</h6>
+            <p>
+              7.1 In no event shall the Platform be liable for any indirect,
+              incidental, special, or consequential damages arising out of or in
+              connection with this Agreement.
+            </p>
+            <p>
+              7.2 The Platform's total liability under this Agreement shall not
+              exceed the amount of fees paid by Provider to the Platform in the
+              six months preceding the claim.
+            </p>
+
+            <h6>8. MISCELLANEOUS</h6>
+            <p>
+              8.1 This Agreement constitutes the entire agreement between the
+              parties and supersedes all prior agreements and understandings.
+            </p>
+            <p>
+              8.2 This Agreement shall be governed by the laws of the
+              jurisdiction in which the Platform is headquartered.
+            </p>
+            <p>
+              8.3 Any dispute arising out of or relating to this Agreement shall
+              be resolved through binding arbitration.
+            </p>
+            <p>
+              8.4 Provider may not assign this Agreement without the prior
+              written consent of the Platform.
+            </p>
+          </div>
+
+          <div class="form-check mb-3">
+            <input
+              class="form-check-input"
+              type="checkbox"
+              id="agreementCheck"
+              required
+            />
+            <label class="form-check-label" for="agreementCheck">
+              I have read and agree to the Terms and Conditions
+            </label>
+            <div class="error-message" id="agreement-error">
+              You must accept the terms and conditions to proceed
+            </div>
+          </div>
+        </div>
+
+        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+          <button type="submit" class="finish-btn">Finish Registration</button>
+        </div>
+      </form>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+      // Operation Hours Toggle
+      const hours24x7 = document.getElementById("hours24x7");
+      const hoursCustom = document.getElementById("hoursCustom");
+      const customHoursSection = document.getElementById("customHoursSection");
+
+      hours24x7.addEventListener("change", function () {
+        if (this.checked) {
+          customHoursSection.style.display = "none";
+        }
+      });
+
+      hoursCustom.addEventListener("change", function () {
+        if (this.checked) {
+          customHoursSection.style.display = "block";
+        }
+      });
+
+      // Day Toggle Switches
+      const dayToggles = document.querySelectorAll(".day-toggle");
+      dayToggles.forEach((toggle) => {
+        toggle.addEventListener("change", function () {
+          const day = this.getAttribute("data-day");
+          const hoursDiv = document.getElementById(`${day}Hours`);
+
+          if (this.checked) {
+            hoursDiv.style.display = "block";
+          } else {
+            hoursDiv.style.display = "none";
+          }
+        });
+      });
+
+      // Form Validation
+      const agreementCheck = document.getElementById("agreementCheck");
+
+      agreementCheck.addEventListener("change", function () {
+        if (this.checked) {
+          this.classList.remove("invalid-field");
+        } else {
+          this.classList.add("invalid-field");
+        }
+      });
+
+      // Form Submission
+      document
+        .getElementById("final-registration-form")
+        .addEventListener("submit", function (e) {
+          e.preventDefault();
+
+          // Validate agreement checkbox
+          if (!agreementCheck.checked) {
+            agreementCheck.classList.add("invalid-field");
+            return;
+          }
+
+          // Collect operation hours data
+          const operationHoursData = {};
+
+          if (hours24x7.checked) {
+            operationHoursData.type = "24x7";
+          } else {
+            operationHoursData.type = "custom";
+            operationHoursData.days = {};
+
+            const days = [
+              "monday",
+              "tuesday",
+              "wednesday",
+              "thursday",
+              "friday",
+              "saturday",
+              "sunday",
+            ];
+            days.forEach((day) => {
+              const isOpen = document.getElementById(`${day}Open`).checked;
+
+              if (isOpen) {
+                const from = document.getElementById(`${day}From`).value;
+                const to = document.getElementById(`${day}To`).value;
+
+                operationHoursData.days[day] = {
+                  isOpen: true,
+                  from: from,
+                  to: to,
+                };
+              } else {
+                operationHoursData.days[day] = {
+                  isOpen: false,
+                };
+              }
+            });
+          }
+
+          // Here you would typically send the data to your server
+          console.log("Registration data:", operationHoursData);
+
+          // Show success message
+          alert("Registration completed successfully!");
+
+          // Redirect to success page or dashboard
+          // window.location.href = 'registration-success.html';
+        });
+    </script>
+  </body>
+</html>
