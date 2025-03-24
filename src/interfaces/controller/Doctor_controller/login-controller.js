@@ -1,11 +1,15 @@
-const loginPageRender = (req, res) => {
-  try {
-    console.log("Doctor login route hit");
-    res.render("doctor-login");
-  } catch (error) {
-    console.error("Controller Error:", error);
-    res.status(500).send("Internal Server Error");
-  }
-};
+class DoctorLoginController {
+  constructor() {}
 
-export { loginPageRender };
+  loginPageRender = async (req, res) => {
+    try {
+      console.log("Doctor login page route hit");
+      res.render("doctor-login");
+    } catch (error) {
+      console.error("loginPageRender Controller Error:", error);
+      res.status(500).send("Internal Server Error");
+    }
+  };
+}
+
+export const doctorLoginController = new DoctorLoginController();
