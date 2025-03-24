@@ -171,7 +171,13 @@
                   </p>
                 </div>
 
-                <form id="registrationForm" class="needs-validation" novalidate>
+                <form
+                  id="registrationForm"
+                  class="needs-validation"
+                  novalidate
+                  method="post"
+                  action="/clinic/signup"
+                >
                   <div class="mb-4">
                     <label class="form-label" for="clinicName"
                       >Hospital/Clinic Name</label
@@ -185,6 +191,7 @@
                         id="clinicName"
                         class="form-control"
                         placeholder="Enter your facility name"
+                        name="clinicName"
                         required
                       />
                     </div>
@@ -206,6 +213,7 @@
                         type="date"
                         id="establishmentDate"
                         class="form-control"
+                        name="date_of_establishment"
                         required
                       />
                     </div>
@@ -229,6 +237,7 @@
                           id="emailAddress"
                           class="form-control"
                           placeholder="email@example.com"
+                          name="email"
                           required
                         />
                       </div>
@@ -251,6 +260,7 @@
                           class="form-control"
                           pattern="[0-9]{10}"
                           placeholder="10-digit number"
+                          name="phoneNumber"
                           required
                         />
                       </div>
@@ -275,6 +285,7 @@
                           id="password"
                           class="form-control"
                           minlength="8"
+                          name="password"
                           placeholder="Minimum 8 characters"
                           required
                         />
