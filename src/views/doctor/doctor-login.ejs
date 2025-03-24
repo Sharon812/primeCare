@@ -1,0 +1,56 @@
+<%- include('../layouts/doctor/header') %>
+<link rel="stylesheet" href="/css/doctor/login.css" />
+
+<div class="page-wrapper">
+  <nav class="navbar">
+    <div class="nav-brand">
+      <img src="/assets/logo.jpg" alt="PrimeCare" class="brand-logo" />
+      <div class="brand-text">
+        <span class="brand-name">PrimeCare</span>
+        <span class="brand-subtitle">Doctor Panel</span>
+      </div>
+    </div>
+  </nav>
+
+  <div class="content-wrapper">
+    <div class="login-container">
+      <div class="login-content">
+        <div class="welcome-text">
+          <h1>Welcome Back, Doctor!</h1>
+          <p>Login to access your dashboard</p>
+        </div>
+        <form class="login-form">
+          <div class="input-group">
+            <i class="fas fa-envelope"></i>
+            <input type="email" placeholder="Email Address" required />
+          </div>
+          <div class="input-group">
+            <i class="fas fa-lock"></i>
+            <input type="password" placeholder="Password" required />
+          </div>
+          <div class="form-options">
+            <label class="remember-me">
+              <input type="checkbox" />
+              <span>Remember me</span>
+            </label>
+            <a href="#" class="forgot-link">Forgot Password?</a>
+          </div>
+          <button type="submit" class="login-btn">
+            Sign In <i class="fas fa-arrow-right"></i>
+          </button>
+        </form>
+      </div>
+      <div class="login-image">
+        <div class="overlay-content">
+          <h2>Leading Healthcare Innovation</h2>
+          <p>
+            Experience modern healthcare management with PrimeCare's advanced
+            platform
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<%- include('../layouts/doctor/footer') %>
