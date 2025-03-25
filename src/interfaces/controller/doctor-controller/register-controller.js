@@ -4,8 +4,8 @@ import HashService from "../../../infrastructure/services/hash-service.js";
 import doctorModal from "../../../infrastructure/database/models/doctor-models.js";
 
 class DoctorRegisterController {
-  constructor(createDoctorUseService) {
-    this.createDoctorUseService = createDoctorUseService;
+  constructor(createDoctorUseCase) {
+    this.createDoctorUseCase = createDoctorUseCase;
   }
 
   // Doctor Register Page Render (GET Request)
@@ -24,7 +24,7 @@ class DoctorRegisterController {
     try {
       console.log(req.body);
       const { name, email, phone, password } = req.body;
-      const doctor = await this.createDoctorUseService.execute({
+      const doctor = await this.createDoctorUseCase.execute({
         name,
         email,
         phone,
@@ -45,11 +45,11 @@ class DoctorRegisterController {
 //Dependency Injection
 const hashService = new HashService();
 const createDoctorRepo = new CreateDoctorRepository(doctorModal);
-const createDoctorUseService = new CreateDoctorUseCase(
+const createDoctorUseCase = new CreateDoctorUseCase(
   createDoctorRepo,
   hashService
 );
 
 export const doctorRegisterController = new DoctorRegisterController(
-  createDoctorUseService
+  createDoctorUseCase
 );
