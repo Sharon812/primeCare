@@ -11,18 +11,18 @@ class DoctorRegisterController {
   }
 
   // Doctor Register Page Render (GET Request)
-  registerPageRender = async (req, res) => {
+  registerPageRender = async (req, res, next) => {
     try {
       console.log("Doctor register page route hit");
       res.render("doctor-register");
     } catch (error) {
       console.log("registerPageRender Controller Error:", error);
-      res.status(500).send("Internal Server Error");
+      next(error);
     }
   };
 
   // Doctor Register (POST Request)
-  registerDoctor = async (req, res) => {
+  registerDoctor = async (req, res, next) => {
     try {
       console.log(req.body);
       const { name, email, phone, password } = req.body;
@@ -39,7 +39,7 @@ class DoctorRegisterController {
       });
     } catch (error) {
       console.log("registerDoctor Controller Error:", error);
-      res.status(500).send("Internal Server Error");
+      next(error);
     }
   };
 }

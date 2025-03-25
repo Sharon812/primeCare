@@ -1,4 +1,6 @@
-class Doctor {
+  import AppError from "../../utils/custom-error.js";
+  
+  class Doctor {
   constructor({ name, email, phone, password }) {
     this.validaterequiredFields(name, email, phone, password);
     this.validateEmail(email);
@@ -51,7 +53,7 @@ class Doctor {
   validaterequiredFields(...fields) {
     fields.forEach((field) => {
       if (!field || field.trim() === "") {
-        throw new Error("Missing required fields");
+        throw new AppError("Missing required fields");
       }
     });
   }
@@ -59,14 +61,14 @@ class Doctor {
   validateEmail(email) {
     const emailRegex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
     if (!emailRegex.test(email)) {
-      throw new Error("Invalid email");
+      throw new AppError("Invalid email");
     }
   }
 
   validatePhone(phone) {
     const phoneRegex = /^\d{10}$/;
     if (!phoneRegex.test(phone)) {
-      throw new Error("Invalid phone number");
+      throw new AppError("Invalid phone number");
     }
   }
 

@@ -1,4 +1,5 @@
 import Doctor from "../../entities/doctor-entity.js";
+import AppError from "../../../utils/custom-error.js";
 
 class DoctorRegistrationService {
   constructor(doctorRepository, findDoctorRepo) {
@@ -12,7 +13,7 @@ class DoctorRegistrationService {
       doctorData.email
     );
     if (existingDoctorByEmail) {
-      throw new Error("Doctor with this email already exists.");
+      throw new AppError("Doctor with this email already exists.");
     }
 
     //check if the doctor with this phone already exists
@@ -20,7 +21,7 @@ class DoctorRegistrationService {
       doctorData.phone
     );
     if (existingDoctorByPhone) {
-      throw new Error("Doctor with this phone already exists.");
+      throw new AppError("Doctor with this phone already exists.");
     }
     const doctor = new Doctor(doctorData);
     return await this.doctorRepository.createDoctor(doctor);
