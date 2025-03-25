@@ -51,12 +51,8 @@
                 <div class="form-row">
                   <div class="input-group">
                     <i class="fas fa-user"></i>
-                    <input
-                      type="text"
-                      name="name"
-                      placeholder="Full Name"
-                      required
-                    />
+                    <input type="text" name="name" placeholder="Full Name" />
+                    <div class="error-message"></div>
                   </div>
                   <div class="input-group">
                     <i class="fas fa-envelope"></i>
@@ -64,19 +60,15 @@
                       type="email"
                       name="email"
                       placeholder="Email Address"
-                      required
                     />
+                    <div class="error-message"></div>
                   </div>
                 </div>
 
                 <div class="input-group">
                   <i class="fas fa-phone"></i>
-                  <input
-                    type="tel"
-                    name="phone"
-                    placeholder="Phone Number"
-                    required
-                  />
+                  <input type="tel" name="phone" placeholder="Phone Number" />
+                  <div class="error-message"></div>
                 </div>
 
                 <div class="form-row">
@@ -86,8 +78,8 @@
                       type="password"
                       name="password"
                       placeholder="Password"
-                      required
                     />
+                    <div class="error-message"></div>
                   </div>
                   <div class="input-group">
                     <i class="fas fa-lock"></i>
@@ -95,8 +87,8 @@
                       type="password"
                       name="confirmPassword"
                       placeholder="Confirm Password"
-                      required
                     />
+                    <div class="error-message"></div>
                   </div>
                 </div>
 
@@ -110,7 +102,7 @@
                   </label>
                 </div>
 
-                <button type="submit" class="register-btn">
+                <button type="submit" class="register-btn" disabled>
                   Create Account <i class="fas fa-arrow-right"></i>
                 </button>
 
@@ -153,6 +145,7 @@
 
     <%- include('../layouts/doctor/footer') %>
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="/scripts/doctor/register.js"></script>
     <script>
       AOS.init({
         duration: 1000,
