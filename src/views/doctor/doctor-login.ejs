@@ -1,5 +1,6 @@
 <%- include('../layouts/doctor/header') %>
 <link rel="stylesheet" href="/css/doctor/login.css" />
+<link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
 
 <div class="page-wrapper">
   <nav class="navbar">
@@ -13,13 +14,13 @@
   </nav>
 
   <div class="content-wrapper">
-    <div class="login-container">
+    <div class="login-container" data-aos="fade-up">
       <div class="login-content">
-        <div class="welcome-text">
-          <h1>Welcome Back, Doctor!</h1>
-          <p>Login to access your dashboard</p>
+        <div class="welcome-text" data-aos="fade-right" data-aos-delay="200">
+          <h1>Welcome to PrimeCare</h1>
+          <p>Enter your credentials to access your dashboard</p>
         </div>
-        <form class="login-form">
+        <form class="login-form" data-aos="fade-up" data-aos-delay="400">
           <div class="input-group">
             <i class="fas fa-envelope"></i>
             <input type="email" placeholder="Email Address" required />
@@ -36,9 +37,9 @@
             <a href="#" class="forgot-link">Forgot Password?</a>
           </div>
           <button type="submit" class="login-btn">
-            Sign In <i class="fas fa-arrow-right"></i>
+            Access Dashboard <i class="fas fa-arrow-right"></i>
           </button>
-          <div class="register-section">
+          <div class="register-section" data-aos="fade-up" data-aos-delay="600">
             <p class="register-text">New to PrimeCare?</p>
             <a href="/doctor/register" class="register-link">
               Register as a Doctor <i class="fas fa-user-md"></i>
@@ -46,12 +47,12 @@
           </div>
         </form>
       </div>
-      <div class="login-image">
+      <div class="login-image" data-aos="fade-left">
         <div class="overlay-content">
           <h2>Leading Healthcare Innovation</h2>
           <p>
-            Experience modern healthcare management with PrimeCare's advanced
-            platform
+            Join our network of healthcare professionals and transform patient
+            care
           </p>
         </div>
       </div>
@@ -59,4 +60,11 @@
   </div>
 </div>
 
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script>
+  AOS.init({
+    duration: 1000,
+    once: true,
+  });
+</script>
 <%- include('../layouts/doctor/footer') %>
