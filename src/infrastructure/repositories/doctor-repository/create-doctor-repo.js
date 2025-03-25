@@ -1,9 +1,12 @@
-class CreateDoctorRepository {
+import DoctorRepository from "../../../domain/respositories/doctor-repository/doctor-repository.js";
+
+class CreateDoctorRepository extends DoctorRepository{
   constructor(doctorModal) {
+    super();
     this.doctorModal = doctorModal;
   }
 
-  async execute(doctor) {
+  async createDoctor(doctor) {
     const doctorData = {
       name: doctor.name,
       email: doctor.email,
@@ -13,7 +16,7 @@ class CreateDoctorRepository {
       isPhoneVerified: doctor.isPhoneVerified,
       isFormCompleted: doctor.isFormCompleted,
       isAdminVerified: doctor.isAdminVerified,
-    }
+    } 
     return await this.doctorModal.create(doctorData);
   }
 }

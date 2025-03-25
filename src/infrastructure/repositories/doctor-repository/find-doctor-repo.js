@@ -3,15 +3,15 @@ class FindDoctorRepository {
     this.doctorModal = doctorModal;
   }
 
-  async byEmail(email) {
+  async findDoctorByEmail(email) {
     return await this.doctorModal.findOne({ email });
   }
 
-  async byId(id) {
+  async findDoctorById(id) {
     return await this.doctorModal.findById(id);
   }
 
-  async byPhone(phone) {
+  async findDoctorByPhone(phone) {
     return await this.doctorModal.findOne({ phone });
   }
 }

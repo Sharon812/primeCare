@@ -1,8 +1,6 @@
-import Doctor from "../../../domain/entities/doctor-entity.js";
-
 class CreateDoctorUseCase {
-  constructor(createDoctorRepository, hashService) {
-    this.createDoctorRepository = createDoctorRepository;
+  constructor(DoctorRegistrationService, hashService) {
+    this.DoctorRegistrationService = DoctorRegistrationService;
     this.hashService = hashService;
   }
 
@@ -11,14 +9,13 @@ class CreateDoctorUseCase {
       throw new Error("Doctor data is required for registration.");
     }
     const hashedPassword = await this.hashService.hashPassword(password);
-    const doctor = new Doctor({
+
+    return await this.DoctorRegistrationService.registerDoctor({
       name,
       email,
       password: hashedPassword,
       phone,
     });
-
-    return this.createDoctorRepository.execute(doctor);
   }
 }
 
