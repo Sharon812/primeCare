@@ -6,6 +6,9 @@ class HashService {
   }
 
   async hashPassword(password) {
+    if (!password) {
+      throw new Error("Password data is required for hashing.");
+    }
     return await bcrypt.hash(password, this.saltRounds);
   }
 

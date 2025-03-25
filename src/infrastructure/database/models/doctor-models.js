@@ -37,6 +37,6 @@ const DoctorSchema = new mongoose.Schema({
   availableDays: { type: [String] },
 });
 
-const Doctor = mongoose.model("Doctor", DoctorSchema);
+const doctorModal = mongoose.model("Doctor", DoctorSchema);
 
-export default Doctor;
+export default doctorModal;

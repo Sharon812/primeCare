@@ -1,3 +1,8 @@
+import CreateDoctorUseCase from "../../../application/use_cases/doctor-use-case/create-doctor-useCase.js";
+import CreateDoctorRepository from "../../../infrastructure/repositories/doctor-repository/create-doctor-repo.js";
+import HashService from "../../../infrastructure/services/hash-service.js";
+import doctorModal from "../../../infrastructure/database/models/doctor-models.js";
+
 class DoctorRegisterController {
   constructor(createDoctorUseService) {
     this.createDoctorUseService = createDoctorUseService;
@@ -37,4 +42,14 @@ class DoctorRegisterController {
   };
 }
 
-export const doctorRegisterController = new DoctorRegisterController();
+//Dependency Injection
+const hashService = new HashService();
+const createDoctorRepo = new CreateDoctorRepository(doctorModal);
+const createDoctorUseService = new CreateDoctorUseCase(
+  createDoctorRepo,
+  hashService
+);
+
+export const doctorRegisterController = new DoctorRegisterController(
+  createDoctorUseService
+);
