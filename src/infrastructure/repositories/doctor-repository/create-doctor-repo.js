@@ -1,7 +1,11 @@
 class CreateDoctorRepository {
-  constructor(database){
-    this.database = database;
+  constructor(doctorModal) {
+    this.doctorModal = doctorModal;
   }
 
-  async createDoctor
+  async execute(doctorData) {
+    return await this.doctorModal.create(doctorData);
+  }
 }
+
+export default CreateDoctorRepository;
