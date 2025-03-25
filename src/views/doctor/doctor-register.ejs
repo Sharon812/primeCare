@@ -9,6 +9,7 @@
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
     />
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
   </head>
   <body>
     <%- include('../layouts/doctor/header') %>
@@ -25,8 +26,12 @@
       </nav>
 
       <div class="content-wrapper">
-        <div class="register-container">
-          <div class="register-content">
+        <div class="register-container" data-aos="fade-up">
+          <div
+            class="register-content"
+            data-aos="fade-right"
+            data-aos-delay="200"
+          >
             <div class="form-header">
               <h1>Create Account</h1>
               <p>Get started with PrimeCare</p>
@@ -110,11 +115,14 @@
             </div>
           </div>
 
-          <div class="register-image">
-            <div class="image-overlay"></div>
+          <div class="register-image" data-aos="fade-left">
             <div class="overlay-content">
-              <h2>Join Our Medical Network</h2>
-              <div class="feature-list">
+              <h2>Leading Healthcare Innovation</h2>
+              <p>
+                Join our network of healthcare professionals and transform
+                patient care
+              </p>
+              <div class="feature-list" data-aos="fade-up" data-aos-delay="400">
                 <div class="feature-item">
                   <i class="fas fa-user-md"></i>
                   <span>Professional Healthcare Platform</span>
@@ -135,5 +143,12 @@
     </div>
 
     <%- include('../layouts/doctor/footer') %>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+      AOS.init({
+        duration: 1000,
+        once: true,
+      });
+    </script>
   </body>
 </html>
