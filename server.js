@@ -42,6 +42,10 @@ app.use(express.urlencoded({ extended: true }));
 import { doctorRoute } from "./src/interfaces/routes/doctor-routes.js";
 app.use("/doctor", doctorRoute);
 
+//for error handling middleware
+import errorHandler from "./src/interfaces/middlewares/error-handler.js";
+app.use(errorHandler);
+
 //to listen to server
 app.listen(process.env.PORT, "0.0.0.0", () => {
   console.log(`server running at port ${process.env.PORT}`);
