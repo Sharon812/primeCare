@@ -14,7 +14,7 @@ class Doctor {
     this.isEmailVerified = false;
     this.isPhoneVerified = false;
     this.isFormCompleted = false;
-    isAdminVerified = false;
+    this.isAdminVerified = false;
 
     //Profile information
     this.firstName = null;
