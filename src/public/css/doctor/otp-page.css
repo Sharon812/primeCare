@@ -1,0 +1,186 @@
+:root {
+  --primary: #7c3aed;
+  --secondary: #5b21b6;
+  --accent: #a78bfa;
+  --dark: #1e1b4b;
+  --light: #f5f3ff;
+  --white: #ffffff;
+  --gradient: linear-gradient(135deg, #7c3aed, #5b21b6);
+  --shadow: 0 8px 32px rgba(124, 58, 237, 0.12);
+}
+
+/* Reuse existing styles from login.css */
+.page-wrapper {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #7c3aed 0%, #5b21b6 100%);
+  background-image: radial-gradient(
+      at 80% 20%,
+      rgba(167, 139, 250, 0.2) 0px,
+      transparent 50%
+    ),
+    radial-gradient(at 20% 80%, rgba(139, 92, 246, 0.2) 0px, transparent 50%),
+    radial-gradient(at 100% 0%, rgba(167, 139, 250, 0.3) 0px, transparent 50%),
+    radial-gradient(at 0% 100%, rgba(139, 92, 246, 0.3) 0px, transparent 50%),
+    linear-gradient(135deg, #7c3aed 0%, #5b21b6 100%);
+  background-attachment: fixed;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Reuse navbar styles from login.css */
+.navbar {
+  /* ...existing code... */
+}
+
+.otp-container {
+  width: 1200px;
+  height: calc(100vh - 100px);
+  max-height: 650px;
+  min-height: 500px;
+  background: rgba(255, 255, 255, 0.85);
+  border-radius: 30px;
+  overflow: hidden;
+  display: flex;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(167, 139, 250, 0.2);
+}
+
+.otp-content {
+  flex: 1;
+  padding: 2.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background: linear-gradient(
+    145deg,
+    rgba(255, 255, 255, 0.95),
+    rgba(255, 255, 255, 0.85)
+  );
+  backdrop-filter: blur(10px);
+}
+
+.otp-input-group {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  margin: 2rem 0;
+}
+
+.otp-input-group input {
+  width: 3.5rem;
+  height: 3.5rem;
+  font-size: 1.5rem;
+  text-align: center;
+  border: 2px solid var(--accent);
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.9);
+  transition: all 0.3s ease;
+}
+
+.otp-input-group input:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 4px rgba(124, 58, 237, 0.15);
+  outline: none;
+}
+
+.timer-section {
+  text-align: center;
+  margin-bottom: 1.5rem;
+  color: var(--dark);
+  font-size: 1.1rem;
+}
+
+.verify-btn {
+  background: var(--gradient);
+  color: var(--white);
+  padding: 1.2rem;
+  border: none;
+  border-radius: 16px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  width: 100%;
+}
+
+.verify-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 20px -8px rgba(124, 58, 237, 0.5);
+}
+
+.resend-section {
+  margin-top: 1.5rem;
+  text-align: center;
+}
+
+.resend-section p {
+  color: #64748b;
+  margin-bottom: 0.5rem;
+}
+
+.resend-btn {
+  background: none;
+  border: none;
+  color: var(--primary);
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.resend-btn:disabled {
+  color: #94a3b8;
+  cursor: not-allowed;
+}
+
+.resend-btn:not(:disabled):hover {
+  color: var(--secondary);
+  transform: translateX(3px);
+}
+
+.otp-image {
+  flex: 1;
+  background: linear-gradient(rgba(124, 58, 237, 0.9), rgba(91, 33, 182, 0.95)),
+    url("https://img.freepik.com/free-photo/medical-banner-with-doctor-working-laptop_23-2149611193.jpg")
+      center/cover;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+}
+
+/* Add responsive styles similar to login.css */
+@media (max-width: 1200px) {
+  .otp-container {
+    width: 95%;
+    flex-direction: column;
+  }
+}
+
+@media (max-width: 768px) {
+  .otp-input-group {
+    gap: 0.5rem;
+  }
+
+  .otp-input-group input {
+    width: 2.5rem;
+    height: 2.5rem;
+    font-size: 1.25rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .otp-input-group input {
+    width: 2rem;
+    height: 2rem;
+    font-size: 1rem;
+  }
+}

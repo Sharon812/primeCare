@@ -1,1 +1,118 @@
- fvfdbdbdv
+<%- include('../layouts/doctor/header') %>
+<link rel="stylesheet" href="/css/doctor/otp-page.css" />
+<link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
+
+<div class="page-wrapper">
+  <nav class="navbar">
+    <div class="nav-brand">
+      <img src="/assets/logo-icon1.png" alt="PrimeCare" class="brand-logo" />
+      <div class="brand-text">
+        <span class="brand-name">PrimeCare</span>
+        <span class="brand-subtitle">Doctor Panel</span>
+      </div>
+    </div>
+  </nav>
+
+  <div class="content-wrapper">
+    <div class="otp-container" data-aos="fade-up">
+      <div class="otp-content">
+        <div class="welcome-text" data-aos="fade-right" data-aos-delay="200">
+          <h1>Email Verification</h1>
+          <p>Enter the OTP sent to your email address</p>
+        </div>
+        <form
+          class="otp-form"
+          action="/doctor/verify-otp"
+          method="POST"
+          data-aos="fade-up"
+          data-aos-delay="400"
+        >
+          <div class="otp-input-group">
+            <input type="text" maxlength="1" pattern="[0-9]" required />
+            <input type="text" maxlength="1" pattern="[0-9]" required />
+            <input type="text" maxlength="1" pattern="[0-9]" required />
+            <input type="text" maxlength="1" pattern="[0-9]" required />
+            <input type="text" maxlength="1" pattern="[0-9]" required />
+            <input type="text" maxlength="1" pattern="[0-9]" required />
+          </div>
+          <!-- Add a hidden input to store combined OTP value -->
+          <input type="hidden" name="otp" id="combinedOtp" />
+          <div class="timer-section">
+            <span class="timer"
+              >Time remaining: <span id="countdown">02:00</span></span
+            >
+          </div>
+          <button type="submit" class="verify-btn">
+            Verify OTP <i class="fas fa-check-circle"></i>
+          </button>
+          <div class="resend-section">
+            <p>Didn't receive the code?</p>
+            <button type="button" class="resend-btn" id="resendBtn">
+              Resend OTP <i class="fas fa-redo"></i>
+            </button>
+          </div>
+        </form>
+      </div>
+      <div class="otp-image" data-aos="fade-left">
+        <div class="overlay-content">
+          <h2>Secure Verification</h2>
+          <p>
+            We prioritize your account security with two-factor authentication
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script src="/scripts/doctor/otp-page.js"></script>
+<script>
+  AOS.init({
+    duration: 1000,
+    once: true,
+  });
+
+  // OTP input handling
+  const otpInputs = document.querySelectorAll(".otp-input-group input");
+  otpInputs.forEach((input, index) => {
+    input.addEventListener("input", (e) => {
+      if (e.target.value && index < otpInputs.length - 1) {
+        otpInputs[index + 1].focus();
+      }
+    });
+    input.addEventListener("keydown", (e) => {
+      if (e.key === "Backspace" && !e.target.value && index > 0) {
+        otpInputs[index - 1].focus();
+      }
+    });
+  });
+
+  // Timer functionality
+  function startTimer(duration, display) {
+    let timer = duration,
+      minutes,
+      seconds;
+    let countdown = setInterval(function () {
+      minutes = parseInt(timer / 60, 10);
+      seconds = parseInt(timer % 60, 10);
+
+      minutes = minutes < 10 ? "0" + minutes : minutes;
+      seconds = seconds < 10 ? "0" + seconds : seconds;
+
+      display.textContent = minutes + ":" + seconds;
+
+      if (--timer < 0) {
+        clearInterval(countdown);
+        document.getElementById("resendBtn").disabled = false;
+      }
+    }, 1000);
+  }
+
+  window.onload = function () {
+    let twoMinutes = 60 * 2,
+      display = document.querySelector("#countdown");
+    startTimer(twoMinutes, display);
+  };
+</script>
+<%- include('../layouts/doctor/footer') %>
