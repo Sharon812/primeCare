@@ -1,4 +1,5 @@
 import AppError from "../../../utils/custom-error.js";
+import doctorOtpService from "../../../infrastructure/services/doctor-otp-service.js";
 
 class CreateDoctorUseCase {
   constructor(DoctorRegistrationService, hashService) {
@@ -12,12 +13,17 @@ class CreateDoctorUseCase {
     }
     const hashedPassword = await this.hashService.hashPassword(password);
 
-    return await this.DoctorRegistrationService.registerDoctor({
+    const doctor = await this.DoctorRegistrationService.registerDoctor({
       name,
       email,
       password: hashedPassword,
       phone,
     });
+
+    await doctorOtpService.generateAndSendOTP(email);
+
+    return doctor;
+
   }
 }
 
