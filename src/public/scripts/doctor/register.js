@@ -227,7 +227,7 @@ class FormValidator {
         "success"
       );
       setTimeout(() => {
-        window.location.href = "/doctor/login";
+        window.location.href = "/doctor/verify-otp";
       }, 2000);
     } catch (error) {
       this.alertManager.show(error.message);
