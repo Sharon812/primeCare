@@ -6,6 +6,8 @@ import mongoose from "mongoose";
 import dotenv from "dotenv";
 import { fileURLToPath } from "url";
 import { dirname } from "path";
+import sessionConfig from "./src/config/session-config.js";
+
 dotenv.config();
 
 //for connecting to mongodb database
@@ -34,6 +36,7 @@ app.set("views", [
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(sessionConfig);
 
 //for clinic routes
 // import clinicRoute from "./src/interfaces/routes/clinic_routes.js";

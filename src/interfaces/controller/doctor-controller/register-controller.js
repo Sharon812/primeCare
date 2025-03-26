@@ -33,6 +33,10 @@ class DoctorRegisterController {
         password,
       });
 
+      console.log("Doctor after registration", doctor);
+      req.session.doctorEmail = doctor.email;
+      console.log("Doctor email in session", req.session.doctorEmail);
+
       res.status(201).json({
         message: "Doctor Registered Successfully",
         doctorId: doctor._id,

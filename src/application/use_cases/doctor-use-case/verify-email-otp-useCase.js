@@ -1,8 +1,8 @@
 import AppError from "../../../utils/custom-error.js";
 
 class VerifyEmailOTPUseCase {
-  constructor(doctorRepository, otpService) {
-    this.doctorRepository = doctorRepository;
+  constructor(updateDoctorRepository, otpService) {
+    this.updateDoctorRepository = updateDoctorRepository;
     this.otpService = otpService;
   }
 
@@ -12,7 +12,7 @@ class VerifyEmailOTPUseCase {
       throw new AppError("Invalid OTP", 400);
     }
 
-    const updateDoctor = await this.doctorRepository.updateDoctorByEmail(
+    const updateDoctor = await this.updateDoctorRepository.updateDoctorByEmail(
       email,
       { isEmailVerified: true }
     );
@@ -20,6 +20,8 @@ class VerifyEmailOTPUseCase {
     if (!updateDoctor) {
       throw new AppError("Doctor not found", 404);
     }
+
+    console.log("Doctor after email verification", updateDoctor);
 
     return updateDoctor;
   }

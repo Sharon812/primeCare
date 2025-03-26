@@ -148,10 +148,16 @@ class OTPService {
   }
 
   async verifyOTP(email, otp) {
+    console.log("Email in verifyOTP:", email, typeof email); // Debugging
+
+    if (typeof email !== "string") {
+      throw new Error("Invalid email format. Expected a string.");
+    }
+
     const record = await OTP.findOne({ email });
+    console.log("Record in verifyOTP:", record);
 
     if (record && record.otp === otp) {
-      // Delete the OTP record after successful verification
       await OTP.deleteOne({ email });
       return true;
     }

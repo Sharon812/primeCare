@@ -27,6 +27,10 @@ class DoctorRepository {
     throw new AppError("Method not implemented.");
   }
 
+  async updateDoctorByEmail(email, updateData) {
+    throw new AppError("Method not implemented.");
+  }
+
   async getDoctors(filters = {}) {
     throw new AppError("Method not implemented.");
   }
