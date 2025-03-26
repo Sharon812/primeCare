@@ -58,10 +58,20 @@ document.addEventListener("DOMContentLoaded", function () {
     input.addEventListener("input", (e) => {
       e.target.value = e.target.value.replace(/[^0-9]/g, "");
 
-      if (e.target.value && index < otpInputs.length - 1) {
-        otpInputs[index + 1].focus();
+      if (e.target.value) {
+        if (index < otpInputs.length - 1) {
+          otpInputs[index + 1].focus();
+        } else {
+          // If this is the last input and all inputs are filled, submit the form
+          const isComplete = Array.from(otpInputs).every(
+            (input) => input.value.length === 1
+          );
+          if (isComplete) {
+            updateCombinedOtp();
+            form.dispatchEvent(new Event("submit"));
+          }
+        }
       }
-
       updateCombinedOtp();
     });
 
