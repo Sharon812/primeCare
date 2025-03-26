@@ -5,7 +5,15 @@ class AlertManager {
     document.body.appendChild(this.container);
   }
 
+  // Add new method to clear existing alerts
+  clearAlerts() {
+    const alerts = this.container.querySelectorAll(".alert");
+    alerts.forEach((alert) => this.remove(alert));
+  }
+
   show(message, type = "error") {
+    // Clear existing alerts before showing new one
+    this.clearAlerts();
     const alert = document.createElement("div");
     alert.className = `alert ${type}`;
     alert.innerHTML = `
@@ -199,6 +207,19 @@ class FormValidator {
       return;
     }
 
+    // Show processing message without auto-removal
+    const processingAlert = document.createElement("div");
+    processingAlert.className = `alert success`;
+    processingAlert.innerHTML = `
+        <div class="alert-icon">
+            <i class="fas fa-spinner fa-spin"></i>
+        </div>
+        <div class="alert-message">Processing your registration...</div>
+    `;
+    this.alertManager.clearAlerts();
+    this.alertManager.container.appendChild(processingAlert);
+    this.submitButton.disabled = true;
+
     // Get only the form data we need
     const formData = {
       name: this.form.querySelector('input[name="name"]').value,
@@ -218,7 +239,11 @@ class FormValidator {
 
       const result = await response.json();
 
+      // Remove processing alert before showing result
+      processingAlert.remove();
+
       if (!response.ok) {
+        this.submitButton.disabled = false;
         throw new Error(result.error || "Registration failed");
       }
 
@@ -230,7 +255,9 @@ class FormValidator {
         window.location.href = "/doctor/verify-otp";
       }, 2000);
     } catch (error) {
+      processingAlert.remove();
       this.alertManager.show(error.message);
+      this.submitButton.disabled = false;
     }
   }
 }
