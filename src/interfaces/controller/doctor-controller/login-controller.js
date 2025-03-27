@@ -4,7 +4,7 @@ class DoctorLoginController {
   loginPageRender = async (req, res) => {
     try {
       console.log("Doctor login page route hit");
-      res.render("doctor-login");
+      res.render("form-step");
     } catch (error) {
       console.error("loginPageRender Controller Error:", error);
       res.status(500).send("Internal Server Error");
