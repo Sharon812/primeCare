@@ -32,6 +32,7 @@ app.set("view engine", "ejs");
 app.set("views", [
   path.join(__dirname, "src", "views/clinic"),
   path.join(__dirname, "src", "views/doctor"),
+  path.join(__dirname, "src", "views/common"),
 ]);
 
 app.use(express.json());
