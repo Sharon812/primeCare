@@ -157,6 +157,85 @@
   padding: 2rem;
 }
 
+.error-message {
+  color: #dc2626;
+  font-size: 0.875rem;
+  margin-top: 0.5rem;
+  text-align: center;
+  min-height: 1.25rem;
+}
+
+.otp-input-group.error input {
+  border-color: #dc2626;
+}
+
+/* Toast Notifications */
+.toast {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  padding: 1rem 1.5rem;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  transform: translateX(110%);
+  transition: transform 0.3s ease;
+  z-index: 1000;
+}
+
+.toast.error {
+  border-left: 4px solid #dc2626;
+}
+
+.toast.success {
+  border-left: 4px solid #059669;
+}
+
+.toast.warning {
+  border-left: 4px solid #eab308;
+}
+
+.toast.show {
+  transform: translateX(0);
+}
+
+.toast-content {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.toast-content i {
+  font-size: 1.25rem;
+}
+
+.toast.error i {
+  color: #dc2626;
+}
+
+.toast.success i {
+  color: #059669;
+}
+
+.toast.warning i {
+  color: #eab308;
+}
+
+.toast-content span {
+  color: #1f2937;
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.toast-content .fa-spinner {
+  animation: spin 1s linear infinite;
+}
+
 /* Add responsive styles similar to login.css */
 @media (max-width: 1200px) {
   .otp-container {

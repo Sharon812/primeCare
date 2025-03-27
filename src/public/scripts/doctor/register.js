@@ -209,12 +209,12 @@ class FormValidator {
 
     // Show processing message without auto-removal
     const processingAlert = document.createElement("div");
-    processingAlert.className = `alert success`;
+    processingAlert.className = `alert warning`;
     processingAlert.innerHTML = `
         <div class="alert-icon">
             <i class="fas fa-spinner fa-spin"></i>
         </div>
-        <div class="alert-message">Processing your registration...</div>
+        <div class="alert-message processing">Processing your registration...</div>
     `;
     this.alertManager.clearAlerts();
     this.alertManager.container.appendChild(processingAlert);
