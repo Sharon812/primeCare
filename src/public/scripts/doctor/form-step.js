@@ -265,8 +265,7 @@ document.addEventListener("DOMContentLoaded", function () {
       'input[type="email"]:required',
       'input[type="tel"]:required',
       'input[type="date"]:required',
-      "select:required",
-      "textarea:required",
+      "textarea:required", // Removed select from here since we no longer have dropdowns
     ]
       .map((selector) => Array.from(form.querySelectorAll(selector)))
       .flat()
@@ -278,17 +277,15 @@ document.addEventListener("DOMContentLoaded", function () {
       return value !== "";
     }).length;
 
-    const progress = Math.min((filledFields / totalFields) * 50, 50); // Changed to 50% max
+    // Changed to 33.33% max for first section
+    const progress = Math.min((filledFields / totalFields) * 33.33, 33.33);
 
-    // Update progress bar width
     const progressBar = document.querySelector(".progress-bar");
     if (progressBar) {
       progressBar.style.setProperty("--progress", `${progress}%`);
 
-      // Update step indicators
       const steps = document.querySelectorAll(".step");
-      if (progress === 50) {
-        // Changed to 50%
+      if (progress === 33.33) {
         steps[0].classList.add("completed");
         steps[1].classList.add("active");
         steps[0].classList.remove("active");
@@ -302,7 +299,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // Add event listeners for real-time progress updates
   const formInputs = document.querySelectorAll(
-    "input:required, select:required, textarea:required"
+    "input:required, textarea:required"
   );
   formInputs.forEach((input) => {
     ["input", "change"].forEach((eventType) => {

@@ -155,7 +155,7 @@
   gap: 0.75rem;
   position: relative;
   z-index: 3;
-  width: 120px;
+  width: 90px; /* Reduced width to accommodate 4 steps */
 }
 
 .step-number {
@@ -174,7 +174,8 @@
 }
 
 .step-text {
-  font-size: 0.9rem;
+  font-size: 0.8rem; /* Slightly smaller text */
+  text-align: center;
   color: #64748b;
   font-weight: 500;
   transition: all 0.3s ease;
@@ -197,11 +198,31 @@
   background: var(--gradient);
   color: var(--white);
   border: none;
+  position: relative;
 }
 
-.step.completed .step-number::after {
-  content: "✓";
+.step.completed .step-number::before {
+  content: "\f00c"; /* FontAwesome check icon */
+  font-family: "Font Awesome 6 Free";
+  font-weight: 900;
   font-size: 1.2rem;
+  animation: scaleCheck 0.3s ease-in-out;
+}
+
+.step.completed .step-number span {
+  display: none; /* Hide the number when completed */
+}
+
+@keyframes scaleCheck {
+  0% {
+    transform: scale(0);
+  }
+  50% {
+    transform: scale(1.2);
+  }
+  100% {
+    transform: scale(1);
+  }
 }
 
 .step.completed .step-text {

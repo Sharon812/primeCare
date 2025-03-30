@@ -21,7 +21,7 @@
     <div class="registration-container" data-aos="fade-up">
       <div class="progress-bar">
         <div class="step active">
-          <span class="step-number">1</span>
+          <span class="step-number"><span>1</span></span>
           <span class="step-text">Personal Details</span>
         </div>
         <div class="step">
@@ -30,7 +30,11 @@
         </div>
         <div class="step">
           <span class="step-number">3</span>
-          <span class="step-text">Final Steps</span>
+          <span class="step-text">Additional Info</span>
+        </div>
+        <div class="step">
+          <span class="step-number">4</span>
+          <span class="step-text">Preview & Submit</span>
         </div>
       </div>
 
@@ -78,22 +82,16 @@
         <div class="address-section">
           <div class="input-group">
             <i class="fas fa-globe"></i>
-            <select id="country" required>
-              <option value="">Select Country</option>
-            </select>
+            <input type="text" placeholder="Country" required />
           </div>
           <div class="form-grid">
             <div class="input-group">
               <i class="fas fa-map"></i>
-              <select id="state" required>
-                <option value="">Select State</option>
-              </select>
+              <input type="text" placeholder="State" required />
             </div>
             <div class="input-group">
               <i class="fas fa-city"></i>
-              <select id="district" required>
-                <option value="">Select District</option>
-              </select>
+              <input type="text" placeholder="District" required />
             </div>
           </div>
           <div class="form-grid">
