@@ -1,7 +1,7 @@
-import VerifyEmailOTPUseCase from "../../../application/use_cases/doctor-use-case/verify-email-otp-useCase.js";
-import UpdateDoctorRepository from "../../../infrastructure/repositories/doctor-repository/update-doctor-repo.js";
-import OTPService from "../../../infrastructure/services/doctor-otp-service.js";
-import DoctorModal from "../../../infrastructure/database/models/doctor-models.js";
+import VerifyEmailOTPUseCase from "../../../../application/use_cases/doctor-use-case/verify-email-otp-useCase.js";
+import UpdateDoctorRepository from "../../../../infrastructure/repositories/doctor-repository/update-doctor-repo.js";
+import OTPService from "../../../../infrastructure/services/doctor-otp-service.js";
+import DoctorModal from "../../../../infrastructure/database/models/doctor-models.js";
 
 class VerifyEmailController {
   constructor(verifyEmailOTPUseCase, otpService) {

@@ -1,7 +1,7 @@
 import express from "express";
-import { doctorLoginController } from "../controller/doctor-controller/login-controller.js";
-import { doctorRegisterController } from "../controller/doctor-controller/register-controller.js";
-import { doctorVerifyEmailController } from '../controller/doctor-controller/verify-email-controller.js';
+import { doctorLoginController } from "../../interfaces/controller/doctor-controller/auth-controller/login-controller.js";
+import { doctorRegisterController } from "../controller/doctor-controller/auth-controller/register-controller.js";
+import { doctorVerifyEmailController } from '../controller/doctor-controller/auth-controller/verify-email-controller.js';
 
 const router = express.Router();
 

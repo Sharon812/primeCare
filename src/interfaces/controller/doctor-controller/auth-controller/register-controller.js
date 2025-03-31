@@ -1,9 +1,9 @@
-import CreateDoctorUseCase from "../../../application/use_cases/doctor-use-case/create-doctor-useCase.js";
-import CreateDoctorRepository from "../../../infrastructure/repositories/doctor-repository/create-doctor-repo.js";
-import FindDoctorRepository from "../../../infrastructure/repositories/doctor-repository/find-doctor-repo.js";
-import DoctorRegistrationService from "../../../domain/services/doctor-service/doctor-registration-service.js";
-import HashService from "../../../infrastructure/services/hash-service.js";
-import doctorModal from "../../../infrastructure/database/models/doctor-models.js";
+import CreateDoctorUseCase from "../../../../application/use_cases/doctor-use-case/create-doctor-useCase.js";
+import CreateDoctorRepository from "../../../../infrastructure/repositories/doctor-repository/create-doctor-repo.js";
+import FindDoctorRepository from "../../../../infrastructure/repositories/doctor-repository/find-doctor-repo.js";
+import DoctorRegistrationService from "../../../../domain/services/doctor-service/doctor-registration-service.js";
+import HashService from "../../../../infrastructure/services/hash-service.js";
+import doctorModal from "../../../../infrastructure/database/models/doctor-models.js";
 
 class DoctorRegisterController {
   constructor(createDoctorUseCase) {

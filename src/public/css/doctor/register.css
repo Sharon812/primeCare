@@ -70,6 +70,48 @@
 
 .navbar {
   background: linear-gradient(to right, var(--primary), var(--secondary));
+  padding: 0.75rem 2.5rem; /* Reduced padding */
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  position: relative;
+  z-index: 10;
+  height: 60px; /* Fixed height */
+  display: flex;
+  align-items: center;
+}
+
+.nav-brand {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.brand-logo {
+  height: 40px;
+  width: auto;
+}
+
+.brand-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.brand-name {
+  color: var(--white);
+  font-size: 1.5rem;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.brand-subtitle {
+  color: var(--light);
+  font-size: 0.875rem;
+  opacity: 0.9;
+}
+
+
+.navbar {
+  background: linear-gradient(to right, var(--primary), var(--secondary));
   padding: 0.75rem 2.5rem;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
