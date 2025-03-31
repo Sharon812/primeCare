@@ -35,9 +35,9 @@ app.set("views", [
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-//for clinic routes
-// import clinicRoute from "./src/interfaces/routes/clinic_routes.js";
-// app.use("/clinic", clinicRoute);
+// for clinic routes
+import clinicRoute from "./src/interfaces/routes/clinic_routes.js";
+app.use("/clinic", clinicRoute);
 
 import { doctorRoute } from "./src/interfaces/routes/doctor-routes.js";
 app.use("/doctor", doctorRoute);

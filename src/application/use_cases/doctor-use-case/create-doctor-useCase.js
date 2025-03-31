@@ -23,7 +23,6 @@ class CreateDoctorUseCase {
     await doctorOtpService.generateAndSendOTP(email);
 
     return doctor;
-
   }
 }
 
