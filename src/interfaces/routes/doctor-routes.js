@@ -8,6 +8,8 @@ const router = express.Router();
 
 router.get("/login", doctorLoginController.loginPageRender);
 
+router.post("/login", doctorLoginController.loginDoctor);
+
 router.get("/register", doctorRegisterController.registerPageRender);
 
 router.post("/register", doctorRegisterController.registerDoctor);

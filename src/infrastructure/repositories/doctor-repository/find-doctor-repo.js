@@ -1,5 +1,8 @@
-class FindDoctorRepository {
+import DoctorRepository from "../../../domain/respositories/doctor-repository/doctor-repository.js";
+
+class FindDoctorRepository extends DoctorRepository {
   constructor(doctorModal) {
+    super();
     this.doctorModal = doctorModal;
   }
 
