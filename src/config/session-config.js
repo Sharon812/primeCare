@@ -20,7 +20,7 @@ const sessionConfig = session({
   saveUninitialized: true,
   store: store,
   cookie: {
-    maxAge: 1000 * 60 * 5, // 5 minutes
+    maxAge: 1000 * 60 * 60,
     secure: false,
     httpOnly: true,
   },
