@@ -162,7 +162,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
       showToast("OTP verified successfully! Redirecting...", "success");
       setTimeout(() => {
-        window.location.href = "/doctor/login";
+        window.location.href = "/doctor/register/step1";
       }, 2000);
     } catch (error) {
       showToast(error.message || "Something went wrong", "error");
