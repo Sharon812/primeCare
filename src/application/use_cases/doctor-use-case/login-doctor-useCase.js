@@ -29,7 +29,7 @@ class DoctorLoginUseCase {
     }
 
     const token = jwt.sign(
-      { doctorId: doctor._id, email: doctor.email },
+      { doctorId: doctor._id, doctorEmail: doctor.email },
       jwtConfig.secret,
       {
         expiresIn: jwtConfig.expiresIn,
