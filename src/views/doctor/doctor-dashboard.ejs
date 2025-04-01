@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Doctor Dashboard - PrimeCare</title>
+    <link rel="stylesheet" href="/css/doctor/dashboard.css" />
+    <link
+      href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div class="announcement-banner">
+      <div class="announcement-container">
+        <div class="announcement-content">
+          <span
+            >⚠️ Please complete the signup process to start consulting
+            patients</span
+          >
+          <span>📝 Update your profile to get more visibility</span>
+          <span>🎉 Welcome to PrimeCare Doctor Dashboard</span>
+        </div>
+        <div class="announcement-content" aria-hidden="true">
+          <span
+            >⚠️ Please complete the signup process to start consulting
+            patients</span
+          >
+          <span>📝 Update your profile to get more visibility</span>
+          <span>🎉 Welcome to PrimeCare Doctor Dashboard</span>
+        </div>
+      </div>
+    </div>
+    <div class="dashboard-container">
+      <nav class="sidebar">
+        <div class="sidebar-header">
+          <img
+            src="/assets/logo-icon1.png"
+            alt="PrimeCare"
+            class="brand-logo"
+          />
+          <div class="brand-text">
+            <h2>PrimeCare</h2>
+            <span class="panel-text">Doctor Panel</span>
+          </div>
+        </div>
+        <ul class="nav-links">
+          <li class="active">
+            <a href="#"><i class="bx bxs-dashboard"></i>Dashboard</a>
+          </li>
+          <li>
+            <a href="#"><i class="bx bx-calendar"></i>Appointments</a>
+          </li>
+          <li>
+            <a href="#"><i class="bx bx-user"></i>Patients</a>
+          </li>
+          <li>
+            <a href="#"><i class="bx bx-time"></i>Schedule</a>
+          </li>
+          <li>
+            <a href="#"><i class="bx bx-message-square-detail"></i>Messages</a>
+          </li>
+          <li>
+            <a href="#"><i class="bx bx-cog"></i>Settings</a>
+          </li>
+        </ul>
+      </nav>
+
+      <main class="main-content">
+        <header class="top-bar">
+          <div class="search-bar">
+            <i class="bx bx-search"></i>
+            <input type="text" placeholder="Search..." />
+          </div>
+          <div class="user-menu">
+            <div class="notifications">
+              <i class="bx bx-bell"></i>
+              <span class="badge">3</span>
+            </div>
+            <div class="profile">
+              <img src="https://placeholder.com/150" alt="Doctor" />
+              <span>Dr. John Doe</span>
+            </div>
+          </div>
+        </header>
+
+        <div class="dashboard-content">
+          <div class="stats-grid">
+            <div class="stat-card">
+              <i class="bx bx-calendar-check"></i>
+              <div class="stat-info">
+                <h3>TODAY'S APPOINTMENTS</h3>
+                <p>24</p>
+              </div>
+            </div>
+            <div class="stat-card">
+              <i class="bx bx-group"></i>
+              <div class="stat-info">
+                <h3>TOTAL PATIENTS</h3>
+                <p>1,234</p>
+              </div>
+            </div>
+            <div class="stat-card">
+              <i class="bx bx-line-chart"></i>
+              <div class="stat-info">
+                <h3>SUCCESS RATE</h3>
+                <p>98%</p>
+              </div>
+            </div>
+            <div class="stat-card">
+              <i class="bx bx-star"></i>
+              <div class="stat-info">
+                <h3>SATISFACTION RATE</h3>
+                <p>4.9</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="dashboard-grid">
+            <div class="appointments-list card">
+              <h2>Upcoming Appointments</h2>
+              <!-- Appointment items will be populated by JavaScript -->
+            </div>
+            <div class="patient-stats card">
+              <h2>Patient Statistics</h2>
+              <!-- Chart will be added here -->
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+    <script src="/scripts/doctor/dashboard.js"></script>
+  </body>
+</html>

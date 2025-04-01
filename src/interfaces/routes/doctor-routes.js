@@ -3,6 +3,7 @@ import { doctorLoginController } from "../../interfaces/controller/doctor-contro
 import { doctorRegisterController } from "../controller/doctor-controller/auth-controller/register-controller.js";
 import { doctorVerifyEmailController } from '../controller/doctor-controller/auth-controller/verify-email-controller.js';
 import { doctorStepOneFormController } from "../controller/doctor-controller/form-controller/step1-controller.js";
+import { doctorDashboardController } from "../controller/doctor-controller/dashboard-controller/dashboard-controller.js";
 
 const router = express.Router();
 
@@ -20,6 +21,8 @@ router.post("/send-otp", doctorVerifyEmailController.sendOTP);
 router.get('/verify-otp', doctorVerifyEmailController.renderingOTPPage);
 
 router.post('/verify-otp', doctorVerifyEmailController.verifyEmail);
+
+router.get("/dashboard", doctorDashboardController.doctorDashboardRender);
 
 
 router.get("/register/step1",doctorStepOneFormController.stepOneFormRender);
