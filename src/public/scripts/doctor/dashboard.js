@@ -6,12 +6,14 @@ document.addEventListener("DOMContentLoaded", function () {
     { id: 3, patient: "Sarah Wilson", time: "02:00 PM", type: "Consultation" },
   ];
 
-  // Populate appointments list
+  // Populate appointments list with animations
   const appointmentsList = document.querySelector(".appointments-list");
   if (appointmentsList) {
-    appointments.forEach((appointment) => {
+    appointments.forEach((appointment, index) => {
       const appointmentItem = document.createElement("div");
       appointmentItem.classList.add("appointment-item");
+      appointmentItem.setAttribute("data-aos", "fade-left");
+      appointmentItem.setAttribute("data-aos-delay", `${(index + 1) * 100}`);
       appointmentItem.innerHTML = `
                 <div class="appointment-info">
                     <h3>${appointment.patient}</h3>

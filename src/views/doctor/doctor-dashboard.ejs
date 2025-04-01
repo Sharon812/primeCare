@@ -9,6 +9,7 @@
       href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
       rel="stylesheet"
     />
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
   </head>
   <body>
     <div class="announcement-banner">
@@ -32,7 +33,7 @@
       </div>
     </div>
     <div class="dashboard-container">
-      <nav class="sidebar">
+      <nav class="sidebar" data-aos="fade-right">
         <div class="sidebar-header">
           <img
             src="/assets/logo-icon1.png"
@@ -67,7 +68,7 @@
       </nav>
 
       <main class="main-content">
-        <header class="top-bar">
+        <header class="top-bar" data-aos="fade-down">
           <div class="search-bar">
             <i class="bx bx-search"></i>
             <input type="text" placeholder="Search..." />
@@ -86,28 +87,28 @@
 
         <div class="dashboard-content">
           <div class="stats-grid">
-            <div class="stat-card">
+            <div class="stat-card" data-aos="zoom-in" data-aos-delay="100">
               <i class="bx bx-calendar-check"></i>
               <div class="stat-info">
                 <h3>TODAY'S APPOINTMENTS</h3>
                 <p>24</p>
               </div>
             </div>
-            <div class="stat-card">
+            <div class="stat-card" data-aos="zoom-in" data-aos-delay="200">
               <i class="bx bx-group"></i>
               <div class="stat-info">
                 <h3>TOTAL PATIENTS</h3>
                 <p>1,234</p>
               </div>
             </div>
-            <div class="stat-card">
+            <div class="stat-card" data-aos="zoom-in" data-aos-delay="300">
               <i class="bx bx-line-chart"></i>
               <div class="stat-info">
                 <h3>SUCCESS RATE</h3>
                 <p>98%</p>
               </div>
             </div>
-            <div class="stat-card">
+            <div class="stat-card" data-aos="zoom-in" data-aos-delay="400">
               <i class="bx bx-star"></i>
               <div class="stat-info">
                 <h3>SATISFACTION RATE</h3>
@@ -117,11 +118,19 @@
           </div>
 
           <div class="dashboard-grid">
-            <div class="appointments-list card">
+            <div
+              class="appointments-list card"
+              data-aos="fade-up"
+              data-aos-delay="500"
+            >
               <h2>Upcoming Appointments</h2>
               <!-- Appointment items will be populated by JavaScript -->
             </div>
-            <div class="patient-stats card">
+            <div
+              class="patient-stats card"
+              data-aos="fade-up"
+              data-aos-delay="600"
+            >
               <h2>Patient Statistics</h2>
               <!-- Chart will be added here -->
             </div>
@@ -129,6 +138,15 @@
         </div>
       </main>
     </div>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script src="/scripts/doctor/dashboard.js"></script>
+    <script>
+      AOS.init({
+        duration: 800,
+        once: true,
+        offset: 20,
+        easing: "ease-in-out",
+      });
+    </script>
   </body>
 </html>
