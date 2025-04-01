@@ -30,7 +30,8 @@ class DoctorLoginController {
       res.cookie("doctorToken", doctor.token, {
         httpOnly: true,
         secure: process.env.NODE_ENV === "production",
-        maxAge: 1000 * 60 * 60,
+        sameSite: "Strict",
+        maxAge: 1000 * 60 * 60 * 1000,
       });
 
       res.json({
