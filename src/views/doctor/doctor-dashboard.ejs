@@ -66,7 +66,9 @@
         </div>
         <ul class="nav-links">
           <li class="active">
-            <a href="/doctor/dashboard"><i class="bx bxs-dashboard"></i>Dashboard</a>
+            <a href="/doctor/dashboard"
+              ><i class="bx bxs-dashboard"></i>Dashboard</a
+            >
           </li>
           <li>
             <a href="#"><i class="bx bx-calendar"></i>Appointments</a>
@@ -113,55 +115,79 @@
         </header>
 
         <div class="dashboard-content">
-          <div class="stats-grid">
-            <div class="stat-card" data-aos="zoom-in" data-aos-delay="100">
-              <i class="bx bx-calendar-check"></i>
-              <div class="stat-info">
-                <h3>TODAY'S APPOINTMENTS</h3>
-                <p>24</p>
+          <div
+            class="content-wrapper <%= !doctor.isFormCompleted ? 'blur-overlay' : '' %>"
+          >
+            <div class="stats-grid">
+              <div class="stat-card" data-aos="zoom-in" data-aos-delay="100">
+                <i class="bx bx-calendar-check"></i>
+                <div class="stat-info">
+                  <h3>TODAY'S APPOINTMENTS</h3>
+                  <p>24</p>
+                </div>
+              </div>
+              <div class="stat-card" data-aos="zoom-in" data-aos-delay="200">
+                <i class="bx bx-group"></i>
+                <div class="stat-info">
+                  <h3>TOTAL PATIENTS</h3>
+                  <p>1,234</p>
+                </div>
+              </div>
+              <div class="stat-card" data-aos="zoom-in" data-aos-delay="300">
+                <i class="bx bx-line-chart"></i>
+                <div class="stat-info">
+                  <h3>SUCCESS RATE</h3>
+                  <p>98%</p>
+                </div>
+              </div>
+              <div class="stat-card" data-aos="zoom-in" data-aos-delay="400">
+                <i class="bx bx-star"></i>
+                <div class="stat-info">
+                  <h3>SATISFACTION RATE</h3>
+                  <p>4.9</p>
+                </div>
               </div>
             </div>
-            <div class="stat-card" data-aos="zoom-in" data-aos-delay="200">
-              <i class="bx bx-group"></i>
-              <div class="stat-info">
-                <h3>TOTAL PATIENTS</h3>
-                <p>1,234</p>
+            <div class="dashboard-grid">
+              <div
+                class="appointments-list card"
+                data-aos="fade-up"
+                data-aos-delay="500"
+              >
+                <h2>Upcoming Appointments</h2>
+                <!-- Appointment items will be populated by JavaScript -->
               </div>
-            </div>
-            <div class="stat-card" data-aos="zoom-in" data-aos-delay="300">
-              <i class="bx bx-line-chart"></i>
-              <div class="stat-info">
-                <h3>SUCCESS RATE</h3>
-                <p>98%</p>
-              </div>
-            </div>
-            <div class="stat-card" data-aos="zoom-in" data-aos-delay="400">
-              <i class="bx bx-star"></i>
-              <div class="stat-info">
-                <h3>SATISFACTION RATE</h3>
-                <p>4.9</p>
+              <div
+                class="patient-stats card"
+                data-aos="fade-up"
+                data-aos-delay="600"
+              >
+                <h2>Patient Statistics</h2>
+                <!-- Chart will be added here -->
               </div>
             </div>
           </div>
-
-          <div class="dashboard-grid">
-            <div
-              class="appointments-list card"
-              data-aos="fade-up"
-              data-aos-delay="500"
-            >
-              <h2>Upcoming Appointments</h2>
-              <!-- Appointment items will be populated by JavaScript -->
-            </div>
-            <div
-              class="patient-stats card"
-              data-aos="fade-up"
-              data-aos-delay="600"
-            >
-              <h2>Patient Statistics</h2>
-              <!-- Chart will be added here -->
+          <% if (!doctor.isFormCompleted) { %>
+          <div class="lock-message">
+            <div class="lock-message-content">
+              <div class="lock-icon-wrapper">
+                <i class="bx bx-lock-alt"></i>
+                <div class="lock-ripple"></div>
+              </div>
+              <div class="message-text">
+                <h2>Complete Your Profile</h2>
+                <p>Get full access to your personalized dashboard</p>
+              </div>
+              <button
+                class="complete-signup-btn"
+                onclick="window.location.href='/doctor/register/step1'"
+              >
+                <span class="btn-text">Complete Setup</span>
+                <i class="bx bx-check-circle"></i>
+              </button>
             </div>
           </div>
+          <% } %>
         </div>
       </main>
     </div>
