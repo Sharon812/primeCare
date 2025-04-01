@@ -1,0 +1,190 @@
+<%- include('../layouts/doctor/header', { customCSS:
+'/css/doctor/form-step2.css' }) %>
+<link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
+
+<div class="page-wrapper">
+  <nav class="navbar">
+    <div class="nav-brand">
+      <img src="/assets/logo-icon1.png" alt="PrimeCare" class="brand-logo" />
+      <div class="brand-text">
+        <span class="brand-name">PrimeCare</span>
+        <span class="brand-subtitle">Doctor Registration</span>
+      </div>
+    </div>
+  </nav>
+
+  <div class="content-wrapper">
+    <div class="registration-container" data-aos="fade-up">
+      <div class="progress-bar">
+        <div class="step completed">
+          <span class="step-number">
+            <i class="fas fa-check"></i>
+          </span> 
+          <span class="step-text">Personal Details</span>
+        </div>
+        <div class="step active">
+          <span class="step-number">2</span>
+          <span class="step-text">Professional Info</span>
+        </div>
+        <div class="step">
+          <span class="step-number">3</span>
+          <span class="step-text">Additional Info</span>
+        </div>
+        <div class="step">
+          <span class="step-number">4</span>
+          <span class="step-text">Preview & Submit</span>
+        </div>
+      </div>
+
+      <form class="registration-form" id="step2Form">
+        <div class="section education-section">
+          <h3>Educational Details</h3>
+          <div class="form-grid">
+            <div class="input-group">
+              <i class="fas fa-graduation-cap"></i>
+              <select id="qualification" required>
+                <option value="">Select Highest Qualification</option>
+                <option value="mbbs">MBBS</option>
+                <option value="md">MD</option>
+                <option value="ms">MS</option>
+                <option value="dm">DM</option>
+                <option value="mch">MCh</option>
+              </select>
+            </div>
+            <div class="input-group">
+              <i class="fas fa-stethoscope"></i>
+              <input type="text" placeholder="Specialization" required />
+            </div>
+            <div class="input-group">
+              <i class="fas fa-university"></i>
+              <input
+                type="text"
+                placeholder="Medical School/University Name"
+                required
+              />
+            </div>
+            <div class="input-group">
+              <i class="fas fa-calendar-alt"></i>
+              <input
+                type="number"
+                placeholder="Year of Graduation"
+                min="1950"
+                max="2024"
+                required
+              />
+            </div>
+            <div class="input-group">
+              <i class="fas fa-globe"></i>
+              <input type="text" placeholder="Country of Study" required />
+            </div>
+          </div>
+
+          <div class="dropzone" id="certificationDropzone">
+            <input
+              type="file"
+              id="certificationUpload"
+              accept="image/*,application/pdf"
+              hidden
+            />
+            <div class="dropzone-content">
+              <i class="fas fa-file-upload"></i>
+              <p>Upload Certification Document</p>
+              <p class="small">
+                Supported formats: JPG, PNG, PDF (Max size: 5MB)
+              </p>
+            </div>
+            <div
+              class="preview-container"
+              id="certPreviewContainer"
+              style="display: none"
+            >
+              <img id="certPreviewImage" src="" alt="Certificate Preview" />
+              <div class="preview-info">
+                <span id="certFileNameDisplay"></span>
+                <button type="button" id="removeCertFile" class="remove-btn">
+                  <i class="fas fa-times"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="section experience-section">
+          <h3>Experience Details</h3>
+          <div class="form-grid">
+            <div class="input-group">
+              <i class="fas fa-clock"></i>
+              <input
+                type="number"
+                placeholder="Years of Practice"
+                min="0"
+                required
+              />
+            </div>
+          </div>
+
+          <div class="dropzone" id="experienceDropzone">
+            <input
+              type="file"
+              id="experienceUpload"
+              accept="image/*,application/pdf"
+              hidden
+            />
+            <div class="dropzone-content">
+              <i class="fas fa-file-upload"></i>
+              <p>Upload Experience Certificate</p>
+              <p class="small">
+                Supported formats: JPG, PNG, PDF (Max size: 5MB)
+              </p>
+            </div>
+            <div
+              class="preview-container"
+              id="expPreviewContainer"
+              style="display: none"
+            >
+              <img
+                id="expPreviewImage"
+                src=""
+                alt="Experience Certificate Preview"
+              />
+              <div class="preview-info">
+                <span id="expFileNameDisplay"></span>
+                <button type="button" id="removeExpFile" class="remove-btn">
+                  <i class="fas fa-times"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div class="hospitals-container">
+            <div class="hospital-entry">
+              <div class="input-group">
+                <i class="fas fa-hospital"></i>
+                <input
+                  type="text"
+                  placeholder="Previous Hospital/Clinic Name"
+                />
+              </div>
+              <button type="button" class="add-hospital-btn">
+                <i class="fas fa-plus"></i> Add Another
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-buttons">
+          <button type="button" class="back-btn">
+            <i class="fas fa-arrow-left"></i> Previous
+          </button>
+          <button type="submit" class="next-btn">
+            Next Step <i class="fas fa-arrow-right"></i>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script src="/scripts/doctor/form-step2.js"></script>
+<%- include('../layouts/doctor/footer') %>

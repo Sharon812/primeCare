@@ -20,14 +20,19 @@
           <h1>Welcome to PrimeCare</h1>
           <p>Enter your credentials to access your dashboard</p>
         </div>
-        <form class="login-form" data-aos="fade-up" data-aos-delay="400">
+        <form
+          class="login-form"
+          data-aos="fade-up"
+          data-aos-delay="400"
+          method="post"
+        >
           <div class="input-group">
             <i class="fas fa-envelope"></i>
-            <input type="email" placeholder="Email Address" required />
+            <input type="email" placeholder="Email Address" name="email" />
           </div>
           <div class="input-group">
             <i class="fas fa-lock"></i>
-            <input type="password" placeholder="Password" required />
+            <input type="password" placeholder="Password" name="password" />
           </div>
           <div class="form-options">
             <label class="remember-me">
@@ -61,6 +66,7 @@
 </div>
 
 <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script src="/scripts/doctor/login.js"></script>
 <script>
   AOS.init({
     duration: 1000,

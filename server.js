@@ -7,6 +7,8 @@ import dotenv from "dotenv";
 import { fileURLToPath } from "url";
 import { dirname } from "path";
 import sessionConfig from "./src/config/session-config.js";
+import RouteHandlerMiddleWare from "./src/interfaces/middlewares/route-handler-middleware.js";
+import cookieParser from "cookie-parser";
 
 dotenv.config();
 
@@ -32,11 +34,13 @@ app.set("view engine", "ejs");
 app.set("views", [
   path.join(__dirname, "src", "views/clinic"),
   path.join(__dirname, "src", "views/doctor"),
+  path.join(__dirname, "src", "views/common"),
 ]);
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(sessionConfig);
+app.use(cookieParser());
 
 //for clinic routes
 // import clinicRoute from "./src/interfaces/routes/clinic_routes.js";
@@ -44,6 +48,15 @@ app.use(sessionConfig);
 
 import { doctorRoute } from "./src/interfaces/routes/doctor-routes.js";
 app.use("/doctor", doctorRoute);
+
+const validRoutes = [
+  "/doctor/login",
+  "/doctor/register",
+  "doctor/verify-otp",
+];
+
+const routeHandlerMidlleware = new RouteHandlerMiddleWare(validRoutes, 3);
+app.use(routeHandlerMidlleware.handle);
 
 //for error handling middleware
 import errorHandler from "./src/interfaces/middlewares/error-handler.js";

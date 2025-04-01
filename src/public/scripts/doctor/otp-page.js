@@ -114,29 +114,28 @@ document.addEventListener("DOMContentLoaded", function () {
   form.addEventListener("submit", async function (e) {
     e.preventDefault();
 
-    // Validate if all inputs are filled
     const isComplete = Array.from(otpInputs).every(
       (input) => input.value.length === 1
     );
 
     if (!isComplete) {
-      alertManager.show("Please enter the complete OTP");
+      showToast("Please enter the complete OTP", "error");
       return;
     }
 
-    // Show processing message
-    const processingAlert = document.createElement("div");
-    processingAlert.className = `alert success`;
-    processingAlert.innerHTML = `
-      <div class="alert-icon">
-        <i class="fas fa-spinner fa-spin"></i>
-      </div>
-      <div class="alert-message">Verifying OTP...</div>
-    `;
-    alertManager.clearAlerts();
-    alertManager.container.appendChild(processingAlert);
-
     try {
+      // Show processing message
+      const toast = document.createElement("div");
+      toast.className = `toast warning`;
+      toast.innerHTML = `
+        <div class="toast-content">
+          <i class="fas fa-spinner"></i>
+          <span>Verifying OTP...</span>
+        </div>
+      `;
+      document.body.appendChild(toast);
+      setTimeout(() => toast.classList.add("show"), 100);
+
       const response = await fetch("/doctor/verify-otp", {
         method: "POST",
         headers: {
@@ -147,26 +146,55 @@ document.addEventListener("DOMContentLoaded", function () {
         }),
       });
 
+      // Remove processing toast before showing result
+      toast.classList.remove("show");
+      setTimeout(() => toast.remove(), 300);
+
       const result = await response.json();
-      processingAlert.remove();
 
       if (!response.ok) {
-        throw new Error(result.error || "OTP verification failed");
+        showToast(result.error || "OTP verification failed", "error");
+        otpInputs.forEach((input) => (input.value = ""));
+        otpInputs[0].focus();
+        updateCombinedOtp();
+        return;
       }
 
-      alertManager.show("OTP verified successfully! Redirecting...", "success");
+      showToast("OTP verified successfully! Redirecting...", "success");
       setTimeout(() => {
         window.location.href = "/doctor/login";
       }, 2000);
     } catch (error) {
-      processingAlert.remove();
-      alertManager.show(error.message);
-      // Reset OTP inputs on error
+      showToast(error.message || "Something went wrong", "error");
       otpInputs.forEach((input) => (input.value = ""));
       otpInputs[0].focus();
       updateCombinedOtp();
     }
   });
+
+  // Toast notification function
+  function showToast(message, type = "error") {
+    const toast = document.createElement("div");
+    toast.className = `toast ${type}`;
+    toast.innerHTML = `
+      <div class="toast-content">
+        <i class="fas ${
+          type === "error" ? "fa-exclamation-circle" : "fa-check-circle"
+        }"></i>
+        <span>${message}</span>
+      </div>
+    `;
+    document.body.appendChild(toast);
+
+    // Trigger animation
+    setTimeout(() => toast.classList.add("show"), 100);
+
+    // Remove toast after 3 seconds
+    setTimeout(() => {
+      toast.classList.remove("show");
+      setTimeout(() => toast.remove(), 300);
+    }, 3000);
+  }
 
   // Timer functionality (keep existing timer code)
   // ...existing timer code...

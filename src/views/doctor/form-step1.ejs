@@ -1,0 +1,184 @@
+<%- include('../layouts/doctor/header', { customCSS: '/css/doctor/form-step1.css'
+}) %>
+<link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
+<link
+  rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.css"
+/>
+
+<div class="page-wrapper">
+  <nav class="navbar">
+    <div class="nav-brand">
+      <img src="/assets/logo-icon1.png" alt="PrimeCare" class="brand-logo" />
+      <div class="brand-text">
+        <span class="brand-name">PrimeCare</span>
+        <span class="brand-subtitle">Doctor Registration</span>
+      </div>
+    </div>
+  </nav>
+
+  <div class="content-wrapper">
+    <div class="registration-container" data-aos="fade-up">
+      <div class="progress-bar">
+        <div class="step active">
+          <span class="step-number"><span>1</span></span>
+          <span class="step-text">Personal Details</span>
+        </div>
+        <div class="step">
+          <span class="step-number">2</span>
+          <span class="step-text">Professional Info</span>
+        </div>
+        <div class="step">
+          <span class="step-number">3</span>
+          <span class="step-text">Additional Info</span>
+        </div>
+        <div class="step">
+          <span class="step-number">4</span>
+          <span class="step-text">Preview & Submit</span>
+        </div>
+      </div>
+
+      <form class="registration-form" id="step1Form">
+        <div class="photo-upload-section">
+          <div class="photo-dropzone" id="photoDropzone">
+            <div class="photo-preview-circle">
+              <img id="previewImage" src="/assets/default-avatar.png" />
+              <div class="upload-overlay">
+                <i class="fas fa-camera"></i>
+                <p>Click or Drop</p>
+              </div>
+            </div>
+            <input type="file" id="photoUpload" accept="image/*" hidden />
+          </div>
+        </div>
+
+        <div class="form-grid">
+          <div class="input-group">
+            <i class="fas fa-user"></i>
+            <input type="text" placeholder="First Name" required />
+          </div>
+          <div class="input-group">
+            <i class="fas fa-user"></i>
+            <input type="text" placeholder="Last Name" required />
+          </div>
+          <div class="input-group">
+            <i class="fas fa-calendar"></i>
+            <input type="date" id="dob" required />
+          </div>
+          <div class="input-group">
+            <i class="fas fa-clock"></i>
+            <input type="number" id="age" placeholder="Age" readonly />
+          </div>
+          <div class="input-group">
+            <i class="fas fa-phone"></i>
+            <input type="tel" placeholder="Phone Number" required />
+          </div>
+          <div class="input-group">
+            <i class="fas fa-envelope"></i>
+            <input type="email" placeholder="Email Address" required />
+          </div>
+        </div>
+
+        <div class="address-section">
+          <div class="input-group">
+            <i class="fas fa-globe"></i>
+            <input type="text" placeholder="Country" required />
+          </div>
+          <div class="form-grid">
+            <div class="input-group">
+              <i class="fas fa-map"></i>
+              <input type="text" placeholder="State" required />
+            </div>
+            <div class="input-group">
+              <i class="fas fa-city"></i>
+              <input type="text" placeholder="District" required />
+            </div>
+          </div>
+          <div class="form-grid">
+            <div class="input-group">
+              <i class="fas fa-map-marker-alt"></i>
+              <input type="text" placeholder="Locality" required />
+            </div>
+            <div class="input-group">
+              <i class="fas fa-map-pin"></i>
+              <input
+                type="text"
+                placeholder="Pincode"
+                pattern="[0-9]{6}"
+                maxlength="6"
+                required
+              />
+            </div>
+          </div>
+          <div class="input-group">
+            <i class="fas fa-home"></i>
+            <textarea placeholder="Full Address" required></textarea>
+          </div>
+        </div>
+
+        <div class="id-proof-section">
+          <div class="input-group">
+            <i class="fas fa-id-card"></i>
+            <select id="idType" required>
+              <option value="">Select ID Proof</option>
+              <option value="aadhar">Aadhar Card</option>
+              <option value="pan">PAN Card</option>
+              <option value="license">Driving License</option>
+            </select>
+          </div>
+          <div class="dropzone" id="idProofDropzone">
+            <input type="file" id="idProofUpload" accept="image/*" hidden />
+            <div class="dropzone-content">
+              <i class="fas fa-cloud-upload-alt"></i>
+              <p>Drag & drop your ID proof here or <span>browse</span></p>
+              <p class="small">
+                Supported formats: JPG, PNG, PDF (Max size: 5MB)
+              </p>
+            </div>
+            <div
+              class="preview-container"
+              id="previewContainer"
+              style="display: none"
+            >
+              <img id="idPreviewImage" src="" alt="ID Preview" />
+              <div class="preview-info">
+                <span id="fileNameDisplay"></span>
+                <button type="button" id="removeFile" class="remove-btn">
+                  <i class="fas fa-times"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <button type="submit" class="next-btn">
+          Next Step <i class="fas fa-arrow-right"></i>
+        </button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<div class="crop-modal" id="cropModal">
+  <div class="crop-container">
+    <div class="crop-header">
+      <h3>Crop Image</h3>
+      <button class="close-btn" id="closeCropModal">
+        <i class="fas fa-times"></i>
+      </button>
+    </div>
+    <div class="crop-area">
+      <img id="cropImage" src="" alt="Image to crop" />
+    </div>
+    <div class="crop-actions">
+      <button class="crop-btn" id="cropBtn">
+        <i class="fas fa-crop-alt"></i> Crop & Save
+      </button>
+    </div>
+  </div>
+</div>
+
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.js"></script>
+<script src="/scripts/doctor/form-step1.js"></script>
+<%- include('../layouts/doctor/footer') %>

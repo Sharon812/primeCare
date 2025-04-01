@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Doctor Dashboard - PrimeCare</title>
+    <link rel="stylesheet" href="/css/doctor/dashboard.css" />
+    <link
+      href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
+      rel="stylesheet"
+    />
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
+  </head>
+  <body>
+    <% if (!doctor.isFormCompleted) { %>
+    <div class="announcement-banner">
+      <div class="announcement-container">
+        <div class="announcement-content">
+          <span
+            >⚠️ Please complete the signup process to start consulting
+            patients</span
+          >
+          <span>📝 Update your profile to get more visibility</span>
+          <span>🎉 Welcome to PrimeCare Doctor Dashboard</span>
+        </div>
+        <div class="announcement-content" aria-hidden="true">
+          <span
+            >⚠️ Please complete the signup process to start consulting
+            patients</span
+          >
+          <span>📝 Update your profile to get more visibility</span>
+          <span>🎉 Welcome to PrimeCare Doctor Dashboard</span>
+        </div>
+      </div>
+    </div>
+    <% } else if (!doctor.isAdminVerified) { %>
+    <div class="announcement-banner verification-banner">
+      <div class="announcement-container">
+        <div class="announcement-content">
+          <span>🔍 Your application is under verification</span>
+          <span>⏳ Please wait 3-4 business days</span>
+          <span>📧 We'll notify you via email once verified</span>
+        </div>
+        <div class="announcement-content" aria-hidden="true">
+          <span>🔍 Your application is under verification</span>
+          <span>⏳ Please wait 3-4 business days</span>
+          <span>📧 We'll notify you via email once verified</span>
+        </div>
+      </div>
+    </div>
+    <% } %>
+    <div
+      class="dashboard-container <%= !doctor.isFormCompleted ? 'with-banner' : (!doctor.isAdminVerified ? 'with-verification-banner' : '') %>"
+    >
+      <nav class="sidebar" data-aos="fade-right">
+        <div class="sidebar-header">
+          <img
+            src="/assets/logo-icon1.png"
+            alt="PrimeCare"
+            class="brand-logo"
+          />
+          <div class="brand-text">
+            <h2>PrimeCare</h2>
+            <span class="panel-text">Doctor Panel</span>
+          </div>
+        </div>
+        <ul class="nav-links">
+          <li class="active">
+            <a href="/doctor/dashboard"><i class="bx bxs-dashboard"></i>Dashboard</a>
+          </li>
+          <li>
+            <a href="#"><i class="bx bx-calendar"></i>Appointments</a>
+          </li>
+          <li>
+            <a href="#"><i class="bx bx-user"></i>Patients</a>
+          </li>
+          <li>
+            <a href="#"><i class="bx bx-time"></i>Schedule</a>
+          </li>
+          <li>
+            <a href="#"><i class="bx bx-message-square-detail"></i>Messages</a>
+          </li>
+          <li>
+            <a href="#"><i class="bx bx-cog"></i>Settings</a>
+          </li>
+        </ul>
+        <div class="logout-section">
+          <a href="/doctor/logout" class="logout-btn">
+            <i class="bx bx-log-out"></i>
+            <span>Logout</span>
+          </a>
+        </div>
+      </nav>
+
+      <main class="main-content">
+        <header class="top-bar" data-aos="fade-down">
+          <div class="search-bar">
+            <i class="bx bx-search"></i>
+            <input type="text" placeholder="Search..." />
+          </div>
+          <div class="user-menu">
+            <div class="notifications">
+              <i class="bx bx-bell"></i>
+              <span class="badge">3</span>
+            </div>
+            <div class="profile">
+              <div class="profile-icon">
+                <i class="bx bxs-user-circle"></i>
+              </div>
+              <span>Dr. <%= doctor.name %></span>
+            </div>
+          </div>
+        </header>
+
+        <div class="dashboard-content">
+          <div class="stats-grid">
+            <div class="stat-card" data-aos="zoom-in" data-aos-delay="100">
+              <i class="bx bx-calendar-check"></i>
+              <div class="stat-info">
+                <h3>TODAY'S APPOINTMENTS</h3>
+                <p>24</p>
+              </div>
+            </div>
+            <div class="stat-card" data-aos="zoom-in" data-aos-delay="200">
+              <i class="bx bx-group"></i>
+              <div class="stat-info">
+                <h3>TOTAL PATIENTS</h3>
+                <p>1,234</p>
+              </div>
+            </div>
+            <div class="stat-card" data-aos="zoom-in" data-aos-delay="300">
+              <i class="bx bx-line-chart"></i>
+              <div class="stat-info">
+                <h3>SUCCESS RATE</h3>
+                <p>98%</p>
+              </div>
+            </div>
+            <div class="stat-card" data-aos="zoom-in" data-aos-delay="400">
+              <i class="bx bx-star"></i>
+              <div class="stat-info">
+                <h3>SATISFACTION RATE</h3>
+                <p>4.9</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="dashboard-grid">
+            <div
+              class="appointments-list card"
+              data-aos="fade-up"
+              data-aos-delay="500"
+            >
+              <h2>Upcoming Appointments</h2>
+              <!-- Appointment items will be populated by JavaScript -->
+            </div>
+            <div
+              class="patient-stats card"
+              data-aos="fade-up"
+              data-aos-delay="600"
+            >
+              <h2>Patient Statistics</h2>
+              <!-- Chart will be added here -->
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+    <% if (!doctor.isFormCompleted) { %>
+    <div class="signup-modal" id="signupModal">
+      <div class="modal-content" data-aos="zoom-in">
+        <div class="modal-icon">
+          <i class="bx bx-user-check"></i>
+        </div>
+        <h2>Complete Your Profile</h2>
+        <p>
+          Please complete your profile setup to start accepting appointments and
+          consulting patients.
+        </p>
+        <div class="modal-actions">
+          <button
+            class="complete-profile-btn"
+            onclick="window.location.href='/doctor/register/step1'"
+          >
+            Complete Setup <i class="bx bx-right-arrow-alt"></i>
+          </button>
+          <button class="dismiss-btn" onclick="closeModal()">Later</button>
+        </div>
+      </div>
+    </div>
+    <% } %>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="/scripts/doctor/dashboard.js"></script>
+    <script>
+      AOS.init({
+        duration: 800,
+        once: true,
+        offset: 20,
+        easing: "ease-in-out",
+      });
+    </script>
+  </body>
+</html>
