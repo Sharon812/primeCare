@@ -142,7 +142,7 @@ document.addEventListener("DOMContentLoaded", function () {
   const backBtn = document.querySelector(".back-btn");
 
   backBtn.addEventListener("click", () => {
-    window.location.href = "/doctor/registration/step1";
+    window.location.href = "/doctor/register/step1"; // Updated route
   });
 
   form.addEventListener("submit", (e) => {
