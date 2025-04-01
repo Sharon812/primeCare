@@ -4,7 +4,7 @@ dotenv.config();
 
 const jwtConfig = {
   secret: process.env.JWT_SECRET,
-  expiresIn: "7d",
+  expiresIn: "10d",
 };
 
 export default jwtConfig;

@@ -31,7 +31,7 @@ class DoctorLoginController {
         httpOnly: true,
         secure: process.env.NODE_ENV === "production",
         sameSite: "Strict",
-        maxAge: 1000 * 60 * 60 * 1000,
+        maxAge: 1000 * 60 * 60 * 24 * 10,
       });
 
       res.json({
