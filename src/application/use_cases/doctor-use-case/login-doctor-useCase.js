@@ -1,4 +1,6 @@
 import AppError from "../../../utils/custom-error.js";
+import jwt from "jsonwebtoken";
+import jwtConfig from "../../../config/jwtConfig.js";
 
 class DoctorLoginUseCase {
   constructor(findDoctorRepository, hashSerivce) {
@@ -26,7 +28,15 @@ class DoctorLoginUseCase {
       throw new AppError("Invalid password", 401);
     }
 
-    return doctor;
+    const token = jwt.sign(
+      { doctorId: doctor._id, email: doctor.email },
+      jwtConfig.secret,
+      {
+        expiresIn: jwtConfig.expiresIn,
+      }
+    );
+
+    return { doctor, token };
   }
 }
 

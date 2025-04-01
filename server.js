@@ -8,6 +8,7 @@ import { fileURLToPath } from "url";
 import { dirname } from "path";
 import sessionConfig from "./src/config/session-config.js";
 import RouteHandlerMiddleWare from "./src/interfaces/middlewares/route-handler-middleware.js";
+import cookieParser from "cookie-parser";
 
 dotenv.config();
 
@@ -39,6 +40,7 @@ app.set("views", [
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(sessionConfig);
+app.use(cookieParser());
 
 //for clinic routes
 // import clinicRoute from "./src/interfaces/routes/clinic_routes.js";

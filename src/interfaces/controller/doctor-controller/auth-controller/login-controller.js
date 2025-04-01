@@ -27,6 +27,12 @@ class DoctorLoginController {
 
       console.log("Doctor after login", doctor);
 
+      res.cookie("doctorToken", doctor.token, {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === "production",
+        maxAge: 1000 * 60 * 60,
+      });
+
       res.json({
         message: "Doctor logged in successfully",
         doctorId: doctor._id,
@@ -35,6 +41,11 @@ class DoctorLoginController {
       console.log("loginDoctor Controller Error:", error);
       next(error);
     }
+  };
+
+  logoutDoctor = (req, res) => {
+    res.clearCookie("doctorToken"); // Remove JWT
+    res.redirect("/doctor/login"); // Redirect to login
   };
 }
 
