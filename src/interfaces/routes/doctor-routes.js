@@ -6,6 +6,7 @@ import { doctorStepOneFormController } from "../controller/doctor-controller/for
 
 const router = express.Router();
 
+// These routes are handling Auth Controllers like login, register, otp.
 router.get("/login", doctorLoginController.loginPageRender);
 
 router.post("/login", doctorLoginController.loginDoctor);
