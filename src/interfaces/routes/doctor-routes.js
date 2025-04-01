@@ -4,6 +4,7 @@ import { doctorRegisterController } from "../controller/doctor-controller/auth-c
 import { doctorVerifyEmailController } from "../controller/doctor-controller/auth-controller/verify-email-controller.js";
 import { doctorStepOneFormController } from "../controller/doctor-controller/form-controller/step1-controller.js";
 import { doctorDashboardController } from "../controller/doctor-controller/dashboard-controller/dashboard-controller.js";
+import { doctorStepSecondFormController } from "../controller/doctor-controller/form-controller/step2-controller.js";
 import {
   protectDoctorRoute,
   preventLoggedDoctor,
@@ -61,6 +62,13 @@ router.get(
   protectDoctorRoute,
   doctorStepOneFormController.stepOneFormRender
 );
+
+router.get(
+  "/register/step2",
+  protectDoctorRoute,
+  doctorStepSecondFormController.stepTwoFormRender
+);
+
 
 router.get("/logout", doctorLoginController.logoutDoctor)
 
