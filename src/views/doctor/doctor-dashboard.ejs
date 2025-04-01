@@ -12,6 +12,7 @@
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
   </head>
   <body>
+    <% if (!doctor.isFormCompleted) { %>
     <div class="announcement-banner">
       <div class="announcement-container">
         <div class="announcement-content">
@@ -32,7 +33,25 @@
         </div>
       </div>
     </div>
-    <div class="dashboard-container">
+    <% } else if (!doctor.isAdminVerified) { %>
+    <div class="announcement-banner verification-banner">
+      <div class="announcement-container">
+        <div class="announcement-content">
+          <span>🔍 Your application is under verification</span>
+          <span>⏳ Please wait 3-4 business days</span>
+          <span>📧 We'll notify you via email once verified</span>
+        </div>
+        <div class="announcement-content" aria-hidden="true">
+          <span>🔍 Your application is under verification</span>
+          <span>⏳ Please wait 3-4 business days</span>
+          <span>📧 We'll notify you via email once verified</span>
+        </div>
+      </div>
+    </div>
+    <% } %>
+    <div
+      class="dashboard-container <%= !doctor.isFormCompleted ? 'with-banner' : (!doctor.isAdminVerified ? 'with-verification-banner' : '') %>"
+    >
       <nav class="sidebar" data-aos="fade-right">
         <div class="sidebar-header">
           <img
@@ -88,7 +107,7 @@
               <div class="profile-icon">
                 <i class="bx bxs-user-circle"></i>
               </div>
-              <span>Dr. John Doe</span>
+              <span>Dr. <%= doctor.name %></span>
             </div>
           </div>
         </header>
@@ -146,6 +165,29 @@
         </div>
       </main>
     </div>
+    <% if (!doctor.isFormCompleted) { %>
+    <div class="signup-modal" id="signupModal">
+      <div class="modal-content" data-aos="zoom-in">
+        <div class="modal-icon">
+          <i class="bx bx-user-check"></i>
+        </div>
+        <h2>Complete Your Profile</h2>
+        <p>
+          Please complete your profile setup to start accepting appointments and
+          consulting patients.
+        </p>
+        <div class="modal-actions">
+          <button
+            class="complete-profile-btn"
+            onclick="window.location.href='/doctor/register/step1'"
+          >
+            Complete Setup <i class="bx bx-right-arrow-alt"></i>
+          </button>
+          <button class="dismiss-btn" onclick="closeModal()">Later</button>
+        </div>
+      </div>
+    </div>
+    <% } %>
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script src="/scripts/doctor/dashboard.js"></script>
     <script>

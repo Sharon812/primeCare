@@ -32,4 +32,27 @@ document.addEventListener("DOMContentLoaded", function () {
       this.classList.add("active");
     });
   });
+
+  // Modal functionality
+  const modal = document.getElementById("signupModal");
+  if (modal) {
+    setTimeout(() => {
+      modal.classList.add("show");
+    }, 3000);
+
+    // Close modal function
+    window.closeModal = function () {
+      modal.classList.add("removing");
+      setTimeout(() => {
+        modal.classList.remove("show", "removing");
+      }, 300);
+    };
+
+    // Close modal when clicking outside
+    modal.addEventListener("click", (e) => {
+      if (e.target === modal) {
+        closeModal();
+      }
+    });
+  }
 });
