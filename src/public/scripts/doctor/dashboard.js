@@ -34,12 +34,12 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 
   // Add logout handler
-  const logoutBtn = document.querySelector('.logout-btn');
+  const logoutBtn = document.querySelector(".logout-btn");
   if (logoutBtn) {
-    logoutBtn.addEventListener('click', (e) => {
+    logoutBtn.addEventListener("click", (e) => {
       e.preventDefault();
       // Clear the modal shown flag before logout
-      localStorage.removeItem('modalShown');
+      localStorage.removeItem("modalShown");
       // Redirect to logout URL
       window.location.href = logoutBtn.href;
     });
@@ -47,11 +47,11 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // Modal functionality
   const modal = document.getElementById("signupModal");
-  if (modal && !localStorage.getItem('modalShown')) {
+  if (modal && !localStorage.getItem("modalShown")) {
     setTimeout(() => {
       modal.classList.add("show");
       // Set flag in localStorage when modal is shown
-      localStorage.setItem('modalShown', 'true');
+      localStorage.setItem("modalShown", "true");
     }, 3000);
 
     // Close modal function
