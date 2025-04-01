@@ -14,7 +14,7 @@ class DoctorLoginController {
       res.render("doctor-login");
     } catch (error) {
       console.error("loginPageRender Controller Error:", error);
-      res.status(500).send("Internal Server Error");
+      next(error);
     }
   };
 
