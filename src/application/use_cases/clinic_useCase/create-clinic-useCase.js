@@ -1,4 +1,5 @@
 import AppError from "../../../utils/custom-error.js";
+import clinicOtpService from "../../../infrastructure/services/clinic-otp-service.js";
 
 class CreateClinicUseCase {
   constructor(clinicRegistrationService, hashservice) {
@@ -24,7 +25,6 @@ class CreateClinicUseCase {
     }
 
     const hashedPassword = await this.hashservice.hashPassword(password);
-    console.log("usecase hit");
 
     const clinic = await this.clinicRegistrationService.registerClinic({
       clinicName,
@@ -33,8 +33,8 @@ class CreateClinicUseCase {
       phoneNumber,
       password: hashedPassword,
     });
+    await clinicOtpService.generateAndSendOTP(email);
 
-    // await doctorotp;
     return clinic;
   }
 }

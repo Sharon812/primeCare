@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Registration - Step 2</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --primary-blue: #0d6efd;
+        --light-blue: #e6f0ff;
+        --dark-blue: #0a58ca;
+      }
+
+      body {
+        background-color: #f8f9fa;
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      }
+
+      .registration-container {
+        max-width: 800px;
+        margin: 40px auto;
+        background-color: white;
+        border-radius: 10px;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+        padding: 30px;
+      }
+
+      .registration-header {
+        text-align: center;
+        margin-bottom: 30px;
+        color: var(--primary-blue);
+      }
+
+      .prefilled-section {
+        background-color: var(--light-blue);
+        padding: 20px;
+        border-radius: 8px;
+        margin-bottom: 25px;
+      }
+
+      .form-label {
+        font-weight: 600;
+        color: #495057;
+      }
+
+      .prefilled-value {
+        background-color: white;
+        padding: 8px 15px;
+        border-radius: 6px;
+        border: 1px solid #dee2e6;
+        color: #495057;
+        margin-bottom: 12px;
+      }
+
+      .upload-section {
+        margin-top: 25px;
+      }
+
+      .required-label::after {
+        content: " *";
+        color: red;
+      }
+
+      .file-upload {
+        margin-bottom: 20px;
+      }
+
+      .image-preview {
+        width: 100%;
+        min-height: 120px;
+        border: 2px dashed #ccc;
+        border-radius: 6px;
+        margin-top: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #6c757d;
+        background-color: #f8f9fa;
+      }
+
+      .next-btn {
+        background-color: var(--primary-blue);
+        color: white;
+        padding: 10px 30px;
+        border: none;
+        border-radius: 6px;
+        font-weight: 600;
+        margin-top: 20px;
+        transition: all 0.3s;
+      }
+
+      .next-btn:hover {
+        background-color: var(--dark-blue);
+        transform: translateY(-2px);
+      }
+
+      .step-indicator {
+        display: flex;
+        justify-content: center;
+        margin-bottom: 30px;
+      }
+
+      .step {
+        width: 35px;
+        height: 35px;
+        border-radius: 50%;
+        background-color: #dee2e6;
+        color: #6c757d;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 10px;
+        font-weight: bold;
+      }
+
+      .step.active {
+        background-color: var(--primary-blue);
+        color: white;
+      }
+
+      .step-line {
+        height: 3px;
+        width: 50px;
+        background-color: #dee2e6;
+        margin-top: 17px;
+      }
+
+      .step-line.active {
+        background-color: var(--primary-blue);
+      }
+
+      .error-message {
+        color: #dc3545;
+        font-size: 0.875rem;
+        margin-top: 5px;
+        font-weight: 500;
+        display: none;
+      }
+
+      .invalid-field {
+        border-color: #dc3545 !important;
+      }
+
+      .invalid-field ~ .error-message {
+        display: block;
+      }
+
+      @media (max-width: 768px) {
+        .registration-container {
+          margin: 20px;
+          padding: 20px;
+        }
+
+        .step-indicator {
+          margin-bottom: 20px;
+        }
+
+        .step {
+          width: 30px;
+          height: 30px;
+          margin: 0 5px;
+        }
+
+        .step-line {
+          width: 30px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container registration-container">
+      <!-- Steps indicator -->
+      <div class="step-indicator">
+        <div class="step active">1</div>
+        <div class="step-line active"></div>
+        <div class="step active">2</div>
+        <div class="step-line"></div>
+        <div class="step">3</div>
+      </div>
+
+      <div class="registration-header">
+        <h2>Complete Your Registration</h2>
+        <p class="text-muted">
+          Please upload the required documents and clinic photos
+        </p>
+      </div>
+
+      <!-- Prefilled information section -->
+      <div class="prefilled-section">
+        <h4 class="mb-3">Your Information</h4>
+        <div class="row g-3">
+          <div class="col-md-6">
+            <label class="form-label">Name</label>
+            <div class="prefilled-value" id="prefill-name">Dr. John Smith</div>
+          </div>
+          <div class="col-md-6">
+            <label class="form-label">Clinic Name</label>
+            <div class="prefilled-value" id="prefill-clinic-name">
+              Smith Family Clinic
+            </div>
+          </div>
+          <div class="col-md-6">
+            <label class="form-label">Registration Number</label>
+            <div class="prefilled-value" id="prefill-reg-number">
+              MED12345678
+            </div>
+          </div>
+          <div class="col-md-6">
+            <label class="form-label">Contact Number</label>
+            <div class="prefilled-value" id="prefill-contact">
+              +91 9876543210
+            </div>
+          </div>
+          <div class="col-md-12">
+            <label class="form-label">Email Address</label>
+            <div class="prefilled-value" id="prefill-email">
+              dr.smith@clinic.com
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Document upload section -->
+      <form id="document-upload-form">
+        <div class="upload-section">
+          <h4 class="mb-4">Upload Required Documents</h4>
+
+          <!-- Clinic Registration Certificate -->
+          <div class="file-upload">
+            <label for="clinic-certificate" class="form-label required-label"
+              >Clinic Registration Certificate</label
+            >
+            <input
+              type="file"
+              class="form-control"
+              id="clinic-certificate"
+              accept="image/*"
+              required
+            />
+            <div class="error-message" id="clinic-certificate-error">
+              Please upload your clinic registration certificate
+            </div>
+            <div class="image-preview mt-2" id="clinic-certificate-preview">
+              <span>No file selected</span>
+            </div>
+          </div>
+
+          <!-- Medical Council Registration -->
+          <div class="file-upload">
+            <label for="medical-council" class="form-label required-label"
+              >Medical Council Registration Certificate</label
+            >
+            <input
+              type="file"
+              class="form-control"
+              id="medical-council"
+              accept="image/*"
+              required
+            />
+            <div class="error-message" id="medical-council-error">
+              Please upload your medical council registration certificate
+            </div>
+            <div class="image-preview mt-2" id="medical-council-preview">
+              <span>No file selected</span>
+            </div>
+          </div>
+
+          <!-- GST Number -->
+          <div class="mb-3">
+            <label for="gst-number" class="form-label required-label"
+              >GST Number</label
+            >
+            <input
+              type="text"
+              class="form-control"
+              id="gst-number"
+              placeholder="Enter your GST number"
+              required
+            />
+            <div class="error-message" id="gst-number-error">
+              Please enter your GST number
+            </div>
+          </div>
+
+          <!-- Owner ID Proof -->
+          <div class="file-upload">
+            <label for="owner-id" class="form-label required-label"
+              >Owner ID Proof</label
+            >
+            <input
+              type="file"
+              class="form-control"
+              id="owner-id"
+              accept="image/*"
+              required
+            />
+            <div class="error-message" id="owner-id-error">
+              Please upload your owner ID proof
+            </div>
+            <div class="image-preview mt-2" id="owner-id-preview">
+              <span>No file selected</span>
+            </div>
+          </div>
+
+          <!-- Clinic Photos -->
+          <h5 class="mt-4 mb-3">Clinic Photos</h5>
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <label for="clinic-photo-1" class="form-label required-label"
+                >Clinic Photo 1</label
+              >
+              <input
+                type="file"
+                class="form-control"
+                id="clinic-photo-1"
+                accept="image/*"
+                required
+              />
+              <div class="error-message" id="clinic-photo-1-error">
+                Please upload first clinic photo
+              </div>
+              <div class="image-preview mt-2" id="clinic-photo-1-preview">
+                <span>No file selected</span>
+              </div>
+            </div>
+            <div class="col-md-6 mb-3">
+              <label for="clinic-photo-2" class="form-label required-label"
+                >Clinic Photo 2</label
+              >
+              <input
+                type="file"
+                class="form-control"
+                id="clinic-photo-2"
+                accept="image/*"
+                required
+              />
+              <div class="error-message" id="clinic-photo-2-error">
+                Please upload second clinic photo
+              </div>
+              <div class="image-preview mt-2" id="clinic-photo-2-preview">
+                <span>No file selected</span>
+              </div>
+            </div>
+            <div class="col-md-6 mb-3">
+              <label for="clinic-photo-3" class="form-label required-label"
+                >Clinic Photo 3</label
+              >
+              <input
+                type="file"
+                class="form-control"
+                id="clinic-photo-3"
+                accept="image/*"
+                required
+              />
+              <div class="error-message" id="clinic-photo-3-error">
+                Please upload third clinic photo
+              </div>
+              <div class="image-preview mt-2" id="clinic-photo-3-preview">
+                <span>No file selected</span>
+              </div>
+            </div>
+            <div class="col-md-6 mb-3">
+              <label for="clinic-photo-4" class="form-label required-label"
+                >Clinic Photo 4</label
+              >
+              <input
+                type="file"
+                class="form-control"
+                id="clinic-photo-4"
+                accept="image/*"
+                required
+              />
+              <div class="error-message" id="clinic-photo-4-error">
+                Please upload fourth clinic photo
+              </div>
+              <div class="image-preview mt-2" id="clinic-photo-4-preview">
+                <span>No file selected</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+          <button type="submit" class="next-btn">
+            Next <i class="bi bi-arrow-right"></i>
+          </button>
+        </div>
+      </form>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+      // Display image previews when files are selected
+      const fileInputs = document.querySelectorAll('input[type="file"]');
+      fileInputs.forEach((input) => {
+        input.addEventListener("change", function () {
+          const previewId = this.id + "-preview";
+          const previewDiv = document.getElementById(previewId);
+
+          if (this.files && this.files[0]) {
+            const reader = new FileReader();
+
+            reader.onload = function (e) {
+              previewDiv.innerHTML = `<img src="${e.target.result}" alt="Preview" style="max-width: 100%; max-height: 150px;">`;
+            };
+
+            reader.readAsDataURL(this.files[0]);
+
+            // Remove validation error if file is selected
+            this.classList.remove("invalid-field");
+          } else {
+            previewDiv.innerHTML = `<span>No file selected</span>`;
+          }
+        });
+      });
+
+      // Add validation for GST number input
+      document
+        .getElementById("gst-number")
+        .addEventListener("input", function () {
+          if (this.value.trim() !== "") {
+            this.classList.remove("invalid-field");
+          }
+        });
+
+      // Real-time validation for all fields
+      const allInputs = document.querySelectorAll("input[required]");
+      allInputs.forEach((input) => {
+        input.addEventListener("blur", function () {
+          validateField(this);
+        });
+      });
+
+      function validateField(field) {
+        const isFile = field.type === "file";
+        let isValid = false;
+
+        if (isFile) {
+          isValid = field.files && field.files.length > 0;
+        } else {
+          isValid = field.value.trim() !== "";
+        }
+
+        if (!isValid) {
+          field.classList.add("invalid-field");
+        } else {
+          field.classList.remove("invalid-field");
+        }
+
+        return isValid;
+      }
+
+      // Form submission handling
+      document
+        .getElementById("document-upload-form")
+        .addEventListener("submit", function (e) {
+          e.preventDefault();
+
+          // Get all required inputs
+          const requiredInputs = document.querySelectorAll("input[required]");
+          let allValid = true;
+
+          // Validate each required field
+          requiredInputs.forEach((input) => {
+            if (!validateField(input)) {
+              allValid = false;
+            }
+          });
+
+          if (allValid) {
+            // Here you would normally submit the form or proceed to next step
+            alert(
+              "All documents uploaded successfully! Proceeding to next step..."
+            );
+            // window.location.href = 'registration-step3.html';
+          } else {
+            // Show error message at the top
+            alert("Please fill in all required fields.");
+
+            // Scroll to the first invalid field
+            const firstInvalid = document.querySelector(".invalid-field");
+            if (firstInvalid) {
+              firstInvalid.scrollIntoView({
+                behavior: "smooth",
+                block: "center",
+              });
+              firstInvalid.focus();
+            }
+          }
+        });
+
+      // Function to prepopulate data (in a real application, this would come from session storage or API)
+      function loadPrefilledData() {
+        // This is just for demonstration - in a real app, this data would come from previous step
+        const prefilledData = {
+          name: "Dr. John Smith",
+          clinicName: "Smith Family Clinic",
+          regNumber: "MED12345678",
+          contact: "+91 9876543210",
+          email: "dr.smith@clinic.com",
+        };
+
+        document.getElementById("prefill-name").textContent =
+          prefilledData.name;
+        document.getElementById("prefill-clinic-name").textContent =
+          prefilledData.clinicName;
+        document.getElementById("prefill-reg-number").textContent =
+          prefilledData.regNumber;
+        document.getElementById("prefill-contact").textContent =
+          prefilledData.contact;
+        document.getElementById("prefill-email").textContent =
+          prefilledData.email;
+      }
+
+      // Load prefilled data when page loads
+      window.onload = loadPrefilledData;
+    </script>
+  </body>
+</html>

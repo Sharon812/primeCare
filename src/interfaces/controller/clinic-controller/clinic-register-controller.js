@@ -26,7 +26,6 @@ class ClinicRegisterController {
       const { clinicName, dateOfEstablishment, email, phoneNumber, password } =
         req.body;
 
-      console.log("route controller hti");
       const clinic = await this.createClinicUseCase.execute({
         clinicName,
         dateOfEstablishment,
@@ -35,7 +34,6 @@ class ClinicRegisterController {
         password,
       });
 
-      console.log("worked");
       res.status(201).json({ message: "clinic registered successfully" });
     } catch (error) {
       console.log(error, "error at registerclinicfirstpart controller error");

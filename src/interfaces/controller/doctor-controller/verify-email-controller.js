@@ -9,7 +9,7 @@ class VerifyEmailController {
     this.otpService = otpService;
   }
 
-  renderingOTPPage = async (req,res,next) => {
+  renderingOTPPage = async (req, res, next) => {
     try {
       res.render("otp-page", {
         title: "Verify Email",
@@ -18,21 +18,20 @@ class VerifyEmailController {
       console.log("Error in renderingOTPPageController", error);
       next(error);
     }
-  }
+  };
 
-  sendOTP = async (req,res,next) =>{
+  sendOTP = async (req, res, next) => {
     try {
       const { email } = req.body;
       await this.otpService.sendOTP(email);
       res.status(200).json({
         message: "OTP sent successfully",
       });
-      
     } catch (error) {
       console.log("Error in sendOTPController", error);
       next(error);
     }
-  }
+  };
 
   verifyEmail = async (req, res, next) => {
     try {

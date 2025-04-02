@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PrimeCare - OTP Verification</title>
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --primary-color: #3b82f6;
+        --primary-hover: #2563eb;
+        --bg-color: #f3f4f6;
+        --text-color: #111827;
+        --input-bg: #ffffff;
+        --border-radius: 12px;
+      }
+
+      body {
+        font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI",
+          Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+        background-color: var(--bg-color);
+        color: var(--text-color);
+        overflow-x: hidden;
+      }
+
+      .navbar {
+        background-color: #ffffff;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        padding: 0.75rem 1.5rem;
+        position: fixed;
+        top: 0;
+        width: 100%;
+        z-index: 1000;
+      }
+
+      .navbar-brand {
+        font-weight: 700;
+        font-size: 1.5rem;
+        color: var(--primary-color);
+      }
+
+      .main-container {
+        min-height: 100vh;
+        padding-top: 80px; /* Account for navbar */
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .otp-container {
+        max-width: 550px;
+        width: 100%;
+        padding: 2rem;
+        background-color: #ffffff;
+        border-radius: var(--border-radius);
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+      }
+
+      .header-icon {
+        height: 70px;
+        width: 70px;
+        background-color: rgba(59, 130, 246, 0.1);
+        color: var(--primary-color);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        margin-bottom: 1.5rem;
+        font-size: 2rem;
+      }
+
+      .otp-input-container {
+        display: flex;
+        justify-content: center;
+        gap: 0.75rem;
+        margin: 2rem 0;
+      }
+
+      .otp-input {
+        width: 60px;
+        height: 70px;
+        font-size: 1.5rem;
+        text-align: center;
+        border: 2px solid #e5e7eb;
+        border-radius: 12px;
+        background-color: var(--input-bg);
+        transition: all 0.3s;
+        caret-color: var(--primary-color);
+      }
+
+      .otp-input:focus {
+        border-color: var(--primary-color);
+        box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+        outline: none;
+      }
+
+      .btn-primary {
+        background-color: var(--primary-color);
+        border-color: var(--primary-color);
+        font-weight: 500;
+        padding: 0.75rem 1.5rem;
+        border-radius: 8px;
+        transition: all 0.3s;
+      }
+
+      .btn-primary:hover {
+        background-color: var(--primary-hover);
+        border-color: var(--primary-hover);
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+      }
+
+      .btn-outline-primary {
+        color: var(--primary-color);
+        border-color: var(--primary-color);
+        font-weight: 500;
+        padding: 0.75rem 1.5rem;
+        border-radius: 8px;
+        transition: all 0.3s;
+      }
+
+      .btn-outline-primary:hover:not(:disabled) {
+        background-color: var(--primary-color);
+        color: white;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+      }
+
+      .btn-outline-primary:disabled {
+        color: #6c757d;
+        border-color: #6c757d;
+        cursor: not-allowed;
+      }
+
+      .timer {
+        color: var(--primary-color);
+        font-weight: 600;
+        margin-left: 8px;
+      }
+
+      /* Animation classes */
+      .fade-in-up {
+        animation: fadeInUp 0.8s ease-out;
+      }
+
+      .pulse-slow {
+        animation: pulse 3s infinite;
+      }
+
+      @keyframes fadeInUp {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      @keyframes pulse {
+        0% {
+          transform: scale(1);
+        }
+        50% {
+          transform: scale(1.05);
+        }
+        100% {
+          transform: scale(1);
+        }
+      }
+
+      /* For mobile screens */
+      @media (max-width: 576px) {
+        .otp-input {
+          width: 50px;
+          height: 60px;
+          font-size: 1.25rem;
+        }
+
+        .otp-container {
+          margin: 0 1rem;
+        }
+
+        .button-group {
+          flex-direction: column;
+          gap: 1rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg animate__animated animate__fadeInDown">
+      <div class="container">
+        <a class="navbar-brand" href="#">
+          <i class="fas fa-heartbeat me-2"></i>PrimeCare
+        </a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNav"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav ms-auto">
+            <li class="nav-item">
+              <a class="nav-link" href="#">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Services</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">About</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Contact</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link active" href="#">Register</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="main-container">
+      <div class="otp-container animate__animated animate__fadeIn">
+        <div class="text-center">
+          <div class="header-icon mx-auto pulse-slow">
+            <i class="fas fa-shield-alt"></i>
+          </div>
+          <h2 class="mb-2 fade-in-up">Email Verification</h2>
+          <p class="text-muted mb-4 fade-in-up" style="animation-delay: 0.1s">
+            We've sent a verification code to
+            <span id="userEmail" class="fw-bold">your email address</span>
+          </p>
+
+          <form
+            id="otpForm"
+            class="needs-validation"
+            novalidate
+            method="post"
+            action="/verify-otp"
+          >
+            <div
+              class="otp-input-container fade-in-up"
+              style="animation-delay: 0.2s"
+            >
+              <input
+                type="text"
+                class="otp-input"
+                maxlength="1"
+                autofocus
+                name="otp-1"
+                data-next="otp-2"
+                pattern="[0-9]"
+                required
+              />
+              <input
+                type="text"
+                class="otp-input"
+                maxlength="1"
+                name="otp-2"
+                data-next="otp-3"
+                data-prev="otp-1"
+                pattern="[0-9]"
+                required
+              />
+              <input
+                type="text"
+                class="otp-input"
+                maxlength="1"
+                name="otp-3"
+                data-next="otp-4"
+                data-prev="otp-2"
+                pattern="[0-9]"
+                required
+              />
+              <input
+                type="text"
+                class="otp-input"
+                maxlength="1"
+                name="otp-4"
+                data-next="otp-5"
+                data-prev="otp-3"
+                pattern="[0-9]"
+                required
+              />
+              <input
+                type="text"
+                class="otp-input"
+                maxlength="1"
+                name="otp-5"
+                data-next="otp-6"
+                data-prev="otp-4"
+                pattern="[0-9]"
+                required
+              />
+              <input
+                type="text"
+                class="otp-input"
+                maxlength="1"
+                name="otp-6"
+                data-prev="otp-5"
+                pattern="[0-9]"
+                required
+              />
+              <input type="hidden" id="completeOtp" name="otp" value="" />
+            </div>
+
+            <p class="text-muted fade-in-up" style="animation-delay: 0.3s">
+              Didn't receive the code?
+              <button
+                type="button"
+                id="resendBtn"
+                class="btn btn-link p-0 text-decoration-none"
+                disabled
+              >
+                Resend
+                <span id="timer" class="timer"></span>
+              </button>
+            </p>
+
+            <div
+              class="d-flex justify-content-center mt-4 gap-3 button-group fade-in-up"
+              style="animation-delay: 0.4s"
+            >
+              <button
+                type="button"
+                class="btn btn-outline-primary"
+                id="backBtn"
+              >
+                <i class="fas fa-arrow-left me-2"></i>Back
+              </button>
+              <button type="submit" class="btn btn-primary" id="verifyBtn">
+                Verify<i class="fas fa-arrow-right ms-2"></i>
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        // Set user email from localStorage
+        const emailElement = document.getElementById("userEmail");
+        const email = localStorage.getItem("userEmail") || "your email address";
+        emailElement.textContent = email;
+
+        // OTP Input Handling
+        const inputs = document.querySelectorAll(".otp-input");
+        const form = document.getElementById("otpForm");
+        const completeOtpInput = document.getElementById("completeOtp");
+        const backBtn = document.getElementById("backBtn");
+        const resendBtn = document.getElementById("resendBtn");
+        const timerElement = document.getElementById("timer");
+
+        const timerDuration = 60; // 60 seconds = 1 minute
+        let timerInterval;
+
+        // Check if timer exists in localStorage and get its value
+        // If not, initialize a new timer
+        let timeLeft;
+        const storedTimer = localStorage.getItem("otpTimer");
+        const timerExpiry = localStorage.getItem("otpTimerExpiry");
+
+        if (storedTimer && timerExpiry) {
+          // Calculate remaining time based on stored expiry timestamp
+          const now = new Date().getTime();
+          const expiryTime = parseInt(timerExpiry);
+          timeLeft = Math.max(0, Math.floor((expiryTime - now) / 1000));
+        } else {
+          // No timer in storage or timer expired, initialize a new one
+          timeLeft = timerDuration;
+          // Set expiry timestamp
+          const expiryTime = new Date().getTime() + timerDuration * 1000;
+          localStorage.setItem("otpTimerExpiry", expiryTime.toString());
+          localStorage.setItem("otpTimer", timeLeft.toString());
+        }
+
+        // Function to update the timer display
+        function updateTimerDisplay() {
+          if (timeLeft <= 0) {
+            timerElement.textContent = "";
+            resendBtn.disabled = false;
+            // Clear timer data when it reaches zero
+            localStorage.removeItem("otpTimer");
+            localStorage.removeItem("otpTimerExpiry");
+          } else {
+            timerElement.textContent = `(${timeLeft}s)`;
+            resendBtn.disabled = true;
+          }
+        }
+
+        // Function to start the timer
+        function startTimer() {
+          // Clear any existing interval
+          if (timerInterval) {
+            clearInterval(timerInterval);
+          }
+
+          // Update timer display initially
+          updateTimerDisplay();
+
+          timerInterval = setInterval(() => {
+            timeLeft -= 1;
+            localStorage.setItem("otpTimer", timeLeft.toString());
+            updateTimerDisplay();
+
+            if (timeLeft <= 0) {
+              clearInterval(timerInterval);
+            }
+          }, 1000);
+        }
+
+        // Start timer on page load
+        startTimer();
+
+        // Handle OTP input
+        inputs.forEach((input) => {
+          input.addEventListener("keyup", function (e) {
+            // Get the input value and convert to uppercase
+            this.value = this.value.replace(/[^0-9]/g, "");
+
+            const key = e.key;
+
+            // If the key is a digit and there's a next input, focus the next input
+            if (/^[0-9]$/.test(key) && this.dataset.next) {
+              document
+                .querySelector(`input[name=${this.dataset.next}]`)
+                .focus();
+            }
+
+            // If the key is Backspace and there's a previous input, focus the previous input
+            if (key === "Backspace" && this.dataset.prev) {
+              document
+                .querySelector(`input[name=${this.dataset.prev}]`)
+                .focus();
+            }
+
+            // Update the complete OTP value
+            updateCompleteOtp();
+          });
+
+          // Handle paste event for OTP
+          input.addEventListener("paste", function (e) {
+            e.preventDefault();
+
+            // Get pasted data
+            let pastedData = (e.clipboardData || window.clipboardData).getData(
+              "text"
+            );
+            pastedData = pastedData.replace(/[^0-9]/g, ""); // Keep only digits
+
+            if (!pastedData) return;
+
+            // Fill inputs with pasted OTP
+            for (let i = 0; i < inputs.length; i++) {
+              if (i < pastedData.length) {
+                inputs[i].value = pastedData[i];
+              }
+            }
+
+            // Focus the next empty input or the last one
+            let focusIndex = Math.min(pastedData.length, inputs.length - 1);
+            inputs[focusIndex].focus();
+
+            // Update the complete OTP value
+            updateCompleteOtp();
+          });
+        });
+
+        // Update the hidden complete OTP field
+        function updateCompleteOtp() {
+          let otp = "";
+          inputs.forEach((input) => {
+            otp += input.value;
+          });
+          completeOtpInput.value = otp;
+        }
+
+        // Handle form submission
+        form.addEventListener("submit", function (e) {
+          e.preventDefault();
+
+          // Validate all inputs are filled
+          let isValid = true;
+          inputs.forEach((input) => {
+            if (!input.value) {
+              isValid = false;
+            }
+          });
+
+          if (!isValid) {
+            alert("Please enter the complete OTP");
+            return;
+          }
+
+          // Clear timer from localStorage when OTP is successfully submitted
+          localStorage.removeItem("otpTimer");
+          localStorage.removeItem("otpTimerExpiry");
+          if (timerInterval) {
+            clearInterval(timerInterval);
+          }
+
+          // Here you would submit the form to your backend
+          // For demo purposes, we'll just show an alert
+          alert(`OTP Verification Successful! OTP: ${completeOtpInput.value}`);
+
+          // Redirect to success page or dashboard
+          // window.location.href = '/dashboard';
+        });
+
+        // Handle back button
+        backBtn.addEventListener("click", function () {
+          window.history.back();
+        });
+
+        // Handle resend button
+        resendBtn.addEventListener("click", function () {
+          // Reset timer duration
+          timeLeft = timerDuration;
+
+          // Set new expiry timestamp
+          const expiryTime = new Date().getTime() + timerDuration * 1000;
+          localStorage.setItem("otpTimerExpiry", expiryTime.toString());
+          localStorage.setItem("otpTimer", timeLeft.toString());
+
+          startTimer();
+
+          // Show success message
+          alert("A new verification code has been sent to your email");
+        });
+
+        // Handle tab/browser close event
+        window.addEventListener("beforeunload", function () {
+          // We don't remove the timer data here anymore
+          // because we want it to persist across refreshes
+          // It will only be removed when the timer expires or OTP is submitted
+        });
+      });
+    </script>
+  </body>
+</html>
