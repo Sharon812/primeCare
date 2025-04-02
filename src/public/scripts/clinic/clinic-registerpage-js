@@ -1,0 +1,206 @@
+// Form validation
+(() => {
+  "use strict";
+
+  const form = document.getElementById("registrationForm");
+  const password = document.getElementById("password");
+  const confirmPassword = document.getElementById("confirmPassword");
+  const togglePassword = document.getElementById("togglePassword");
+  const toggleConfirmPassword = document.getElementById(
+    "toggleConfirmPassword"
+  );
+  const phoneNumber = document.getElementById("phoneNumber");
+
+  // Get all error elements
+  const clinicNameError = document.getElementById("clinicNameError");
+  const establishmentDateError = document.getElementById(
+    "establishmentDateError"
+  );
+  const emailAddressError = document.getElementById("emailAddressError");
+  const phoneNumberError = document.getElementById("phoneNumberError");
+  const passwordError = document.getElementById("passwordError");
+  const confirmPasswordError = document.getElementById("confirmPasswordError");
+  const termsCheckError = document.getElementById("termsCheckError");
+
+  // Add animation to form elements on page load
+  document.addEventListener("DOMContentLoaded", function () {
+    // Animate elements with staggered delay
+    const animatedElements = document.querySelectorAll(
+      ".fade-in-up, .fade-in-left, .fade-in-right"
+    );
+    animatedElements.forEach((element) => {
+      element.style.opacity = "0";
+      setTimeout(() => {
+        element.style.opacity = "1";
+      }, 100);
+    });
+  });
+
+  // Check if passwords match
+  const validatePasswordMatch = () => {
+    if (password.value !== confirmPassword.value) {
+      confirmPassword.setCustomValidity("Passwords do not match");
+      confirmPasswordError.textContent = "Passwords do not match.";
+    } else {
+      confirmPassword.setCustomValidity("");
+      confirmPasswordError.textContent = "";
+    }
+  };
+
+  // Validate phone number
+  phoneNumber.addEventListener("input", () => {
+    if (phoneNumber.validity.patternMismatch) {
+      phoneNumberError.textContent =
+        "Please enter exactly 10 digits for your phone number.";
+    } else {
+      phoneNumberError.textContent = "";
+    }
+  });
+
+  // Validate each field individually
+  const validateField = (field, errorElement, message) => {
+    if (!field.validity.valid) {
+      if (field.validity.valueMissing) {
+        errorElement.textContent = `This field is required.`;
+      } else if (field.validity.typeMismatch && field.type === "email") {
+        errorElement.textContent = `Please enter a valid email address.`;
+      } else if (field.validity.tooShort) {
+        errorElement.textContent = `This field must be at least ${field.minLength} characters.`;
+      } else if (field.validity.patternMismatch && field.id === "phoneNumber") {
+        errorElement.textContent = `Please enter exactly 10 digits for your phone number.`;
+      } else {
+        errorElement.textContent = message;
+      }
+      return false;
+    } else {
+      errorElement.textContent = "";
+      return true;
+    }
+  };
+
+  // Toggle password visibility
+  togglePassword.addEventListener("click", () => {
+    const type =
+      password.getAttribute("type") === "password" ? "text" : "password";
+    password.setAttribute("type", type);
+    togglePassword.querySelector("i").classList.toggle("fa-eye");
+    togglePassword.querySelector("i").classList.toggle("fa-eye-slash");
+  });
+
+  toggleConfirmPassword.addEventListener("click", () => {
+    const type =
+      confirmPassword.getAttribute("type") === "password" ? "text" : "password";
+    confirmPassword.setAttribute("type", type);
+    toggleConfirmPassword.querySelector("i").classList.toggle("fa-eye");
+    toggleConfirmPassword.querySelector("i").classList.toggle("fa-eye-slash");
+  });
+
+  // Add event listeners for password fields
+  password.addEventListener("input", () => {
+    validateField(
+      password,
+      passwordError,
+      "Password must be at least 8 characters long."
+    );
+    if (confirmPassword.value) validatePasswordMatch();
+  });
+
+  confirmPassword.addEventListener("input", validatePasswordMatch);
+
+  // Add input event listeners for real-time validation
+  document.getElementById("clinicName").addEventListener("input", () => {
+    validateField(
+      document.getElementById("clinicName"),
+      clinicNameError,
+      "Please provide your hospital/clinic name."
+    );
+  });
+
+  document.getElementById("establishmentDate").addEventListener("input", () => {
+    validateField(
+      document.getElementById("establishmentDate"),
+      establishmentDateError,
+      "Please select the date of establishment."
+    );
+  });
+
+  document.getElementById("emailAddress").addEventListener("input", () => {
+    validateField(
+      document.getElementById("emailAddress"),
+      emailAddressError,
+      "Please provide a valid email address."
+    );
+  });
+
+  document.getElementById("termsCheck").addEventListener("change", () => {
+    validateField(
+      document.getElementById("termsCheck"),
+      termsCheckError,
+      "You must agree to our terms and conditions."
+    );
+  });
+
+  // Form submission validation
+  form.addEventListener("submit", (event) => {
+    event.preventDefault();
+    event.stopPropagation();
+
+    // Validate all fields
+    let isValid = true;
+
+    isValid =
+      validateField(
+        document.getElementById("clinicName"),
+        clinicNameError,
+        "Please provide your hospital/clinic name."
+      ) && isValid;
+    isValid =
+      validateField(
+        document.getElementById("establishmentDate"),
+        establishmentDateError,
+        "Please select the date of establishment."
+      ) && isValid;
+    isValid =
+      validateField(
+        document.getElementById("emailAddress"),
+        emailAddressError,
+        "Please provide a valid email address."
+      ) && isValid;
+    isValid =
+      validateField(
+        document.getElementById("phoneNumber"),
+        phoneNumberError,
+        "Please enter a valid 10-digit phone number."
+      ) && isValid;
+    isValid =
+      validateField(
+        document.getElementById("password"),
+        passwordError,
+        "Password must be at least 8 characters long."
+      ) && isValid;
+    isValid =
+      validateField(
+        document.getElementById("termsCheck"),
+        termsCheckError,
+        "You must agree to our terms and conditions."
+      ) && isValid;
+
+    validatePasswordMatch();
+    if (password.value !== confirmPassword.value) {
+      isValid = false;
+    }
+
+    form.classList.add("was-validated");
+
+    if (isValid) {
+      // Add success animation
+      const button = document.querySelector(".btn-primary");
+      button.innerHTML = '<i class="fas fa-check me-2"></i> Success!';
+      button.classList.add("animate__animated", "animate__pulse");
+
+      setTimeout(() => {
+        form.submit();
+      }, 1000);
+    }
+  });
+})();

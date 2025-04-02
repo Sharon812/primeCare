@@ -23,11 +23,14 @@ app.use((req, res, next) => {
 });
 
 //for public folder
-app.use(express.static(path.join(__dirname, "public")));
+app.use(express.static(path.join(__dirname, "src", "public")));
 
 //for ejs setup
 app.set("view engine", "ejs");
-app.set("views", [path.join(__dirname, "src", "views/clinic")]);
+app.set("views", [
+  path.join(__dirname, "src", "views/clinic"),
+  path.join(__dirname, "src", "views/doctor"),
+]);
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -35,6 +38,13 @@ app.use(express.urlencoded({ extended: true }));
 // for clinic routes
 import clinicRoute from "./src/interfaces/routes/clinic_routes.js";
 app.use("/clinic", clinicRoute);
+
+import { doctorRoute } from "./src/interfaces/routes/doctor-routes.js";
+app.use("/doctor", doctorRoute);
+
+//for error handling middleware
+import errorHandler from "./src/interfaces/middlewares/error-handler.js";
+app.use(errorHandler);
 
 //to listen to server
 app.listen(process.env.PORT, "0.0.0.0", () => {

@@ -1,20 +1,52 @@
-class Clinic {
-  constructor({ clinicName, registerNumber, email, phone }) {
-    if (!clinicName || !registerNumber || !email || !phone) {
-      throw new Error("All clinic fields are required.");
-    }
+import AppError from "../../utils/custom-error.js";
 
-    this.clinicName = clinicName;
-    this.registerNumber = registerNumber;
+class Clinic {
+  constructor({
+    clinicName,
+    dateOfEstablishment,
+    email,
+    phoneNumber,
+    password,
+  }) {
+    this.validaterequiredFields(
+      clinicName,
+      email,
+      dateOfEstablishment,
+      phoneNumber,
+      password
+    );
+    this.validateEmail(email);
+    this.validatePhone(phoneNumber);
+
+    //Basic registration information
+    this.name = clinicName;
     this.email = email;
-    this.phone = phone;
-    this.otp = this.generateOTP(); // Generate OTP on creation
-    this.status = "Pending OTP Verification";
+    this.phone = phoneNumber;
+    this.dateOfEstablishment = dateOfEstablishment;
+    this.password = password;
   }
 
-  generateOTP() {
-    return Math.floor(100000 + Math.random() * 900000).toString();
+  validaterequiredFields(...fields) {
+    fields.forEach((field) => {
+      if (!field || field.trim() === "") {
+        throw new AppError("Missing required fields");
+      }
+    });
+  }
+
+  validateEmail(email) {
+    const emailRegex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
+    if (!emailRegex.test(email)) {
+      throw new AppError("Invalid email");
+    }
+  }
+
+  validatePhone(phone) {
+    const phoneRegex = /^\d{10}$/;
+    if (!phoneRegex.test(phone)) {
+      throw new AppError("Invalid phone number");
+    }
   }
 }
 
-export default new Clinic();
+export default Clinic;
