@@ -63,13 +63,18 @@ router.get(
   doctorStepOneFormController.stepOneFormRender
 );
 
+router.post(
+  "/register/step1",
+  protectDoctorRoute,
+  doctorStepOneFormController.stepOneForm
+);
+
 router.get(
   "/register/step2",
   protectDoctorRoute,
   doctorStepSecondFormController.stepTwoFormRender
 );
 
-
-router.get("/logout", doctorLoginController.logoutDoctor)
+router.get("/logout", doctorLoginController.logoutDoctor);
 
 export const doctorRoute = router;

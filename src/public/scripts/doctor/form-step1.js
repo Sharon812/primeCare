@@ -199,14 +199,15 @@ document.addEventListener("DOMContentLoaded", function () {
   const form = document.getElementById("step1Form");
   form.addEventListener("submit", function (e) {
     e.preventDefault();
-    // Add your form submission logic here
-    // Show loading animation
     const btn = form.querySelector('button[type="submit"]');
     btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing...';
-    // Simulate form submission
+
+    // Clear localStorage before proceeding
+    localStorage.removeItem("doctorFormStep1");
+
+    // Simulate form submission (replace with your actual submission logic)
     setTimeout(() => {
-      // Proceed to next step
-      // Add your navigation logic here
+      window.location.href = "/doctor/register/step2"; // Replace with your actual next step URL
     }, 2000);
   });
 
@@ -309,4 +310,128 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // Initialize progress
   calculateProgress();
+
+  // Add this function to store form data
+  function storeFormData() {
+    const formData = {
+      firstName: document.querySelector('input[placeholder="First Name"]')
+        .value,
+      lastName: document.querySelector('input[placeholder="Last Name"]').value,
+      dob: document.getElementById("dob").value,
+      age: document.getElementById("age").value,
+      phone: document.querySelector('input[placeholder="Phone Number"]').value,
+      email: document.querySelector('input[placeholder="Email Address"]').value,
+      country: document.querySelector('input[placeholder="Country"]').value,
+      state: document.querySelector('input[placeholder="State"]').value,
+      district: document.querySelector('input[placeholder="District"]').value,
+      locality: document.querySelector('input[placeholder="Locality"]').value,
+      pincode: document.querySelector('input[placeholder="Pincode"]').value,
+      address: document.querySelector('textarea[placeholder="Full Address"]')
+        .value,
+      idType: document.getElementById("idType").value,
+      profileImage: previewImage.src,
+      idProofPreview: idPreviewImage.src,
+    };
+    localStorage.setItem("doctorFormStep1", JSON.stringify(formData));
+  }
+
+  // Load saved form data if exists
+  function loadSavedFormData() {
+    const savedData = localStorage.getItem("doctorFormStep1");
+    if (savedData) {
+      const formData = JSON.parse(savedData);
+
+      // Fill in the form fields
+      document.querySelector('input[placeholder="First Name"]').value =
+        formData.firstName || "";
+      document.querySelector('input[placeholder="Last Name"]').value =
+        formData.lastName || "";
+      document.getElementById("dob").value = formData.dob || "";
+      document.getElementById("age").value = formData.age || "";
+      document.querySelector('input[placeholder="Phone Number"]').value =
+        formData.phone || "";
+      document.querySelector('input[placeholder="Email Address"]').value =
+        formData.email || "";
+      document.querySelector('input[placeholder="Country"]').value =
+        formData.country || "";
+      document.querySelector('input[placeholder="State"]').value =
+        formData.state || "";
+      document.querySelector('input[placeholder="District"]').value =
+        formData.district || "";
+      document.querySelector('input[placeholder="Locality"]').value =
+        formData.locality || "";
+      document.querySelector('input[placeholder="Pincode"]').value =
+        formData.pincode || "";
+      document.querySelector('textarea[placeholder="Full Address"]').value =
+        formData.address || "";
+      document.getElementById("idType").value = formData.idType || "";
+
+      // Load images if they were saved
+      if (
+        formData.profileImage &&
+        formData.profileImage !== "/assets/default-avatar.png"
+      ) {
+        previewImage.src = formData.profileImage;
+      }
+
+      if (formData.idProofPreview && formData.idProofPreview !== "data:,") {
+        idPreviewImage.src = formData.idProofPreview;
+        previewContainer.style.display = "block";
+        dropzone.querySelector(".dropzone-content").style.display = "none";
+        const fileName = formData.idType
+          ? `${formData.idType} ID Proof`
+          : "ID Proof";
+        fileNameDisplay.textContent = fileName;
+      } else {
+        idPreviewImage.src = "";
+        previewContainer.style.display = "none";
+        dropzone.querySelector(".dropzone-content").style.display = "flex";
+        fileNameDisplay.textContent = "";
+      }
+    }
+  }
+
+  // Add input event listeners to all form fields
+  const formFields = document.querySelectorAll(
+    'input:not([type="file"]), textarea, select'
+  );
+  formFields.forEach((input) => {
+    input.addEventListener("input", storeFormData);
+    input.addEventListener("change", storeFormData);
+  });
+
+  // Modify existing file handling functions to store image data
+  const originalHandlePhotoFile = handlePhotoFile;
+  handlePhotoFile = function (file) {
+    originalHandlePhotoFile(file);
+    // The cropped image will be stored when crop button is clicked
+  };
+
+  const originalCropBtnClick = cropBtn.onclick;
+  cropBtn.onclick = function () {
+    if (originalCropBtnClick) {
+      originalCropBtnClick.call(this);
+    }
+    setTimeout(storeFormData, 100); // Store after crop is complete
+  };
+
+  const originalHandleFile = handleFile;
+  handleFile = function (file) {
+    originalHandleFile(file);
+    setTimeout(storeFormData, 100); // Store after ID proof is loaded
+  };
+
+  // Load saved data when page loads
+  loadSavedFormData();
+
+  // Modify form submission to clear storage on successful submission
+  const originalSubmit = form.onsubmit;
+  form.onsubmit = function (e) {
+    if (originalSubmit) {
+      originalSubmit.call(this, e);
+    }
+    // Clear storage only if form submission is successful
+    // This will be handled in your existing AJAX success callback
+    // localStorage.removeItem('doctorFormStep1');
+  };
 });
