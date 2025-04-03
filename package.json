@@ -31,6 +31,7 @@
   "homepage": "https://github.com/Sharon812/primeCare#readme",
   "dependencies": {
     "bcrypt": "^5.1.1",
+    "cloudinary": "^2.6.0",
     "connect-mongodb-session": "^5.0.0",
     "cookie-parser": "^1.4.7",
     "dotenv": "^16.4.7",
@@ -40,7 +41,9 @@
     "fast-levenshtein": "^3.0.0",
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.12.1",
-    "nodemailer": "^6.10.0"
+    "multer": "^1.4.5-lts.2",
+    "nodemailer": "^6.10.0",
+    "streamifier": "^0.1.1"
   },
   "devDependencies": {
     "nodemon": "^3.1.9"

@@ -8,6 +8,9 @@ const DoctorSchema = new mongoose.Schema({
 
   isEmailVerified: { type: Boolean, default: false },
   isPhoneVerified: { type: Boolean, default: false },
+  isStepOneFormCompleted: { type: Boolean, default: false },
+  isStepTwoFormCompleted: { type: Boolean, default: false },
+  isStepThreeFormCompleted: { type: Boolean, default: false },
   isFormCompleted: { type: Boolean, default: false },
   isAdminVerified: { type: Boolean, default: false },
 
@@ -15,10 +18,18 @@ const DoctorSchema = new mongoose.Schema({
   lastName: { type: String },
   dob: { type: Date },
   age: { type: Number },
-  gender: { type: String },
+  country: { type: String },
+  state: { type: String },
+  district: { type: String },
+  locality: { type: String },
+  pincode: { type: Number },
   address: { type: String },
-  photo: { type: String },
   idProof: { type: String },
+  idType: { type: String },
+  profileImage: { type: String },
+  
+
+
 
   highestQualification: { type: String },
   specialization: { type: String },

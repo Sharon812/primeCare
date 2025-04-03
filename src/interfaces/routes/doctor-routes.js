@@ -9,6 +9,7 @@ import {
   protectDoctorRoute,
   preventLoggedDoctor,
 } from "../middlewares/auth_middleware.js";
+import upload from "../upload/multer-config.js";
 
 const router = express.Router();
 
@@ -66,6 +67,10 @@ router.get(
 router.post(
   "/register/step1",
   protectDoctorRoute,
+  upload.fields([
+    { name: "profileImage", maxCount: 1 },
+    { name: "idProof", maxCount: 1 },
+  ]),
   doctorStepOneFormController.stepOneForm
 );
 

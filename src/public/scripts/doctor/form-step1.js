@@ -114,14 +114,10 @@ document.addEventListener("DOMContentLoaded", function () {
   dobInput.addEventListener("change", function () {
     const dob = new Date(this.value);
     const today = new Date();
-    let age = today.getFullYear() - dob.getFullYear();
-    const monthDiff = today.getMonth() - dob.getMonth();
-
-    if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < dob.getDate())) {
-      age--;
-    }
-
+    const age = Math.floor((today - dob) / (365.25 * 24 * 60 * 60 * 1000));
     ageInput.value = age;
+    // Trigger store data
+    storeFormData();
   });
 
   // File upload display
@@ -197,18 +193,171 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // Form submission
   const form = document.getElementById("step1Form");
-  form.addEventListener("submit", function (e) {
+
+  function showError(inputElement, message) {
+    const errorDiv =
+      inputElement.parentElement.querySelector(".error-message") ||
+      document.createElement("div");
+    errorDiv.className = "error-message";
+    errorDiv.textContent = message;
+    if (!inputElement.parentElement.querySelector(".error-message")) {
+      inputElement.parentElement.appendChild(errorDiv);
+    }
+    inputElement.classList.add("error");
+  }
+
+  function clearError(inputElement) {
+    const errorDiv = inputElement.parentElement.querySelector(".error-message");
+    if (errorDiv) {
+      errorDiv.remove();
+    }
+    inputElement.classList.remove("error");
+  }
+
+  function validateField(field) {
+    const value = field.value.trim();
+    const name = field.getAttribute("name");
+    clearError(field);
+
+    if (!value) {
+      showError(field, `${field.placeholder} is required`);
+      return false;
+    }
+
+    if (name === "email") {
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(value)) {
+        showError(field, "Please enter a valid email address");
+        return false;
+      }
+    }
+
+    if (name === "phone") {
+      if (!/^\d{10}$/.test(value)) {
+        showError(field, "Please enter a valid 10-digit phone number");
+        return false;
+      }
+    }
+
+    if (name === "pincode") {
+      if (!/^\d{6}$/.test(value)) {
+        showError(field, "Please enter a valid 6-digit pincode");
+        return false;
+      }
+    }
+
+    return true;
+  }
+
+  // Add input event listeners for real-time validation
+  const allInputs = form.querySelectorAll(
+    "input:not([readonly]), select, textarea"
+  );
+  allInputs.forEach((input) => {
+    input.addEventListener("blur", () => validateField(input));
+    input.addEventListener("input", () => {
+      if (input.classList.contains("error")) {
+        validateField(input);
+      }
+    });
+  });
+
+  form.addEventListener("submit", async function (e) {
     e.preventDefault();
-    const btn = form.querySelector('button[type="submit"]');
-    btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing...';
 
-    // Clear localStorage before proceeding
-    localStorage.removeItem("doctorFormStep1");
+    // Clear all existing errors
+    const errorMessages = form.querySelectorAll(".error-message");
+    errorMessages.forEach((error) => error.remove());
 
-    // Simulate form submission (replace with your actual submission logic)
-    setTimeout(() => {
-      window.location.href = "/doctor/register/step2"; // Replace with your actual next step URL
-    }, 2000);
+    let isValid = true;
+
+    // Validate all fields
+    allInputs.forEach((input) => {
+      if (!validateField(input)) {
+        isValid = false;
+      }
+    });
+
+    // Validate profile photo
+    if (previewImage.src === "/assets/default-avatar.png") {
+      showError(photoUpload, "Profile photo is required");
+      isValid = false;
+    }
+
+    // Validate ID proof
+    if (!idPreviewImage.src) {
+      showError(idProofUpload, "ID proof is required");
+      isValid = false;
+    }
+
+    if (!isValid) {
+      return;
+    }
+
+    try {
+      const btn = form.querySelector('button[type="submit"]');
+      btn.disabled = true;
+      btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing...';
+
+      const formData = new FormData();
+
+      // Add text fields including age
+      allInputs.forEach((input) => {
+        if (input.name) {
+          formData.append(input.name, input.value.trim());
+        }
+      });
+
+      // Explicitly add age field
+      formData.append("age", document.getElementById("age").value);
+
+      // Get the actual File objects from the input elements
+      const profileImageFile = photoUpload.files[0];
+      const idProofFile = idProofUpload.files[0];
+
+      // Append files with correct field names
+      if (profileImageFile) {
+        formData.append("profileImage", profileImageFile);
+      } else {
+        // If no file selected, convert base64 to blob
+        const profileImageResponse = await fetch(previewImage.src);
+        const profileImageBlob = await profileImageResponse.blob();
+        formData.append("profileImage", profileImageBlob, "profile.jpg");
+      }
+
+      if (idProofFile) {
+        formData.append("idProof", idProofFile);
+      } else if (idPreviewImage.src) {
+        // If no file selected but has preview image, convert base64 to blob
+        const idProofResponse = await fetch(idPreviewImage.src);
+        const idProofBlob = await idProofResponse.blob();
+        formData.append("idProof", idProofBlob, "idproof.jpg");
+      }
+
+      // Send form data
+      const response = await fetch("/doctor/register/step1", {
+        method: "POST",
+        body: formData,
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.message || "Something went wrong");
+      }
+
+      // Clear localStorage
+      localStorage.removeItem("doctorFormStep1");
+
+      // Redirect to next step
+      window.location.href = "/doctor/register/step2";
+    } catch (error) {
+      console.error("Error:", error);
+      alert(error.message || "An error occurred. Please try again.");
+      const btn = form.querySelector('button[type="submit"]');
+      btn.disabled = false;
+      btn.innerHTML = 'Next Step <i class="fas fa-arrow-right"></i>';
+    }
   });
 
   // Add input validation for pincode

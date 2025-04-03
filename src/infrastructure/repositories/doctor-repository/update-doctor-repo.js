@@ -6,7 +6,8 @@ class UpdateDoctorRepository extends DoctorRepository {
     this.doctorModel = doctorModel;
   }
 
-  async execute(doctorId, updateData) {
+  async updateDoctorById(doctorId, updateData) {
+    console.log("UpdateDoctorRepository hit", updateData)
     return this.doctorModel.findByIdAndUpdate(doctorId, updateData, {
       new: true,
     });

@@ -1,5 +1,5 @@
-<%- include('../layouts/doctor/header', { customCSS: '/css/doctor/form-step1.css'
-}) %>
+<%- include('../layouts/doctor/header', { customCSS:
+'/css/doctor/form-step1.css' }) %>
 <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
 <link
   rel="stylesheet"
@@ -38,7 +38,11 @@
         </div>
       </div>
 
-      <form class="registration-form" id="step1Form">
+      <form
+        class="registration-form"
+        id="step1Form"
+        enctype="multipart/form-data"
+      >
         <div class="photo-upload-section">
           <div class="photo-dropzone" id="photoDropzone">
             <div class="photo-preview-circle">
@@ -48,78 +52,84 @@
                 <p>Click or Drop</p>
               </div>
             </div>
-            <input type="file" id="photoUpload" accept="image/*" hidden />
+            <input
+              type="file"
+              id="photoUpload"
+              name="profileImage"
+              accept="image/*"
+              hidden
+            />
           </div>
         </div>
 
         <div class="form-grid">
           <div class="input-group">
             <i class="fas fa-user"></i>
-            <input type="text" placeholder="First Name" required />
+            <input type="text" placeholder="First Name" name="firstName" />
           </div>
           <div class="input-group">
             <i class="fas fa-user"></i>
-            <input type="text" placeholder="Last Name" required />
+            <input type="text" placeholder="Last Name" name="lastName" />
           </div>
           <div class="input-group">
             <i class="fas fa-calendar"></i>
-            <input type="date" id="dob" required />
+            <input type="date" id="dob" name="dob" />
           </div>
           <div class="input-group">
             <i class="fas fa-clock"></i>
-            <input type="number" id="age" placeholder="Age" readonly />
+            <input
+              type="number"
+              id="age"
+              name="age"
+              placeholder="Age"
+              readonly
+            />
           </div>
           <div class="input-group">
             <i class="fas fa-phone"></i>
-            <input type="tel" placeholder="Phone Number" required />
+            <input type="tel" placeholder="Phone Number" name="phone" />
           </div>
           <div class="input-group">
             <i class="fas fa-envelope"></i>
-            <input type="email" placeholder="Email Address" required />
+            <input type="email" placeholder="Email Address" name="email" />
           </div>
         </div>
 
         <div class="address-section">
           <div class="input-group">
             <i class="fas fa-globe"></i>
-            <input type="text" placeholder="Country" required />
+            <input type="text" placeholder="Country" name="country" />
           </div>
           <div class="form-grid">
             <div class="input-group">
               <i class="fas fa-map"></i>
-              <input type="text" placeholder="State" required />
+              <input type="text" placeholder="State" name="state" />
             </div>
             <div class="input-group">
               <i class="fas fa-city"></i>
-              <input type="text" placeholder="District" required />
+              <input type="text" placeholder="District" name="district" />
             </div>
           </div>
           <div class="form-grid">
             <div class="input-group">
               <i class="fas fa-map-marker-alt"></i>
-              <input type="text" placeholder="Locality" required />
+              <input type="text" placeholder="Locality" name="locality" />
             </div>
             <div class="input-group">
               <i class="fas fa-map-pin"></i>
-              <input
-                type="text"
-                placeholder="Pincode"
-                pattern="[0-9]{6}"
-                maxlength="6"
-                required
-              />
+              <input type="text" placeholder="Pincode" name="pincode" />
             </div>
           </div>
           <div class="input-group">
             <i class="fas fa-home"></i>
-            <textarea placeholder="Full Address" required></textarea>
+            <textarea placeholder="Full Address" name="address"></textarea>
           </div>
         </div>
 
         <div class="id-proof-section">
           <div class="input-group">
             <i class="fas fa-id-card"></i>
-            <select id="idType" required>
+            <select id="idType" name="idType">
               <option value="">Select ID Proof</option>
               <option value="aadhar">Aadhar Card</option>
               <option value="pan">PAN Card</option>
@@ -127,7 +137,13 @@
             </select>
           </div>
           <div class="dropzone" id="idProofDropzone">
-            <input type="file" id="idProofUpload" accept="image/*" hidden />
+            <input
+              type="file"
+              id="idProofUpload"
+              name="idProof"
+              accept="image/*"
+              hidden
+            />
             <div class="dropzone-content">
               <i class="fas fa-cloud-upload-alt"></i>
               <p>Drag & drop your ID proof here or <span>browse</span></p>
