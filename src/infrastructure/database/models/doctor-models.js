@@ -24,9 +24,9 @@ const DoctorSchema = new mongoose.Schema({
   locality: { type: String },
   pincode: { type: Number },
   address: { type: String },
-  idProof: { type: String },
+  idproof: { type: String },
   idType: { type: String },
-  profileImage: { type: String },
+  profileimage: { type: String },
   
 
 

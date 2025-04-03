@@ -4,23 +4,24 @@ import AppError from "../../utils/custom-error.js";
 class CloudinaryService {
   constructor() {}
 
-  async uploadImage(file) {
-    try {
-      const result = cloudinary.uploader.upload_stream({
-        folder: "doctors",
-        resource_type: "image",
-      },
-      (error, result) =>{
-        if(error) throw new AppError("Failed to upload image to Cloudinary");
-        return result.secure_url; 
-      }
-    ).end(file.buffer);
+  async uploadImage(fileBuffer) {
+    return new Promise((resolve, reject) => {
+      const uploadStream = cloudinary.uploader.upload_stream(
+        {
+          folder: "doctors",
+          resource_type: "image",
+        },
+        (error, result) => {
+          if (error) {
+            console.error("Cloudinary Upload Error:", error);
+            return reject(new AppError("Failed to upload image to Cloudinary"));
+          }
+          resolve(result.secure_url);
+        }
+      );
 
-    return result;
-    } catch (error) {
-      console.log("Cloudinary Service Error: ", error);
-      throw new AppError("Failed to upload image to Cloudinary");
-    }
+      uploadStream.end(fileBuffer);
+    });
   }
 }
 

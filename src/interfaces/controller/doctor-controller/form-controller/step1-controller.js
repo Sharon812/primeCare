@@ -22,6 +22,7 @@ class DoctorStepOneFormController {
     try {
       console.log("Received form data:", req.body);
       console.log("Received files:", req.files);
+
       const doctorId = req.doctor.doctorId;
 
       const updateData = {
@@ -36,22 +37,23 @@ class DoctorStepOneFormController {
         pincode: req.body.pincode,
         address: req.body.address,
         idType: req.body.idType,
-        profileimage: req.files?.profileimage
-          ? req.files.profileimage[0]
+        profileimage: req.files?.profileImage
+          ? req.files.profileImage[0].buffer
           : null,
-        idproof: req.files?.idproof ? req.files.idproof[0] : null,
+        idproof: req.files?.idProof ? req.files.idProof[0].buffer : null,
       };
 
+      // Pass data to the use case
       const stepOneFormData = await this.stepOneFormUseCase.execute(
         doctorId,
         updateData
       );
 
-      console.log("stepOneFormData:", stepOneFormData);
+      console.log("Updated Doctor Data:", stepOneFormData);
 
       res.json({
         message: "Form submitted successfully",
-        data: req.body,
+        data: stepOneFormData,
       });
     } catch (error) {
       console.log("stepOneForm Controller Error:", error);

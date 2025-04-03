@@ -5,23 +5,28 @@ class saveStepOneFormData {
   }
 
   async execute(doctorId, doctorData) {
-    if (doctorData.profileImage) {
-      doctorData.profileImage = await this.cloudinaryService.uploadImage(
-        doctorData.profileImage
-      );
+    try {
+      if (doctorData.profileimage) {
+        doctorData.profileimage = await this.cloudinaryService.uploadImage(
+          doctorData.profileimage
+        );
+      }
+
+      if (doctorData.idproof) {
+        doctorData.idproof = await this.cloudinaryService.uploadImage(
+          doctorData.idproof
+        );
+      }
+
+      doctorData.isStepOneFormCompleted = true;
+
+      console.log("Final Data to Save:", doctorData);
+
+      return await this.doctorRepository.updateDoctorById(doctorId, doctorData);
+    } catch (error) {
+      console.error("Step One Form Use Case Error:", error);
+      throw new AppError("Failed to save doctor step one form data.");
     }
-
-    if (doctorData.idProof) {
-      doctorData.idProof = await this.cloudinaryService.uploadImage(
-        doctorData.idProof
-      );
-    }
-
-    doctorData.isStepOneFormCompleted = true;
-
-    console.log("data from repo",doctorData);
-
-    return await this.doctorRepository.updateDoctorById(doctorId, doctorData);
   }
 }
 
