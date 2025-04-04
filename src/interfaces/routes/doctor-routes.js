@@ -10,6 +10,11 @@ import {
   protectDoctorRoute,
   preventLoggedDoctor,
 } from "../middlewares/auth_middleware.js";
+
+import {
+  stepTwoAuth,
+  stepThreeAuth,
+} from "../middlewares/form-auth-middleware.js";
 import upload from "../upload/multer-config.js";
 
 const router = express.Router();
@@ -74,7 +79,7 @@ router.get(
 router.post(
   "/send-otp-to-phone",
   protectDoctorRoute,
-  sendOtpToPhoneNumber.sendOtp,
+  sendOtpToPhoneNumber.sendOtp
 );
 
 router.post(
@@ -90,6 +95,7 @@ router.post(
 router.get(
   "/register/step2",
   protectDoctorRoute,
+  stepTwoAuth,
   doctorStepSecondFormController.stepTwoFormRender
 );
 
