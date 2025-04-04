@@ -1,3 +1,5 @@
+import AppError from "../../../../utils/custom-error.js";
+
 class saveStepOneFormData {
   constructor(doctorRepository, cloudinaryService) {
     this.doctorRepository = doctorRepository;

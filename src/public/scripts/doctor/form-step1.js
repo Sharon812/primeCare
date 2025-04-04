@@ -215,6 +215,9 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   function validateField(field) {
+    // Skip file inputs as they are validated separately based on image preview values.
+    if (field.type === "file") return true;
+
     const value = field.value.trim();
     const name = field.getAttribute("name");
     clearError(field);
@@ -249,19 +252,6 @@ document.addEventListener("DOMContentLoaded", function () {
     return true;
   }
 
-  // Add input event listeners for real-time validation
-  const allInputs = form.querySelectorAll(
-    "input:not([readonly]), select, textarea"
-  );
-  allInputs.forEach((input) => {
-    input.addEventListener("blur", () => validateField(input));
-    input.addEventListener("input", () => {
-      if (input.classList.contains("error")) {
-        validateField(input);
-      }
-    });
-  });
-
   form.addEventListener("submit", async function (e) {
     e.preventDefault();
 
@@ -271,21 +261,33 @@ document.addEventListener("DOMContentLoaded", function () {
 
     let isValid = true;
 
-    // Validate all fields
-    allInputs.forEach((input) => {
+    // Validate all text/select/textarea fields
+    allFormInputs.forEach((input) => {
       if (!validateField(input)) {
         isValid = false;
       }
     });
 
-    // Validate profile photo
-    if (previewImage.src === "/assets/default-avatar.png") {
+    // Validate profile photo:
+    // Only require if previewImage.src is empty or default AND no new file is chosen.
+    if (
+      (!previewImage.src ||
+        previewImage.src === "/assets/default-avatar.png" ||
+        previewImage.src.trim() === "") &&
+      !photoUpload.files.length
+    ) {
       showError(photoUpload, "Profile photo is required");
       isValid = false;
     }
 
-    // Validate ID proof
-    if (!idPreviewImage.src) {
+    // Validate ID proof:
+    // Only require if idPreviewImage.src is empty (or equals the empty data URL) AND no new file is chosen.
+    if (
+      (!idPreviewImage.src ||
+        idPreviewImage.src === "data:," ||
+        idPreviewImage.src.trim() === "") &&
+      !idProofUpload.files.length
+    ) {
       showError(idProofUpload, "ID proof is required");
       isValid = false;
     }
@@ -302,14 +304,15 @@ document.addEventListener("DOMContentLoaded", function () {
       const formData = new FormData();
 
       // Add text fields including age
-      allInputs.forEach((input) => {
+      allFormInputs.forEach((input) => {
         if (input.name) {
-          formData.append(input.name, input.value.trim());
+          if (input.name === "age") {
+            formData.append(input.name, Number(input.value)); // Ensure age is sent as a number
+          } else {
+            formData.append(input.name, input.value.trim());
+          }
         }
       });
-
-      // Explicitly add age field
-      formData.append("age", document.getElementById("age").value);
 
       // Get the actual File objects from the input elements
       const profileImageFile = photoUpload.files[0];
@@ -318,8 +321,11 @@ document.addEventListener("DOMContentLoaded", function () {
       // Append files with correct field names
       if (profileImageFile) {
         formData.append("profileImage", profileImageFile);
-      } else {
-        // If no file selected, convert base64 to blob
+      } else if (
+        previewImage.src &&
+        previewImage.src !== "/assets/default-avatar.png"
+      ) {
+        // If no file selected but preview image exists, convert base64 to blob
         const profileImageResponse = await fetch(previewImage.src);
         const profileImageBlob = await profileImageResponse.blob();
         formData.append("profileImage", profileImageBlob, "profile.jpg");
@@ -327,8 +333,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
       if (idProofFile) {
         formData.append("idProof", idProofFile);
-      } else if (idPreviewImage.src) {
-        // If no file selected but has preview image, convert base64 to blob
+      } else if (idPreviewImage.src && idPreviewImage.src !== "data:,") {
+        // If no file selected but preview image exists, convert base64 to blob
         const idProofResponse = await fetch(idPreviewImage.src);
         const idProofBlob = await idProofResponse.blob();
         formData.append("idProof", idProofBlob, "idproof.jpg");
@@ -486,56 +492,44 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // Load saved form data if exists
   function loadSavedFormData() {
+    // Only load from localStorage if fields are empty (no backend data)
     const savedData = localStorage.getItem("doctorFormStep1");
     if (savedData) {
       const formData = JSON.parse(savedData);
+      const inputs = form.querySelectorAll(
+        'input:not([type="file"]), textarea, select'
+      );
 
-      // Fill in the form fields
-      document.querySelector('input[placeholder="First Name"]').value =
-        formData.firstName || "";
-      document.querySelector('input[placeholder="Last Name"]').value =
-        formData.lastName || "";
-      document.getElementById("dob").value = formData.dob || "";
-      document.getElementById("age").value = formData.age || "";
-      document.querySelector('input[placeholder="Phone Number"]').value =
-        formData.phone || "";
-      document.querySelector('input[placeholder="Email Address"]').value =
-        formData.email || "";
-      document.querySelector('input[placeholder="Country"]').value =
-        formData.country || "";
-      document.querySelector('input[placeholder="State"]').value =
-        formData.state || "";
-      document.querySelector('input[placeholder="District"]').value =
-        formData.district || "";
-      document.querySelector('input[placeholder="Locality"]').value =
-        formData.locality || "";
-      document.querySelector('input[placeholder="Pincode"]').value =
-        formData.pincode || "";
-      document.querySelector('textarea[placeholder="Full Address"]').value =
-        formData.address || "";
-      document.getElementById("idType").value = formData.idType || "";
+      inputs.forEach((input) => {
+        // Only fill if current value is empty
+        if (!input.value && formData[input.name]) {
+          input.value = formData[input.name];
+        }
+      });
 
-      // Load images if they were saved
+      // Handle images only if not already set from backend
       if (
-        formData.profileImage &&
-        formData.profileImage !== "/assets/default-avatar.png"
+        !previewImage.src ||
+        previewImage.src.endsWith("default-avatar.png")
       ) {
-        previewImage.src = formData.profileImage;
+        if (
+          formData.profileImage &&
+          formData.profileImage !== "/assets/default-avatar.png"
+        ) {
+          previewImage.src = formData.profileImage;
+        }
       }
 
-      if (formData.idProofPreview && formData.idProofPreview !== "data:,") {
-        idPreviewImage.src = formData.idProofPreview;
-        previewContainer.style.display = "block";
-        dropzone.querySelector(".dropzone-content").style.display = "none";
-        const fileName = formData.idType
-          ? `${formData.idType} ID Proof`
-          : "ID Proof";
-        fileNameDisplay.textContent = fileName;
-      } else {
-        idPreviewImage.src = "";
-        previewContainer.style.display = "none";
-        dropzone.querySelector(".dropzone-content").style.display = "flex";
-        fileNameDisplay.textContent = "";
+      if (!idPreviewImage.src) {
+        if (formData.idProofPreview && formData.idProofPreview !== "data:,") {
+          idPreviewImage.src = formData.idProofPreview;
+          previewContainer.style.display = "block";
+          dropzone.querySelector(".dropzone-content").style.display = "none";
+          const fileName = formData.idType
+            ? `${formData.idType} ID Proof`
+            : "ID Proof";
+          fileNameDisplay.textContent = fileName;
+        }
       }
     }
   }
@@ -583,4 +577,110 @@ document.addEventListener("DOMContentLoaded", function () {
     // This will be handled in your existing AJAX success callback
     // localStorage.removeItem('doctorFormStep1');
   };
+
+  function calculateProgress() {
+    const requiredFields = {
+      firstName: document.querySelector('input[name="firstName"]'),
+      lastName: document.querySelector('input[name="lastName"]'),
+      dob: document.getElementById("dob"),
+      phone: document.querySelector('input[name="phone"]'),
+      email: document.querySelector('input[name="email"]'),
+      country: document.querySelector('input[name="country"]'),
+      state: document.querySelector('input[name="state"]'),
+      district: document.querySelector('input[name="district"]'),
+      locality: document.querySelector('input[name="locality"]'),
+      pincode: document.querySelector('input[name="pincode"]'),
+      address: document.querySelector('textarea[name="address"]'),
+      idType: document.getElementById("idType"),
+    };
+
+    let filledCount = 0;
+    let totalFields = Object.keys(requiredFields).length + 2; // +2 for profile photo and ID proof
+
+    // Check text inputs, select, and textarea
+    Object.entries(requiredFields).forEach(([key, field]) => {
+      if (field && field.value.trim()) {
+        // Additional validation for specific fields
+        switch (key) {
+          case "email":
+            if (/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(field.value.trim()))
+              filledCount++;
+            break;
+          case "phone":
+            if (/^\d{10}$/.test(field.value.trim())) filledCount++;
+            break;
+          case "pincode":
+            if (/^\d{6}$/.test(field.value.trim())) filledCount++;
+            break;
+          default:
+            filledCount++;
+        }
+      }
+    });
+
+    // Check profile photo
+    if (previewImage.src && previewImage.src !== "/assets/default-avatar.png") {
+      filledCount++;
+    }
+
+    // Check ID proof
+    if (idPreviewImage.src && idPreviewImage.src !== "") {
+      filledCount++;
+    }
+
+    // Calculate percentage (33.33% max for first step)
+    const progress = Math.min((filledCount / totalFields) * 33.33, 33.33);
+
+    // Update progress bar
+    const progressBar = document.querySelector(".progress-bar");
+    if (progressBar) {
+      progressBar.style.setProperty("--progress", `${progress}%`);
+
+      const steps = document.querySelectorAll(".step");
+      if (progress === 33.33) {
+        steps[0].classList.add("completed");
+        steps[1].classList.add("active");
+        steps[0].classList.remove("active");
+      } else {
+        steps[0].classList.add("active");
+        steps[0].classList.remove("completed");
+        steps[1].classList.remove("active");
+      }
+    }
+
+    return progress === 33.33; // Return true if section is complete
+  }
+
+  // Remove all duplicate formInputs declarations and combine the event listeners
+  const allFormInputs = document.querySelectorAll("input, select, textarea");
+  allFormInputs.forEach((input) => {
+    // Real-time validation
+    if (!input.readOnly && input.type !== "file") {
+      input.addEventListener("blur", () => validateField(input));
+      input.addEventListener("input", () => {
+        if (input.classList.contains("error")) {
+          validateField(input);
+        }
+      });
+    }
+
+    // Progress calculation
+    input.addEventListener("input", calculateProgress);
+    input.addEventListener("change", calculateProgress);
+
+    // Store form data
+    if (input.type !== "file") {
+      input.addEventListener("input", storeFormData);
+      input.addEventListener("change", storeFormData);
+    }
+  });
+
+  // Update progress when images are added/changed
+  const imageInputs = [photoUpload, idProofUpload];
+  imageInputs.forEach((input) => {
+    input.addEventListener("change", calculateProgress);
+  });
+
+  // Initialize progress
+  calculateProgress();
 });

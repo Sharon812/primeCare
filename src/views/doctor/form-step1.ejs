@@ -46,7 +46,7 @@
         <div class="photo-upload-section">
           <div class="photo-dropzone" id="photoDropzone">
             <div class="photo-preview-circle">
-              <img id="previewImage" src="/assets/default-avatar.png" />
+              <img id="previewImage" src="<%= (doctorDetails && doctorDetails.profileImage) ? doctorDetails.profileImage : '/assets/default-avatar.png' %>" alt="Profile Photo" />
               <div class="upload-overlay">
                 <i class="fas fa-camera"></i>
                 <p>Click or Drop</p>
@@ -65,64 +65,115 @@
         <div class="form-grid">
           <div class="input-group">
             <i class="fas fa-user"></i>
-            <input type="text" placeholder="First Name" name="firstName" />
+            <input 
+              type="text" 
+              placeholder="First Name" 
+              name="firstName" 
+              value="<%= doctorDetails && doctorDetails.firstName ? doctorDetails.firstName : '' %>"
+            />
           </div>
           <div class="input-group">
             <i class="fas fa-user"></i>
-            <input type="text" placeholder="Last Name" name="lastName" />
+            <input 
+              type="text" 
+              placeholder="Last Name" 
+              name="lastName" 
+              value="<%= doctorDetails && doctorDetails.lastName ? doctorDetails.lastName : '' %>"
+            />
           </div>
           <div class="input-group">
             <i class="fas fa-calendar"></i>
-            <input type="date" id="dob" name="dob" />
+            <input 
+              type="date" 
+              id="dob" 
+              name="dob" 
+              value="<%= doctorDetails && doctorDetails.dob ? doctorDetails.dob : '' %>"
+            />
           </div>
           <div class="input-group">
             <i class="fas fa-clock"></i>
-            <input
-              type="number"
-              id="age"
-              name="age"
-              placeholder="Age"
-              readonly
+            <input 
+              type="number" 
+              id="age" 
+              name="age" 
+              placeholder="Age" 
+              readonly 
+              value="<%= doctorDetails && doctorDetails.age ? doctorDetails.age : '' %>"
             />
           </div>
           <div class="input-group">
             <i class="fas fa-phone"></i>
-            <input type="tel" placeholder="Phone Number" name="phone" />
+            <input 
+              type="tel" 
+              placeholder="Phone Number" 
+              name="phone" 
+              value="<%= doctorDetails && doctorDetails.phoneNumber ? doctorDetails.phoneNumber : '' %>"
+            />
           </div>
           <div class="input-group">
             <i class="fas fa-envelope"></i>
-            <input type="email" placeholder="Email Address" name="email" />
+            <input 
+              type="email" 
+              placeholder="Email Address" 
+              name="email" 
+              value="<%= doctorDetails && doctorDetails.email ? doctorDetails.email : '' %>"
+            />
           </div>
         </div>
 
         <div class="address-section">
           <div class="input-group">
             <i class="fas fa-globe"></i>
-            <input type="text" placeholder="Country" name="country" />
+            <input 
+              type="text" 
+              placeholder="Country" 
+              name="country" 
+              value="<%= doctorDetails && doctorDetails.country ? doctorDetails.country : '' %>"
+            />
           </div>
           <div class="form-grid">
             <div class="input-group">
               <i class="fas fa-map"></i>
-              <input type="text" placeholder="State" name="state" />
+              <input 
+                type="text" 
+                placeholder="State" 
+                name="state" 
+                value="<%= doctorDetails && doctorDetails.state ? doctorDetails.state : '' %>"
+              />
             </div>
             <div class="input-group">
               <i class="fas fa-city"></i>
-              <input type="text" placeholder="District" name="district" />
+              <input 
+                type="text" 
+                placeholder="District" 
+                name="district" 
+                value="<%= doctorDetails && doctorDetails.district ? doctorDetails.district : '' %>"
+              />
             </div>
           </div>
           <div class="form-grid">
             <div class="input-group">
               <i class="fas fa-map-marker-alt"></i>
-              <input type="text" placeholder="Locality" name="locality" />
+              <input 
+                type="text" 
+                placeholder="Locality" 
+                name="locality" 
+                value="<%= doctorDetails && doctorDetails.locality ? doctorDetails.locality : '' %>"
+              />
             </div>
             <div class="input-group">
               <i class="fas fa-map-pin"></i>
-              <input type="text" placeholder="Pincode" name="pincode" />
+              <input 
+                type="text" 
+                placeholder="Pincode" 
+                name="pincode" 
+                value="<%= doctorDetails && doctorDetails.pincode ? doctorDetails.pincode : '' %>"
+              />
             </div>
           </div>
           <div class="input-group">
             <i class="fas fa-home"></i>
-            <textarea placeholder="Full Address" name="address"></textarea>
+            <textarea placeholder="Full Address" name="address"><%= doctorDetails && doctorDetails.address ? doctorDetails.address : '' %></textarea>
           </div>
         </div>
 
@@ -131,9 +182,9 @@
             <i class="fas fa-id-card"></i>
             <select id="idType" name="idType">
               <option value="">Select ID Proof</option>
-              <option value="aadhar">Aadhar Card</option>
-              <option value="pan">PAN Card</option>
-              <option value="license">Driving License</option>
+              <option value="aadhar" <%= doctorDetails && doctorDetails.idType === 'aadhar' ? 'selected' : '' %>>Aadhar Card</option>
+              <option value="pan" <%= doctorDetails && doctorDetails.idType === 'pan' ? 'selected' : '' %>>PAN Card</option>
+              <option value="license" <%= doctorDetails && doctorDetails.idType === 'license' ? 'selected' : '' %>>Driving License</option>
             </select>
           </div>
           <div class="dropzone" id="idProofDropzone">
@@ -144,21 +195,19 @@
               accept="image/*"
               hidden
             />
-            <div class="dropzone-content">
+            <div class="dropzone-content" style="display: <%= doctorDetails && doctorDetails.idProof ? 'none' : 'flex' %>">
               <i class="fas fa-cloud-upload-alt"></i>
               <p>Drag & drop your ID proof here or <span>browse</span></p>
-              <p class="small">
-                Supported formats: JPG, PNG, PDF (Max size: 5MB)
-              </p>
+              <p class="small">Supported formats: JPG, PNG, PDF (Max size: 5MB)</p>
             </div>
             <div
               class="preview-container"
               id="previewContainer"
-              style="display: none"
+              style="display: <%= (doctorDetails && doctorDetails.idProof) ? 'block' : 'none' %>"
             >
-              <img id="idPreviewImage" src="" alt="ID Preview" />
+              <img id="idPreviewImage" src="<%= (doctorDetails && doctorDetails.idProof) ? doctorDetails.idProof : '' %>" alt="ID Preview" />
               <div class="preview-info">
-                <span id="fileNameDisplay"></span>
+                <span id="fileNameDisplay"><%= (doctorDetails && doctorDetails.idType) ? `${doctorDetails.idType} ID Proof` : '' %></span>
                 <button type="button" id="removeFile" class="remove-btn">
                   <i class="fas fa-times"></i>
                 </button>

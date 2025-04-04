@@ -2,16 +2,46 @@ import SaveStepOneFormData from "../../../../application/use_cases/doctor-use-ca
 import UpdateDoctorRepository from "../../../../infrastructure/repositories/doctor-repository/update-doctor-repo.js";
 import CloudinaryService from "../../../../infrastructure/services/CloudinaryService.js";
 import doctorModal from "../../../../infrastructure/database/models/doctor-models.js";
+import FindDoctorDetails from "../../../../application/use_cases/doctor-use-case/find-doctor-details-useCase.js";
+import FindDoctorRepository from "../../../../infrastructure/repositories/doctor-repository/find-doctor-repo.js";
 
 class DoctorStepOneFormController {
-  constructor(stepOneFormUseCase) {
+  constructor(stepOneFormUseCase, findDoctorDetailsUseCase) {
+    this.findDoctorDetailsUseCase = findDoctorDetailsUseCase;
     this.stepOneFormUseCase = stepOneFormUseCase;
   }
 
   stepOneFormRender = async (req, res, next) => {
     try {
       console.log("Doctor step one form route hit");
-      res.render("form-step1");
+      const doctorDetails = await this.findDoctorDetailsUseCase.execute(
+        req.doctor.doctorId
+      );
+
+      const formattedDOB = doctorDetails.dob
+        ? new Date(doctorDetails.dob).toISOString().split("T")[0]
+        : "";
+
+      res.render("form-step1", {
+        doctorDetails: {
+          firstName: doctorDetails.firstName,
+          lastName: doctorDetails.lastName,
+          dob: formattedDOB,
+          age: doctorDetails.age,
+          country: doctorDetails.country,
+          state: doctorDetails.state,
+          district: doctorDetails.district,
+          locality: doctorDetails.locality,
+          pincode: doctorDetails.pincode,
+          address: doctorDetails.address,
+          idType: doctorDetails.idType,
+          profileImage: doctorDetails.profileimage || null,
+          idProof: doctorDetails.idproof || null,
+          email: doctorDetails.email,
+          phoneNumber: doctorDetails.phone,
+        },
+        doctorId: req.doctor.doctorId,
+      });
     } catch (error) {
       console.log("stepOneFormRender Controller Error:", error);
       next(error);
@@ -64,11 +94,14 @@ class DoctorStepOneFormController {
 
 const cloudinaryService = new CloudinaryService();
 const updateDoctorRepository = new UpdateDoctorRepository(doctorModal);
+const findDoctorRepository = new FindDoctorRepository(doctorModal);
+const findDoctorDetailsUseCase = new FindDoctorDetails(findDoctorRepository);
 const stepOneFormUseCase = new SaveStepOneFormData(
   updateDoctorRepository,
   cloudinaryService
 );
 
 export const doctorStepOneFormController = new DoctorStepOneFormController(
-  stepOneFormUseCase
+  stepOneFormUseCase,
+  findDoctorDetailsUseCase
 );
