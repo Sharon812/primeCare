@@ -101,4 +101,57 @@ router.get(
 
 router.get("/logout", doctorLoginController.logoutDoctor);
 
+router.post("/login", preventLoggedDoctor, doctorLoginController.loginDoctor);
+
+router.get(
+  "/register",
+  preventLoggedDoctor,
+  doctorRegisterController.registerPageRender
+);
+
+router.post(
+  "/register",
+  preventLoggedDoctor,
+  doctorRegisterController.registerDoctor
+);
+
+router.post(
+  "/send-otp",
+  preventLoggedDoctor,
+  doctorVerifyEmailController.sendOTP
+);
+
+router.get(
+  "/verify-otp",
+  preventLoggedDoctor,
+  doctorVerifyEmailController.renderingOTPPage
+);
+
+router.post(
+  "/verify-otp",
+  preventLoggedDoctor,
+  doctorVerifyEmailController.verifyEmail
+);
+
+router.get(
+  "/dashboard",
+  protectDoctorRoute,
+  doctorDashboardController.doctorDashboardRender
+);
+
+router.get(
+  "/register/step1",
+  protectDoctorRoute,
+  doctorStepOneFormController.stepOneFormRender
+);
+
+router.get(
+  "/register/step2",
+  protectDoctorRoute,
+  doctorStepSecondFormController.stepTwoFormRender
+);
+
+
+router.get("/logout", doctorLoginController.logoutDoctor)
+
 export const doctorRoute = router;

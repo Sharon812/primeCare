@@ -10,6 +10,8 @@ class DoctorStepOneFormController {
     this.findDoctorDetailsUseCase = findDoctorDetailsUseCase;
     this.stepOneFormUseCase = stepOneFormUseCase;
   }
+class DoctorStepOneFormController {
+  constructor() {}
 
   stepOneFormRender = async (req, res, next) => {
     try {
@@ -42,6 +44,7 @@ class DoctorStepOneFormController {
         },
         doctorId: req.doctor.doctorId,
       });
+      res.render("form-step1");
     } catch (error) {
       console.log("stepOneFormRender Controller Error:", error);
       next(error);
@@ -105,3 +108,6 @@ export const doctorStepOneFormController = new DoctorStepOneFormController(
   stepOneFormUseCase,
   findDoctorDetailsUseCase
 );
+}
+
+export const doctorStepOneFormController = new DoctorStepOneFormController();
