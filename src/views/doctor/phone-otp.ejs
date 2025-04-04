@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Send OTP</title>
+  </head>
+  <body>
+    <h2>Doctor Phone OTP Login</h2>
+
+    <form id="otp-form">
+      <input type="tel" id="phoneNumber" placeholder="+91XXXXXXXXXX" required />
+      <button type="submit">Send OTP</button>
+    </form>
+
+    <!-- Recaptcha container (invisible) -->
+    <div id="recaptcha-container"></div>
+
+    <script type="module">
+      // Import Firebase
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/10.10.0/firebase-app.js";
+      import {
+        getAuth,
+        RecaptchaVerifier,
+        signInWithPhoneNumber,
+      } from "https://www.gstatic.com/firebasejs/10.10.0/firebase-auth.js";
+
+      // Firebase config (Replace with your .env values if needed)
+      const firebaseConfig = {
+        apiKey: "<%= process.env.FIREBASE_API_KEY %>",
+        authDomain: "<%= process.env.FIREBASE_AUTH_DOMAIN %>",
+        projectId: "<%= process.env.FIREBASE_PROJECT_ID %>",
+        storageBucket: "<%= process.env.FIREBASE_STORAGE_BUCKET %>",
+        messagingSenderId: "<%= process.env.FIREBASE_MESSAGING_SENDER_ID %>",
+        appId: "<%= process.env.FIREBASE_APP_ID %>",
+      };
+
+      // Initialize Firebase
+      const app = initializeApp(firebaseConfig);
+      const auth = getAuth(app);
+
+      // Global confirmationResult (store for later use)
+      let confirmationResult = null;
+
+      // Setup reCAPTCHA
+      const recaptcha = new RecaptchaVerifier(auth, "recaptcha-container", {
+        size: "invisible",
+        callback: (response) => {
+          console.log("Recaptcha solved", response);
+        },
+      });
+
+      document
+        .getElementById("otp-form")
+        .addEventListener("submit", async (e) => {
+          e.preventDefault();
+          const phoneNumber = document.getElementById("phoneNumber").value;
+
+          try {
+            confirmationResult = await signInWithPhoneNumber(
+              auth,
+              phoneNumber,
+              recaptcha
+            );
+            alert("OTP sent to your phone");
+            console.log("Confirmation Result:", confirmationResult);
+            // You can now show a second input for entering OTP
+          } catch (error) {
+            console.error("Error sending OTP:", error);
+            alert("Failed to send OTP. Check console.");
+          }
+        });
+    </script>
+  </body>
+</html>

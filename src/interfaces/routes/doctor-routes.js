@@ -5,6 +5,7 @@ import { doctorVerifyEmailController } from "../controller/doctor-controller/aut
 import { doctorStepOneFormController } from "../controller/doctor-controller/form-controller/step1-controller.js";
 import { doctorDashboardController } from "../controller/doctor-controller/dashboard-controller/dashboard-controller.js";
 import { doctorStepSecondFormController } from "../controller/doctor-controller/form-controller/step2-controller.js";
+import { sendOtpToPhoneNumber } from "../controller/doctor-controller/auth-controller/sendOtp-toPhoneNumber.js";
 import {
   protectDoctorRoute,
   preventLoggedDoctor,
@@ -62,6 +63,18 @@ router.get(
   "/register/step1",
   protectDoctorRoute,
   doctorStepOneFormController.stepOneFormRender
+);
+
+router.get(
+  "/send-otp-to-phone",
+  protectDoctorRoute,
+  sendOtpToPhoneNumber.sendOtpPageRender
+);
+
+router.post(
+  "/send-otp-to-phone",
+  protectDoctorRoute,
+  sendOtpToPhoneNumber.sendOtp,
 );
 
 router.post(
