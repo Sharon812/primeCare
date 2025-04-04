@@ -5,7 +5,7 @@ class SendOtpToPhoneNumberUseCase {
 
   async execute(phoneNumber, recaptcha) {
     return await this.firebaseService
-      .SendOtpToPhoneNumberUseCase(phoneNumber, recaptcha)
+      .SendOtpToPhoneNumber(phoneNumber, recaptcha)
       .then((confirmationResult) => {
         console.log("OTP sent successfully:", confirmationResult);
         return confirmationResult;
