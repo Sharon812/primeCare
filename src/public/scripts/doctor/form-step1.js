@@ -118,14 +118,6 @@ document.addEventListener("DOMContentLoaded", function () {
     ageInput.value = age;
     // Trigger store data
     storeFormData();
-    let age = today.getFullYear() - dob.getFullYear();
-    const monthDiff = today.getMonth() - dob.getMonth();
-
-    if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < dob.getDate())) {
-      age--;
-    }
-
-    ageInput.value = age;
   });
 
   // File upload display
@@ -372,17 +364,6 @@ document.addEventListener("DOMContentLoaded", function () {
       btn.disabled = false;
       btn.innerHTML = 'Next Step <i class="fas fa-arrow-right"></i>';
     }
-  form.addEventListener("submit", function (e) {
-    e.preventDefault();
-    // Add your form submission logic here
-    // Show loading animation
-    const btn = form.querySelector('button[type="submit"]');
-    btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing...';
-    // Simulate form submission
-    setTimeout(() => {
-      // Proceed to next step
-      // Add your navigation logic here
-    }, 2000);
   });
 
   // Add input validation for pincode
