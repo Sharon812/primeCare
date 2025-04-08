@@ -27,21 +27,17 @@ const DoctorSchema = new mongoose.Schema({
   idproof: { type: String },
   idType: { type: String },
   profileimage: { type: String },
-  
 
-
-
-  highestQualification: { type: String },
+  qualification: { type: String },
   specialization: { type: String },
-  medicalSchool: { type: String },
+  university: { type: String },
   graduationYear: { type: Number },
-  countryOfStudy: { type: String },
-  certificationPhoto: { type: String },
+  studyCountry: { type: String },
+  certification: { type: String },
 
-  yearsOfPractice: { type: Number },
-  experienceCertificate: { type: String },
-  previousHospital: { type: [String] },
-  currentHospital: { type: String },
+  yearsOfExperience: { type: Number },
+  experience: { type: String },
+  previousHospital: { type: String },
 
   originalConsultationFee: { type: Number },
   finalConsultationFee: { type: Number },

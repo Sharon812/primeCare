@@ -79,8 +79,6 @@ class DoctorStepOneFormController {
         updateData
       );
 
-      console.log("Updated Doctor Data:", stepOneFormData);
-
       res.json({
         message: "Form submitted successfully",
         data: stepOneFormData,

@@ -352,9 +352,6 @@ document.addEventListener("DOMContentLoaded", function () {
         throw new Error(data.message || "Something went wrong");
       }
 
-      // Clear localStorage
-      localStorage.removeItem("doctorFormStep1");
-
       // Redirect to next step
       window.location.href = "/doctor/register/step2";
     } catch (error) {
@@ -566,17 +563,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // Load saved data when page loads
   loadSavedFormData();
-
-  // Modify form submission to clear storage on successful submission
-  const originalSubmit = form.onsubmit;
-  form.onsubmit = function (e) {
-    if (originalSubmit) {
-      originalSubmit.call(this, e);
-    }
-    // Clear storage only if form submission is successful
-    // This will be handled in your existing AJAX success callback
-    // localStorage.removeItem('doctorFormStep1');
-  };
 
   function calculateProgress() {
     const requiredFields = {

@@ -4,6 +4,7 @@
 /* Additional styles specific to form-step2 */
 .section {
   margin-bottom: 2.5rem;
+  width: 100%;
 }
 
 .section h3 {
@@ -11,6 +12,106 @@
   margin-bottom: 1.5rem;
   font-size: 1.25rem;
   font-weight: 600;
+}
+
+.education-section .form-grid,
+.experience-section .form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+  width: 100%;
+}
+
+.input-group {
+  position: relative;
+  width: 100%;
+  margin-bottom: 1.5rem;
+}
+
+.input-group input,
+.input-group select {
+  width: 100%;
+  padding: 1rem 1rem 1rem 3rem;
+  border: 2px solid var(--accent);
+  border-radius: 12px;
+  background: var(--light);
+  color: var(--dark);
+  transition: all 0.3s ease;
+}
+
+.error-message {
+  color: #ef4444;
+  font-size: 0.75rem;
+  position: absolute;
+  bottom: -20px;
+  left: 0;
+  padding-left: 3rem;
+}
+
+.input-group input.error,
+.input-group select.error {
+  border-color: #ef4444;
+  background-color: #fef2f2;
+}
+
+.input-group input.error:focus,
+.input-group select.error:focus {
+  box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.2);
+}
+
+.dropzone {
+  border: 2px dashed var(--accent);
+  border-radius: 12px;
+  padding: 2rem;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  background: var(--light);
+  position: relative;
+  margin-top: 1.5rem;
+  width: 100%;
+}
+
+.dropzone.error {
+  border-color: #ef4444;
+  background-color: #fef2f2;
+}
+
+.preview-container {
+  margin-top: 1rem;
+  padding: 1rem;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  width: 100%;
+}
+
+.preview-container img {
+  width: 100%;
+  max-height: 300px;
+  object-fit: contain;
+  margin-bottom: 1rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.dropzone-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  padding: 2rem;
+}
+
+.preview-info {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.5rem 1rem;
+  background: var(--light);
+  border-radius: 6px;
+  margin-top: 0.5rem;
 }
 
 .hospitals-container {
@@ -50,6 +151,7 @@
   display: flex;
   gap: 1rem;
   margin-top: 2rem;
+  width: 100%;
 }
 
 .back-btn {
@@ -81,6 +183,11 @@
 @media (max-width: 768px) {
   .hospital-entry {
     flex-direction: column;
+  }
+
+  .education-section .form-grid,
+  .experience-section .form-grid {
+    grid-template-columns: 1fr;
   }
 
   .form-buttons {
@@ -144,4 +251,12 @@
   z-index: 2;
   border-radius: 10px;
   transition: width 0.5s ease-in-out;
+}
+
+#qualification {
+  /* Add any specific styles for the new qualification input */
+}
+
+#specialization {
+  /* Add any specific styles for the specialization dropdown */
 }

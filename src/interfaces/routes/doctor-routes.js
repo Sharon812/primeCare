@@ -65,12 +65,6 @@ router.get(
 );
 
 router.get(
-  "/register/step1",
-  protectDoctorRoute,
-  doctorStepOneFormController.stepOneFormRender
-);
-
-router.get(
   "/send-otp-to-phone",
   protectDoctorRoute,
   sendOtpToPhoneNumber.sendOtpPageRender
@@ -80,6 +74,12 @@ router.post(
   "/send-otp-to-phone",
   protectDoctorRoute,
   sendOtpToPhoneNumber.sendOtp
+);
+
+router.get(
+  "/register/step1",
+  protectDoctorRoute,
+  doctorStepOneFormController.stepOneFormRender
 );
 
 router.post(
@@ -97,6 +97,17 @@ router.get(
   protectDoctorRoute,
   stepTwoAuth,
   doctorStepSecondFormController.stepTwoFormRender
+);
+
+router.post(
+  "/register/step2",
+  protectDoctorRoute,
+  stepTwoAuth,
+  upload.fields([
+    { name: "certification", maxCount: 1 },
+    { name: "experience", maxCount: 1 },
+  ]),
+  doctorStepSecondFormController.stepTwoForm
 );
 
 router.get("/logout", doctorLoginController.logoutDoctor);
