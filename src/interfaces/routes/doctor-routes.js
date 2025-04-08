@@ -6,6 +6,7 @@ import { doctorStepOneFormController } from "../controller/doctor-controller/for
 import { doctorDashboardController } from "../controller/doctor-controller/dashboard-controller/dashboard-controller.js";
 import { doctorStepSecondFormController } from "../controller/doctor-controller/form-controller/step2-controller.js";
 import { doctorStepThirdFormController } from "../controller/doctor-controller/form-controller/step3-controller.js";
+import { doctorStepFourthFormController } from "../controller/doctor-controller/form-controller/step4-controller.js";
 import { sendOtpToPhoneNumber } from "../controller/doctor-controller/auth-controller/sendOtp-toPhoneNumber.js";
 import {
   protectDoctorRoute,
@@ -123,6 +124,12 @@ router.post(
   protectDoctorRoute,
   stepThreeAuth,
   doctorStepThirdFormController.stepThreeForm
+);
+
+router.get(
+  "/register/step4",
+  protectDoctorRoute,
+  doctorStepFourthFormController.stepFourFormRender
 );
 
 router.get("/logout", doctorLoginController.logoutDoctor);
