@@ -122,7 +122,7 @@ router.post(
   "/register/step3",
   protectDoctorRoute,
   stepThreeAuth,
-  doctorStepThirdFormController.stepTwoForm
+  doctorStepThirdFormController.stepThreeForm
 );
 
 router.get("/logout", doctorLoginController.logoutDoctor);

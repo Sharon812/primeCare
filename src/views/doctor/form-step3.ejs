@@ -46,12 +46,21 @@
                 name="consultationFee"
                 placeholder="Enter consultation fee"
                 min="0"
+                value="<%= doctorDetails.consultationFee %>"
               />
               <div class="error-message"></div>
             </div>
             <div class="fee-breakdown">
-              <p>Admin Fee (10%): <span id="adminFee">₹0</span></p>
-              <p>Your Earnings: <span id="finalEarnings">₹0</span></p>
+              <p>
+                Admin Fee (10%):
+                <span id="adminFee">₹<%= doctorDetails.adminFee %></span>
+              </p>
+              <p>
+                Your Earnings:
+                <span id="finalEarnings"
+                  >₹<%= doctorDetails.doctorEarnings %></span
+                >
+              </p>
             </div>
           </div>
         </div>
@@ -60,7 +69,8 @@
           <h3>Terms & Agreements</h3>
           <div class="terms-container">
             <div class="checkbox-group">
-              <input type="checkbox" id="termsAccept" name="termsAccept" />
+              <input type="checkbox" id="termsAccept" name="termsAccept" <%=
+              doctorDetails.termsAccepted ? 'checked' : '' %> />
               <label for="termsAccept"
                 >I agree to PrimeCare's
                 <a href="/terms" target="_blank">Terms and Conditions</a></label
@@ -69,7 +79,8 @@
             </div>
 
             <div class="checkbox-group">
-              <input type="checkbox" id="privacyAccept" name="privacyAccept" />
+              <input type="checkbox" id="privacyAccept" name="privacyAccept" <%=
+              doctorDetails.privacyAccepted ? 'checked' : '' %> />
               <label for="privacyAccept"
                 >I agree to PrimeCare's
                 <a href="/privacy" target="_blank">Privacy Policy</a></label
