@@ -1,0 +1,97 @@
+<%- include('../layouts/doctor/header', { customCSS:
+'/css/doctor/form-step3.css' }) %>
+<link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
+
+<div class="page-wrapper">
+  <nav class="navbar">
+    <div class="nav-brand">
+      <img src="/assets/logo-icon1.png" alt="PrimeCare" class="brand-logo" />
+      <div class="brand-text">
+        <span class="brand-name">PrimeCare</span>
+        <span class="brand-subtitle">Doctor Registration</span>
+      </div>
+    </div>
+  </nav>
+
+  <div class="content-wrapper">
+    <div class="registration-container" data-aos="fade-up">
+      <div class="progress-bar">
+        <div class="step completed">
+          <span class="step-number"><i class="fas fa-check"></i></span>
+          <span class="step-text">Personal Details</span>
+        </div>
+        <div class="step completed">
+          <span class="step-number"><i class="fas fa-check"></i></span>
+          <span class="step-text">Professional Info</span>
+        </div>
+        <div class="step active">
+          <span class="step-number">3</span>
+          <span class="step-text">Additional Info</span>
+        </div>
+        <div class="step">
+          <span class="step-number">4</span>
+          <span class="step-text">Preview & Submit</span>
+        </div>
+      </div>
+
+      <form id="step3Form" class="registration-form">
+        <div class="section fee-section">
+          <h3>Consultation Fee</h3>
+          <div class="fee-container">
+            <div class="input-group">
+              <i class="fas fa-rupee-sign"></i>
+              <input
+                type="number"
+                id="consultationFee"
+                name="consultationFee"
+                placeholder="Enter consultation fee"
+                min="0"
+              />
+              <div class="error-message"></div>
+            </div>
+            <div class="fee-breakdown">
+              <p>Admin Fee (10%): <span id="adminFee">₹0</span></p>
+              <p>Your Earnings: <span id="finalEarnings">₹0</span></p>
+            </div>
+          </div>
+        </div>
+
+        <div class="section terms-section">
+          <h3>Terms & Agreements</h3>
+          <div class="terms-container">
+            <div class="checkbox-group">
+              <input type="checkbox" id="termsAccept" name="termsAccept" />
+              <label for="termsAccept"
+                >I agree to PrimeCare's
+                <a href="/terms" target="_blank">Terms and Conditions</a></label
+              >
+              <div class="error-message"></div>
+            </div>
+
+            <div class="checkbox-group">
+              <input type="checkbox" id="privacyAccept" name="privacyAccept" />
+              <label for="privacyAccept"
+                >I agree to PrimeCare's
+                <a href="/privacy" target="_blank">Privacy Policy</a></label
+              >
+              <div class="error-message"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-buttons">
+          <button type="button" class="back-btn">
+            <i class="fas fa-arrow-left"></i> Previous
+          </button>
+          <button type="submit" class="next-btn">
+            Next Step <i class="fas fa-arrow-right"></i>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script src="/scripts/doctor/form-step3.js"></script>
+<%- include('../layouts/doctor/footer') %>

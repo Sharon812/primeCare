@@ -39,9 +39,11 @@ const DoctorSchema = new mongoose.Schema({
   experience: { type: String },
   previousHospital: { type: String },
 
-  originalConsultationFee: { type: Number },
-  finalConsultationFee: { type: Number },
-  availableDays: { type: [String] },
+  consultationFee: { type: Number },
+  adminFee: { type: Number },
+  doctorEarnings: { type: Number },
+  termsAccepted: { type: Boolean },
+  privacyAccepted: { type: Boolean },
 });
 
 const doctorModal = mongoose.model("Doctor", DoctorSchema);

@@ -5,6 +5,7 @@ import { doctorVerifyEmailController } from "../controller/doctor-controller/aut
 import { doctorStepOneFormController } from "../controller/doctor-controller/form-controller/step1-controller.js";
 import { doctorDashboardController } from "../controller/doctor-controller/dashboard-controller/dashboard-controller.js";
 import { doctorStepSecondFormController } from "../controller/doctor-controller/form-controller/step2-controller.js";
+import { doctorStepThirdFormController } from "../controller/doctor-controller/form-controller/step3-controller.js";
 import { sendOtpToPhoneNumber } from "../controller/doctor-controller/auth-controller/sendOtp-toPhoneNumber.js";
 import {
   protectDoctorRoute,
@@ -108,6 +109,20 @@ router.post(
     { name: "experience", maxCount: 1 },
   ]),
   doctorStepSecondFormController.stepTwoForm
+);
+
+router.get(
+  "/register/step3",
+  protectDoctorRoute,
+  stepThreeAuth,
+  doctorStepThirdFormController.stepThreeFormRender
+);
+
+router.post(
+  "/register/step3",
+  protectDoctorRoute,
+  stepThreeAuth,
+  doctorStepThirdFormController.stepTwoForm
 );
 
 router.get("/logout", doctorLoginController.logoutDoctor);
