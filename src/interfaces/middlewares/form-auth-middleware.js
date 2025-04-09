@@ -39,3 +39,27 @@ export const stepThreeAuth = async (req, res, next) => {
     next(error);
   }
 };
+
+export const stepFourAuth = async (req, res, next) => {
+  try {
+    const doctorId = req.doctor.doctorId;
+    const findDoctorRepository = new FindDoctorRepository(doctorModal);
+    const doctor = await findDoctorRepository.findDoctorById(doctorId);
+    if (doctor.isStepTwoFormCompleted && doctor.isStepOneFormCompleted && doctor.isStepThreeFormCompleted) {
+      console.log("stepFourAuth middleware passed");
+      next();
+    } else if (doctor.isStepThreeFormCompleted) {
+      console.log("stepFourAuth middleware failed");
+      res.redirect("/doctor/register/step2");
+    } else if (doctor.isStepTwoFormCompleted) {
+      console.log("stepFourAuth middleware failed");
+      res.redirect("/doctor/register/step3");
+    } else {
+      console.log("stepFourAuth middleware failed");
+      res.redirect("/doctor/register/step1");
+    }
+  } catch (error) {
+    console.log("Error in stepFourAuth middleware: ", error);
+    next(error);
+  }
+};

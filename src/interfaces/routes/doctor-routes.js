@@ -8,6 +8,7 @@ import { doctorStepSecondFormController } from "../controller/doctor-controller/
 import { doctorStepThirdFormController } from "../controller/doctor-controller/form-controller/step3-controller.js";
 import { doctorStepFourthFormController } from "../controller/doctor-controller/form-controller/step4-controller.js";
 import { sendOtpToPhoneNumber } from "../controller/doctor-controller/auth-controller/sendOtp-toPhoneNumber.js";
+import { doctorFullFormViewController } from "../controller/doctor-controller/form-controller/full-form-controller.js";
 import {
   protectDoctorRoute,
   preventLoggedDoctor,
@@ -16,6 +17,7 @@ import {
 import {
   stepTwoAuth,
   stepThreeAuth,
+  stepFourAuth
 } from "../middlewares/form-auth-middleware.js";
 import upload from "../upload/multer-config.js";
 
@@ -129,6 +131,7 @@ router.post(
 router.get(
   "/register/step4",
   protectDoctorRoute,
+  stepFourAuth,
   doctorStepFourthFormController.stepFourFormRender
 );
 
@@ -136,7 +139,13 @@ router.post(
   "/register/step4",
   protectDoctorRoute,
   doctorStepFourthFormController.stepFourForm
-)
+);
+
+router.get(
+  "/register/full-form",
+  protectDoctorRoute,
+  doctorFullFormViewController.fullFormRender
+);
 
 router.get("/logout", doctorLoginController.logoutDoctor);
 
