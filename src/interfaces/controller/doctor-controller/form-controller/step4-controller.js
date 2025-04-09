@@ -1,9 +1,12 @@
 import doctorModal from "../../../../infrastructure/database/models/doctor-models.js";
 import FindDoctorDetails from "../../../../application/use_cases/doctor-use-case/find-doctor-details-useCase.js";
 import FindDoctorRepository from "../../../../infrastructure/repositories/doctor-repository/find-doctor-repo.js";
+import saveStepFourFormData from "../../../../application/use_cases/doctor-use-case/form-use-case/stepFour-form-useCase.js";
+import UpdateDoctorRepository from "../../../../infrastructure/repositories/doctor-repository/update-doctor-repo.js";
 
 class DoctorStepFourthFormController {
-  constructor(findDoctorDetailUseCase) {
+  constructor(findDoctorDetailUseCase, stepFourFormUseCase) {
+    this.stepFourFormUseCase = stepFourFormUseCase;
     this.findDoctorDetailUseCase = findDoctorDetailUseCase;
   }
 
@@ -60,10 +63,45 @@ class DoctorStepFourthFormController {
       next(error);
     }
   };
+
+  stepFourForm = async (req, res, next) => {
+    try {
+      console.log("Received Data", req.body);
+      const doctorId = req.doctor.doctorId;
+
+      const stepFourFormData = await this.stepFourFormUseCase.execute(doctorId);
+
+      console.log("Step Four Form Data", stepFourFormData);
+
+      if (stepFourFormData) {
+        res.status(200).json({
+          success: true,
+          message: "Application submitted successfully",
+          redirectUrl: "/doctor/dashboard",
+        });
+      } else {
+        res.status(400).json({
+          success: false,
+          message: "Failed to submit application",
+        });
+      }
+    } catch (error) {
+      console.log("stepFourForm Controller Error", error);
+      res.status(500).json({
+        success: false,
+        message: "An error occurred while submitting the application",
+      });
+    }
+  };
 }
 
 const findDoctorRepository = new FindDoctorRepository(doctorModal);
 const findDoctorDetailUseCase = new FindDoctorDetails(findDoctorRepository);
+const updateDoctorRepository = new UpdateDoctorRepository(doctorModal);
+const stepFourFormUseCase = new saveStepFourFormData(updateDoctorRepository);
 
 export const doctorStepFourthFormController =
-  new DoctorStepFourthFormController(findDoctorDetailUseCase);
+  new DoctorStepFourthFormController(
+    findDoctorDetailUseCase,
+    stepFourFormUseCase
+  );

@@ -132,6 +132,12 @@ router.get(
   doctorStepFourthFormController.stepFourFormRender
 );
 
+router.post(
+  "/register/step4",
+  protectDoctorRoute,
+  doctorStepFourthFormController.stepFourForm
+)
+
 router.get("/logout", doctorLoginController.logoutDoctor);
 
 export const doctorRoute = router;
