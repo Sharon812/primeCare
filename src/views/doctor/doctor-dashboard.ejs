@@ -13,6 +13,7 @@
   </head>
   <body>
     <% if (!doctor.isFormCompleted) { %>
+    <!-- Banner for Incomplete Form -->
     <div class="announcement-banner">
       <div class="announcement-container">
         <div class="announcement-content">
@@ -34,6 +35,7 @@
       </div>
     </div>
     <% } else if (!doctor.isAdminVerified) { %>
+    <!-- Banner for Pending Verification -->
     <div class="announcement-banner verification-banner">
       <div class="announcement-container">
         <div class="announcement-content">
@@ -49,6 +51,8 @@
       </div>
     </div>
     <% } %>
+
+    <!-- Apply margin-top based on which banner is shown -->
     <div
       class="dashboard-container <%= !doctor.isFormCompleted ? 'with-banner' : (!doctor.isAdminVerified ? 'with-verification-banner' : '') %>"
     >
@@ -66,7 +70,9 @@
         </div>
         <ul class="nav-links">
           <li class="active">
-            <a href="/doctor/dashboard"><i class="bx bxs-dashboard"></i>Dashboard</a>
+            <a href="/doctor/dashboard"
+              ><i class="bx bxs-dashboard"></i>Dashboard</a
+            >
           </li>
           <li>
             <a href="#"><i class="bx bx-calendar"></i>Appointments</a>
@@ -113,58 +119,118 @@
         </header>
 
         <div class="dashboard-content">
-          <div class="stats-grid">
-            <div class="stat-card" data-aos="zoom-in" data-aos-delay="100">
-              <i class="bx bx-calendar-check"></i>
-              <div class="stat-info">
-                <h3>TODAY'S APPOINTMENTS</h3>
-                <p>24</p>
+          <!-- Apply blur if form is incomplete OR if form is complete but not verified -->
+          <div
+            class="content-wrapper <%= !doctor.isFormCompleted ? 'blur-overlay' : (!doctor.isAdminVerified ? 'blur-overlay' : '') %>"
+          >
+            <!-- Stats Grid -->
+            <div class="stats-grid">
+              <div class="stat-card" data-aos="zoom-in" data-aos-delay="100">
+                <i class="bx bx-calendar-check"></i>
+                <div class="stat-info">
+                  <h3>TODAY'S APPOINTMENTS</h3>
+                  <p>24</p>
+                </div>
+              </div>
+              <div class="stat-card" data-aos="zoom-in" data-aos-delay="200">
+                <i class="bx bx-group"></i>
+                <div class="stat-info">
+                  <h3>TOTAL PATIENTS</h3>
+                  <p>1,234</p>
+                </div>
+              </div>
+              <div class="stat-card" data-aos="zoom-in" data-aos-delay="300">
+                <i class="bx bx-line-chart"></i>
+                <div class="stat-info">
+                  <h3>SUCCESS RATE</h3>
+                  <p>98%</p>
+                </div>
+              </div>
+              <div class="stat-card" data-aos="zoom-in" data-aos-delay="400">
+                <i class="bx bx-star"></i>
+                <div class="stat-info">
+                  <h3>SATISFACTION RATE</h3>
+                  <p>4.9</p>
+                </div>
               </div>
             </div>
-            <div class="stat-card" data-aos="zoom-in" data-aos-delay="200">
-              <i class="bx bx-group"></i>
-              <div class="stat-info">
-                <h3>TOTAL PATIENTS</h3>
-                <p>1,234</p>
+            <!-- Dashboard Grid -->
+            <div class="dashboard-grid">
+              <div
+                class="appointments-list card"
+                data-aos="fade-up"
+                data-aos-delay="500"
+              >
+                <h2>Upcoming Appointments</h2>
+                <!-- Appointment items will be populated by JavaScript -->
               </div>
-            </div>
-            <div class="stat-card" data-aos="zoom-in" data-aos-delay="300">
-              <i class="bx bx-line-chart"></i>
-              <div class="stat-info">
-                <h3>SUCCESS RATE</h3>
-                <p>98%</p>
-              </div>
-            </div>
-            <div class="stat-card" data-aos="zoom-in" data-aos-delay="400">
-              <i class="bx bx-star"></i>
-              <div class="stat-info">
-                <h3>SATISFACTION RATE</h3>
-                <p>4.9</p>
+              <div
+                class="patient-stats card"
+                data-aos="fade-up"
+                data-aos-delay="600"
+              >
+                <h2>Patient Statistics</h2>
+                <!-- Chart will be added here -->
               </div>
             </div>
           </div>
+          <!-- End of content-wrapper -->
 
-          <div class="dashboard-grid">
-            <div
-              class="appointments-list card"
-              data-aos="fade-up"
-              data-aos-delay="500"
-            >
-              <h2>Upcoming Appointments</h2>
-              <!-- Appointment items will be populated by JavaScript -->
-            </div>
-            <div
-              class="patient-stats card"
-              data-aos="fade-up"
-              data-aos-delay="600"
-            >
-              <h2>Patient Statistics</h2>
-              <!-- Chart will be added here -->
+          <!-- Message for INCOMPLETE FORM -->
+          <% if (!doctor.isFormCompleted) { %>
+          <div class="lock-message">
+            <div class="lock-message-content">
+              <div class="lock-icon-wrapper">
+                <i class="bx bx-lock-alt"></i>
+                <div class="lock-ripple"></div>
+              </div>
+              <div class="message-text">
+                <h2>Complete Your Profile</h2>
+                <p>Get full access to your personalized dashboard</p>
+              </div>
+              <button
+                class="complete-signup-btn"
+                onclick="window.location.href='/doctor/register/step1'"
+              >
+                <span class="btn-text">Complete Setup</span>
+                <i class="bx bx-check-circle"></i>
+              </button>
             </div>
           </div>
+          <% } %>
+
+          <!-- Message for PENDING VERIFICATION -->
+          <% if (doctor.isFormCompleted && !doctor.isAdminVerified) { %>
+          <div class="verification-pending-message">
+            <div class="message-content">
+              <div class="icon-wrapper">
+                <i class="bx bx-time-five"></i>
+                <div class="ripple"></div>
+              </div>
+              <div class="message-text">
+                <h2>Verification Pending</h2>
+                <p>
+                  Your application is under review by the admin. This may take
+                  3-4 business days.
+                </p>
+                <p>You can review your submitted details below.</p>
+              </div>
+              <button
+                class="view-application-btn"
+                onclick="window.location.href='/doctor/register/full-form'"
+              >
+                <span class="btn-text">View Application</span>
+                <i class="bx bx-file-find"></i>
+              </button>
+            </div>
+          </div>
+          <% } %>
         </div>
+        <!-- End of dashboard-content -->
       </main>
     </div>
+
+    <!-- Modal for initial signup prompt (only if form not completed) -->
     <% if (!doctor.isFormCompleted) { %>
     <div class="signup-modal" id="signupModal">
       <div class="modal-content" data-aos="zoom-in">
@@ -188,6 +254,7 @@
       </div>
     </div>
     <% } %>
+
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script src="/scripts/doctor/dashboard.js"></script>
     <script>
@@ -200,3 +267,4 @@
     </script>
   </body>
 </html>
+

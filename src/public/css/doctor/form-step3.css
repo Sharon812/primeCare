@@ -1,0 +1,181 @@
+/* Import base styles from form-step1.css */
+@import url("/css/doctor/form-step1.css");
+
+.fee-section,
+.terms-section {
+  margin-bottom: 2.5rem;
+  width: 100%;
+}
+
+.section h3 {
+  color: var(--primary);
+  margin-bottom: 1.5rem;
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
+.fee-container,
+.terms-container {
+  background: #ffffff;
+  padding: 2rem;
+  border-radius: 12px;
+  border: 2px solid var(--accent);
+}
+
+.fee-breakdown {
+  margin-top: 1.5rem;
+  padding: 1rem;
+  background: var(--light);
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.fee-breakdown p {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 0.5rem;
+  color: var(--dark);
+  font-size: 0.95rem;
+}
+
+.fee-breakdown p:last-child {
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--accent);
+  font-weight: 600;
+}
+
+.terms-container {
+  background: var(--light);
+  padding: 2rem;
+  border-radius: 12px;
+  border: 2px solid var(--accent);
+}
+
+.checkbox-group {
+  margin-bottom: 1.5rem;
+  position: relative;
+}
+
+.checkbox-group:last-child {
+  margin-bottom: 0;
+}
+
+.checkbox-group input[type="checkbox"] {
+  margin-right: 0.5rem;
+  transform: scale(1.2);
+}
+
+.checkbox-group label {
+  color: var(--dark);
+  font-size: 0.95rem;
+}
+
+.checkbox-group label a {
+  color: var(--primary);
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.checkbox-group label a:hover {
+  text-decoration: underline;
+}
+
+.checkbox-group .error-message {
+  position: absolute;
+  bottom: -20px;
+  left: 0;
+  color: #ef4444;
+  font-size: 0.75rem;
+}
+
+.checkbox-group.error input[type="checkbox"] {
+  outline: 2px solid #ef4444;
+}
+
+/* Progress bar styles */
+.progress-bar {
+  --progress: 66.66%;
+}
+
+/* Reset all completed steps to show numbers */
+.step.completed .step-number {
+  background: #5b21b6;
+  color: #ffffff;
+  border: 2px solid #5b21b6;
+  font-family: var(--font);
+  font-size: 1.1rem;
+}
+
+.step.completed .step-number i {
+  display: none;
+}
+
+/* Show checkmark only for step 3 when completed */
+.step.completed:nth-child(3) .step-number {
+  background: var(--gradient);
+  color: var(--white);
+  border: none;
+}
+
+.step.completed:nth-child(3) .step-number i {
+  font-size: 1.2rem;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: block;
+}
+
+.form-buttons {
+  display: flex;
+  gap: 1rem;
+  margin-top: 2rem;
+  width: 100%;
+}
+
+.back-btn {
+  background: #ffffff;
+  border: 2px solid var(--accent);
+  color: var(--primary);
+  padding: 1rem;
+  border-radius: 12px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  flex: 1;
+  justify-content: center;
+}
+
+.back-btn:hover {
+  background: var(--accent);
+  color: white;
+}
+
+.next-btn {
+  flex: 2;
+}
+
+@media (max-width: 768px) {
+  .fee-container,
+  .terms-container {
+    padding: 1.5rem;
+  }
+
+  .checkbox-group label {
+    font-size: 0.9rem;
+  }
+
+  .form-buttons {
+    flex-direction: column;
+  }
+
+  .back-btn,
+  .next-btn {
+    width: 100%;
+  }
+}

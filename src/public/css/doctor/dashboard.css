@@ -420,6 +420,7 @@
 }
 
 .dashboard-content {
+  position: relative;
   padding: 2rem;
 }
 
@@ -641,6 +642,311 @@
   color: var(--dark);
 }
 
+/* Add styles for signup overlay and blur */
+.signup-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(12px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+}
+
+.overlay-content {
+  text-align: center;
+  animation: fadeInUp 0.5s ease;
+  padding: 3rem;
+  border-radius: 24px;
+  background: rgba(255, 255, 255, 0.95);
+  box-shadow: 0 20px 40px rgba(124, 58, 237, 0.15);
+  border: 1px solid rgba(124, 58, 237, 0.1);
+  max-width: 500px;
+  width: 90%;
+}
+
+.lock-icon {
+  width: 100px;
+  height: 100px;
+  background: var(--gradient);
+  border-radius: 50%;
+  margin: 0 auto 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 15px 30px rgba(124, 58, 237, 0.2);
+}
+
+.lock-icon i {
+  font-size: 3.5rem;
+  color: var(--white);
+  animation: lockShake 2s ease infinite;
+}
+
+.content-text {
+  margin-bottom: 2.5rem;
+}
+
+.content-text h2 {
+  font-size: 2.5rem;
+  color: var(--dark);
+  margin-bottom: 1rem;
+  font-weight: 700;
+  background: var(--gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.content-text p {
+  color: #64748b;
+  font-size: 1.2rem;
+  line-height: 1.6;
+}
+
+.blur-content {
+  filter: blur(8px);
+  pointer-events: none;
+  user-select: none;
+  opacity: 0.5;
+  transform: scale(0.98);
+  transition: all 0.3s ease;
+}
+
+@keyframes lockShake {
+  0%,
+  100% {
+    transform: rotate(0);
+  }
+  20%,
+  60% {
+    transform: rotate(-12deg);
+  }
+  40%,
+  80% {
+    transform: rotate(12deg);
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.complete-signup-btn {
+  background: var(--gradient);
+  color: var(--white);
+  border: none;
+  padding: 1rem 2rem;
+  border-radius: 12px;
+  font-size: 1.25rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  box-shadow: 0 8px 20px rgba(124, 58, 237, 0.3);
+}
+
+.complete-signup-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 25px rgba(124, 58, 237, 0.4);
+}
+
+.complete-signup-btn i {
+  font-size: 1.5rem;
+}
+
+.content-wrapper {
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+.content-wrapper.blur-overlay {
+  filter: blur(8px);
+  opacity: 0.6;
+  transform: scale(0.98);
+  pointer-events: none;
+}
+
+.lock-message {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 100;
+  background: rgba(255, 255, 255, 0.98);
+  padding: 2.5rem;
+  border-radius: 24px;
+  box-shadow: 0 25px 50px -12px rgba(124, 58, 237, 0.25);
+  border: 1px solid rgba(124, 58, 237, 0.15);
+  min-width: 350px;
+  width: 90%;
+  max-width: 400px;
+  backdrop-filter: blur(20px);
+  animation: messageAppear 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+.lock-message-content {
+  text-align: center;
+}
+
+.lock-icon-wrapper {
+  position: relative;
+  width: 80px;
+  height: 80px;
+  margin: 0 auto 1.5rem;
+}
+
+.lock-icon-wrapper i {
+  position: relative;
+  z-index: 2;
+  font-size: 2.5rem;
+  color: var(--white);
+  background: var(--gradient);
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: iconFloat 3s ease-in-out infinite;
+}
+
+.lock-ripple {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: var(--gradient);
+  border-radius: 50%;
+  opacity: 0.5;
+  animation: rippleEffect 2s ease-out infinite;
+}
+
+.message-text {
+  margin-bottom: 2rem;
+}
+
+.message-text h2 {
+  font-size: 1.75rem;
+  background: var(--gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+}
+
+.message-text p {
+  color: #64748b;
+  font-size: 1rem;
+}
+
+.lock-message .complete-signup-btn {
+  width: auto;
+  min-width: 200px;
+  margin: 0 auto;
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.lock-message .complete-signup-btn:hover {
+  transform: translateY(-2px);
+}
+
+.lock-message .complete-signup-btn .btn-text {
+  position: relative;
+  z-index: 1;
+}
+
+.lock-message .complete-signup-btn i {
+  font-size: 1.2rem;
+  position: relative;
+  z-index: 1;
+  transition: transform 0.3s ease;
+}
+
+.lock-message .complete-signup-btn:hover i {
+  transform: translateX(3px);
+}
+
+@keyframes messageAppear {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -40%) scale(0.95);
+  }
+  100% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+
+@keyframes iconFloat {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes rippleEffect {
+  0% {
+    transform: scale(0.8);
+    opacity: 0.5;
+  }
+  100% {
+    transform: scale(1.5);
+    opacity: 0;
+  }
+}
+
+.lock-message h2 {
+  font-size: 1.75rem;
+  margin-bottom: 0.5rem;
+}
+
+.lock-message p {
+  font-size: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -40%);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%);
+  }
+}
+
+@keyframes lockBounce {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
 @media (max-width: 1024px) {
   .stats-grid {
     grid-template-columns: repeat(2, 1fr);
@@ -702,3 +1008,145 @@
     justify-content: center;
   }
 }
+
+/* === Add these new styles at the end or alongside .lock-message styles === */
+
+.verification-pending-message {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 100;
+  background: rgba(255, 255, 255, 0.98);
+  padding: 2.5rem;
+  border-radius: 24px;
+  box-shadow: 0 25px 50px -12px rgba(3, 105, 161, 0.25); /* Blue shadow */
+  border: 1px solid rgba(3, 105, 161, 0.15); /* Blue border */
+  min-width: 350px;
+  width: 90%;
+  max-width: 450px; /* Adjusted max-width */
+  backdrop-filter: blur(20px);
+  animation: messageAppear 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  text-align: center;
+}
+
+.verification-pending-message .message-content {
+  /* Optional inner wrapper if needed, similar to lock-message-content */
+  text-align: center;
+}
+
+.verification-pending-message .icon-wrapper {
+  position: relative;
+  width: 80px;
+  height: 80px;
+  margin: 0 auto 1.5rem;
+}
+
+.verification-pending-message .icon-wrapper i {
+  position: relative;
+  z-index: 2;
+  font-size: 2.5rem;
+  color: var(--white);
+  /* Blue gradient for verification */
+  background: linear-gradient(135deg, #0ea5e9, #0284c7);
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: iconFloat 3s ease-in-out infinite;
+}
+
+.verification-pending-message .ripple {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  /* Blue gradient for ripple */
+  background: linear-gradient(135deg, #0ea5e9, #0284c7);
+  border-radius: 50%;
+  opacity: 0.5;
+  animation: rippleEffect 2s ease-out infinite;
+  z-index: 1; /* Ensure it's behind the icon */
+}
+
+.verification-pending-message .message-text {
+  margin-bottom: 2rem;
+}
+
+.verification-pending-message .message-text h2 {
+  font-size: 1.75rem;
+  /* Blue gradient text */
+  background: linear-gradient(135deg, #0ea5e9, #0284c7);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 0.75rem; /* Increased margin */
+  font-weight: 600;
+}
+
+.verification-pending-message .message-text p {
+  color: #475569; /* Slightly darker grey than default */
+  font-size: 1rem;
+  line-height: 1.6; /* Improved line spacing */
+}
+
+.verification-pending-message .message-text p:last-of-type {
+  margin-top: 0.5rem; /* Space between paragraphs */
+}
+
+.view-application-btn {
+  /* Style similar to complete-signup-btn but with blue theme */
+  background: linear-gradient(135deg, #0ea5e9, #0284c7); /* Blue gradient */
+  color: var(--white);
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 12px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: inline-flex; /* Use inline-flex for icon alignment */
+  align-items: center;
+  gap: 0.75rem; /* Space between text and icon */
+  box-shadow: 0 8px 20px rgba(2, 132, 199, 0.3); /* Blue shadow */
+  position: relative;
+  overflow: hidden;
+}
+
+.view-application-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 25px rgba(2, 132, 199, 0.4); /* Darker blue shadow */
+}
+
+.view-application-btn .btn-text {
+  position: relative;
+  z-index: 1;
+}
+
+.view-application-btn i {
+  font-size: 1.2rem;
+  position: relative;
+  z-index: 1;
+  transition: transform 0.3s ease;
+}
+
+.view-application-btn:hover i {
+  transform: translateX(3px);
+}
+
+/* Ensure blur overlay logic works */
+.content-wrapper.blur-overlay {
+  filter: blur(8px);
+  opacity: 0.6;
+  transform: scale(0.98);
+  pointer-events: none;
+  user-select: none; /* Add this */
+}
+
+/* === Make sure existing .lock-message styles are still present === */
+/* ... (keep existing .lock-message styles) ... */
+
+/* === Make sure existing animations (messageAppear, iconFloat, rippleEffect) are present === */
+/* ... (keep existing keyframes) ... */

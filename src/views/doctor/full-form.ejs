@@ -1,0 +1,241 @@
+<%- include('../layouts/doctor/header', { customCSS:
+'/css/doctor/form-step4.css' }) %>
+<link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
+<!-- Ensure Boxicons is linked (likely in header, but added here for certainty if not) -->
+<link
+  href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
+  rel="stylesheet"
+/>
+
+<div class="page-wrapper">
+  <nav class="navbar">
+    <div class="nav-brand">
+      <img src="/assets/logo-icon1.png" alt="PrimeCare" class="brand-logo" />
+      <div class="brand-text">
+        <span class="brand-name">PrimeCare</span>
+        <span class="brand-subtitle">Doctor Registration</span>
+      </div>
+    </div>
+  </nav>
+
+  <div class="content-wrapper">
+    <div class="registration-container" data-aos="fade-up">
+      <div class="review-container">
+        <!-- Personal Details Section -->
+        <div class="review-section personal-details">
+          <h3><i class="fas fa-user-circle"></i> Personal Details</h3>
+          <div class="profile-header">
+            <div class="profile-image">
+              <img
+                src="<%= doctorDetails.profileImage %>"
+                alt="Profile Image"
+              />
+            </div>
+            <div class="basic-info">
+              <h4>
+                <%= doctorDetails.firstname %> <%= doctorDetails.lastname %>
+              </h4>
+              <p><i class="fas fa-envelope"></i> <%= doctorDetails.email %></p>
+              <p>
+                <i class="fas fa-phone"></i> <%= doctorDetails.phoneNumber %>
+              </p>
+            </div>
+          </div>
+
+          <div class="document-preview">
+            <h4>ID Proof - <%= doctorDetails.idType %></h4>
+            <div class="document-card">
+              <img src="<%= doctorDetails.idProof %>" alt="ID Proof" />
+              <div class="document-overlay">
+                <a
+                  href="<%= doctorDetails.idProof %>"
+                  target="_blank"
+                  class="view-btn"
+                >
+                  <i class="fas fa-eye"></i> View Full
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <div class="details-grid">
+            <div class="detail-item">
+              <label>Date of Birth:</label>
+              <span><%= doctorDetails.dob %></span>
+            </div>
+            <div class="detail-item">
+              <label>Age:</label>
+              <span><%= doctorDetails.age %></span>
+            </div>
+            <div class="detail-item">
+              <label>Country:</label>
+              <span><%= doctorDetails.country %></span>
+            </div>
+            <div class="detail-item">
+              <label>State:</label>
+              <span><%= doctorDetails.state %></span>
+            </div>
+            <div class="detail-item full-width">
+              <label>Address:</label>
+              <span><%= doctorDetails.address %></span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Professional Information Section -->
+        <div class="review-section professional-info">
+          <h3>
+            <i class="fas fa-graduation-cap"></i> Professional Information
+          </h3>
+
+          <div class="documents-grid">
+            <div class="document-preview">
+              <h4>Certification</h4>
+              <div class="document-card">
+                <img
+                  src="<%= doctorDetails.certification %>"
+                  alt="Certification"
+                />
+                <div class="document-overlay">
+                  <a
+                    href="<%= doctorDetails.certification %>"
+                    target="_blank"
+                    class="view-btn"
+                  >
+                    <i class="fas fa-eye"></i> View Full
+                  </a>
+                </div>
+              </div>
+            </div>
+
+            <div class="document-preview">
+              <h4>Experience Certificate</h4>
+              <div class="document-card">
+                <img src="<%= doctorDetails.experience %>" alt="Experience" />
+                <div class="document-overlay">
+                  <a
+                    href="<%= doctorDetails.experience %>"
+                    target="_blank"
+                    class="view-btn"
+                  >
+                    <i class="fas fa-eye"></i> View Full
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="details-grid">
+            <div class="detail-item">
+              <label>Specialization:</label>
+              <span><%= doctorDetails.specialization %></span>
+            </div>
+            <div class="detail-item">
+              <label>Qualification:</label>
+              <span><%= doctorDetails.qualification %></span>
+            </div>
+            <div class="detail-item">
+              <label>University:</label>
+              <span><%= doctorDetails.university %></span>
+            </div>
+            <div class="detail-item">
+              <label>Graduation Year:</label>
+              <span><%= doctorDetails.graduationYear %></span>
+            </div>
+            <div class="detail-item">
+              <label>Years of Experience:</label>
+              <span><%= doctorDetails.yearsOfExperience %></span>
+            </div>
+            <div class="detail-item">
+              <label>Previous Hospital:</label>
+              <span><%= doctorDetails.previousHospital %></span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Consultation Details Section -->
+        <div class="review-section fee-details">
+          <h3><i class="fas fa-money-bill-wave"></i> Consultation Details</h3>
+          <div class="fee-grid">
+            <div class="detail-item">
+              <label>Consultation Fee:</label>
+              <span>₹<%= doctorDetails.consultationFee %></span>
+            </div>
+            <div class="detail-item">
+              <label>Admin Fee (10%):</label>
+              <span>₹<%= doctorDetails.adminFee %></span>
+            </div>
+            <div class="detail-item highlight">
+              <label>Your Earnings:</label>
+              <span>₹<%= doctorDetails.doctorEarnings %></span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Terms & Agreements Section -->
+        <div class="review-section terms-section">
+          <h3><i class="fas fa-check-circle"></i> Terms & Agreements</h3>
+          <div class="terms-status">
+            <p><i class="fas fa-check"></i> Terms and Conditions accepted</p>
+            <p><i class="fas fa-check"></i> Privacy Policy accepted</p>
+          </div>
+        </div>
+      </div>
+      <!-- End of review-container -->
+
+      <!-- ===== START: Back to Dashboard Button ===== -->
+      <div class="action-buttons">
+        <a href="/doctor/dashboard" class="btn back-to-dashboard-btn">
+          <i class="bx bx-arrow-back"></i> Back to Dashboard
+        </a>
+      </div>
+      <!-- ===== END: Back to Dashboard Button ===== -->
+    </div>
+    <!-- End of registration-container -->
+  </div>
+  <!-- End of content-wrapper -->
+</div>
+<!-- End of page-wrapper -->
+
+<!-- ===== START: CSS for Back Button (Move to form-step4.css) ===== -->
+<style>
+  .action-buttons {
+    text-align: center;
+    margin-top: 2rem; /* Space above the button */
+    padding-bottom: 1rem; /* Space below the button */
+  }
+
+  .back-to-dashboard-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem; /* Space between icon and text */
+    padding: 0.8rem 1.8rem; /* Button size */
+    background-color: #7c3aed; /* A neutral grey color */
+    color: white;
+    text-decoration: none;
+    border-radius: 8px; /* Rounded corners */
+    font-weight: 500;
+    font-size: 1rem;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    border: none;
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+  }
+
+  .back-to-dashboard-btn:hover {
+    background-color: #7c3aed; /* Darker grey on hover */
+    transform: translateY(-2px); /* Slight lift effect */
+    color: white; /* Ensure text remains white */
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+  }
+
+  .back-to-dashboard-btn i {
+    font-size: 1.2em; /* Make icon slightly larger */
+    line-height: 1; /* Align icon properly */
+  }
+</style>
+<!-- ===== END: CSS for Back Button ===== -->
+
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script src="/scripts/doctor/form-step4.js"></script>
+<%- include('../layouts/doctor/footer') %>

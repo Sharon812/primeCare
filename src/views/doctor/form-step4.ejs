@@ -1,0 +1,228 @@
+<%- include('../layouts/doctor/header', { customCSS:
+'/css/doctor/form-step4.css' }) %>
+<link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
+
+<div class="page-wrapper">
+  <nav class="navbar">
+    <div class="nav-brand">
+      <img src="/assets/logo-icon1.png" alt="PrimeCare" class="brand-logo" />
+      <div class="brand-text">
+        <span class="brand-name">PrimeCare</span>
+        <span class="brand-subtitle">Doctor Registration</span>
+      </div>
+    </div>
+  </nav>
+
+  <div class="content-wrapper">
+    <div class="registration-container" data-aos="fade-up">
+      <div class="progress-bar">
+        <div class="step completed">
+          <span class="step-number"></span>
+          <span class="step-text">Personal Details</span>
+        </div>
+        <div class="step completed">
+          <span class="step-number"></span>
+          <span class="step-text">Professional Info</span>
+        </div>
+        <div class="step completed">
+          <span class="step-number"></span>
+          <span class="step-text">Additional Info</span>
+        </div>
+        <div class="step active">
+          <span class="step-number">4</span>
+          <span class="step-text">Preview & Submit</span>
+        </div>
+      </div>
+
+      <div class="review-container">
+        <div class="review-section personal-details">
+          <h3><i class="fas fa-user-circle"></i> Personal Details</h3>
+          <div class="profile-header">
+            <div class="profile-image">
+              <img
+                src="<%= doctorDetails.profileImage %>"
+                alt="Profile Image"
+              />
+            </div>
+            <div class="basic-info">
+              <h4>
+                <%= doctorDetails.firstname %> <%= doctorDetails.lastname %>
+              </h4>
+              <p><i class="fas fa-envelope"></i> <%= doctorDetails.email %></p>
+              <p>
+                <i class="fas fa-phone"></i> <%= doctorDetails.phoneNumber %>
+              </p>
+            </div>
+          </div>
+
+          <div class="document-preview">
+            <h4>ID Proof - <%= doctorDetails.idType %></h4>
+            <div class="document-card">
+              <img src="<%= doctorDetails.idProof %>" alt="ID Proof" />
+              <div class="document-overlay">
+                <a
+                  href="<%= doctorDetails.idProof %>"
+                  target="_blank"
+                  class="view-btn"
+                >
+                  <i class="fas fa-eye"></i> View Full
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <div class="details-grid">
+            <div class="detail-item">
+              <label>Date of Birth:</label>
+              <span><%= doctorDetails.dob %></span>
+            </div>
+            <div class="detail-item">
+              <label>Age:</label>
+              <span><%= doctorDetails.age %></span>
+            </div>
+            <div class="detail-item">
+              <label>Country:</label>
+              <span><%= doctorDetails.country %></span>
+            </div>
+            <div class="detail-item">
+              <label>State:</label>
+              <span><%= doctorDetails.state %></span>
+            </div>
+            <div class="detail-item full-width">
+              <label>Address:</label>
+              <span><%= doctorDetails.address %></span>
+            </div>
+          </div>
+        </div>
+
+        <div class="review-section professional-info">
+          <h3>
+            <i class="fas fa-graduation-cap"></i> Professional Information
+          </h3>
+
+          <div class="documents-grid">
+            <div class="document-preview">
+              <h4>Certification</h4>
+              <div class="document-card">
+                <img
+                  src="<%= doctorDetails.certification %>"
+                  alt="Certification"
+                />
+                <div class="document-overlay">
+                  <a
+                    href="<%= doctorDetails.certification %>"
+                    target="_blank"
+                    class="view-btn"
+                  >
+                    <i class="fas fa-eye"></i> View Full
+                  </a>
+                </div>
+              </div>
+            </div>
+
+            <div class="document-preview">
+              <h4>Experience Certificate</h4>
+              <div class="document-card">
+                <img src="<%= doctorDetails.experience %>" alt="Experience" />
+                <div class="document-overlay">
+                  <a
+                    href="<%= doctorDetails.experience %>"
+                    target="_blank"
+                    class="view-btn"
+                  >
+                    <i class="fas fa-eye"></i> View Full
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="details-grid">
+            <div class="detail-item">
+              <label>Specialization:</label>
+              <span><%= doctorDetails.specialization %></span>
+            </div>
+            <div class="detail-item">
+              <label>Qualification:</label>
+              <span><%= doctorDetails.qualification %></span>
+            </div>
+            <div class="detail-item">
+              <label>University:</label>
+              <span><%= doctorDetails.university %></span>
+            </div>
+            <div class="detail-item">
+              <label>Graduation Year:</label>
+              <span><%= doctorDetails.graduationYear %></span>
+            </div>
+            <div class="detail-item">
+              <label>Years of Experience:</label>
+              <span><%= doctorDetails.yearsOfExperience %></span>
+            </div>
+            <div class="detail-item">
+              <label>Previous Hospital:</label>
+              <span><%= doctorDetails.previousHospital %></span>
+            </div>
+          </div>
+        </div>
+
+        <div class="review-section fee-details">
+          <h3><i class="fas fa-money-bill-wave"></i> Consultation Details</h3>
+          <div class="fee-grid">
+            <div class="detail-item">
+              <label>Consultation Fee:</label>
+              <span>₹<%= doctorDetails.consultationFee %></span>
+            </div>
+            <div class="detail-item">
+              <label>Admin Fee (10%):</label>
+              <span>₹<%= doctorDetails.adminFee %></span>
+            </div>
+            <div class="detail-item highlight">
+              <label>Your Earnings:</label>
+              <span>₹<%= doctorDetails.doctorEarnings %></span>
+            </div>
+          </div>
+        </div>
+
+        <div class="review-section terms-section">
+          <h3><i class="fas fa-check-circle"></i> Terms & Agreements</h3>
+          <div class="terms-status">
+            <p><i class="fas fa-check"></i> Terms and Conditions accepted</p>
+            <p><i class="fas fa-check"></i> Privacy Policy accepted</p>
+          </div>
+        </div>
+
+        <div class="form-buttons">
+          <button type="button" class="back-btn">
+            <i class="fas fa-arrow-left"></i> Edit Details
+          </button>
+          <button type="button" class="submit-btn">
+            Submit Application <i class="fas fa-check"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Confirmation Modal -->
+  <div class="confirmation-modal" id="confirmModal" style="display: none">
+    <div class="modal-content">
+      <h3><i class="fas fa-question-circle"></i> Confirm Submission</h3>
+      <p>
+        Are you sure you want to submit your application? This action cannot be
+        undone.
+      </p>
+      <div class="modal-buttons">
+        <button id="cancelSubmit" class="back-btn">
+          <i class="fas fa-times"></i> Cancel
+        </button>
+        <button id="confirmSubmit" class="submit-btn">
+          <i class="fas fa-check"></i> Yes, Submit
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script src="/scripts/doctor/form-step4.js"></script>
+<%- include('../layouts/doctor/footer') %>

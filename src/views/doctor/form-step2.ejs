@@ -1,5 +1,4 @@
-<%- include('../layouts/doctor/header', { customCSS:
-'/css/doctor/form-step2.css' }) %>
+<%- include('../layouts/doctor/header', { customCSS: '/css/doctor/form-step2.css' }) %>
 <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
 
 <div class="page-wrapper">
@@ -19,7 +18,7 @@
         <div class="step completed">
           <span class="step-number">
             <i class="fas fa-check"></i>
-          </span> 
+          </span>
           <span class="step-text">Personal Details</span>
         </div>
         <div class="step active">
@@ -36,71 +35,77 @@
         </div>
       </div>
 
-      <form class="registration-form" id="step2Form">
+      <form id="step2Form" class="registration-form" enctype="multipart/form-data">
         <div class="section education-section">
           <h3>Educational Details</h3>
           <div class="form-grid">
             <div class="input-group">
               <i class="fas fa-graduation-cap"></i>
-              <select id="qualification" required>
-                <option value="">Select Highest Qualification</option>
-                <option value="mbbs">MBBS</option>
-                <option value="md">MD</option>
-                <option value="ms">MS</option>
-                <option value="dm">DM</option>
-                <option value="mch">MCh</option>
-              </select>
+              <input
+                type="text"
+                placeholder="Highest Qualification"
+                id="qualification"
+                name="qualification"
+                value="<%= doctorDetails && doctorDetails.qualification ? doctorDetails.qualification : '' %>"
+              />
+              <div class="error-message"></div>
             </div>
             <div class="input-group">
               <i class="fas fa-stethoscope"></i>
-              <input type="text" placeholder="Specialization" required />
+              <select id="specialization" name="specialization">
+                <option value="">Select Specialization</option>
+                <% const specializations = ["Cardiologist", "Dermatologist", "Pediatrician", "General Physician", "Orthopedic Surgeon", "Gynecologist", "Neurologist", "Psychiatrist", "ENT Specialist", "Urologist", "Ophthalmologist", "Oncologist", "Dentist", "Endocrinologist", "Gastroenterologist", "Pulmonologist", "Nephrologist", "Rheumatologist", "Surgeon", "Radiologist", "Anesthesiologist", "Allergist/Immunologist", "Hematologist", "Pathologist", "Plastic Surgeon", "Infectious Disease Specialist", "Sexologist", "Physiotherapist", "Ayurveda Specialist", "Homeopathy Doctor"]; %>
+                <% specializations.forEach(spec => { %>
+                  <option value="<%= spec %>" <%= doctorDetails && doctorDetails.specialization === spec ? 'selected' : '' %>><%= spec %></option>
+                <% }); %>
+              </select>
+              <div class="error-message"></div>
             </div>
             <div class="input-group">
               <i class="fas fa-university"></i>
               <input
                 type="text"
                 placeholder="Medical School/University Name"
-                required
+                name="university"
+                value="<%= doctorDetails && doctorDetails.university ? doctorDetails.university : '' %>"
               />
+              <div class="error-message"></div>
             </div>
             <div class="input-group">
               <i class="fas fa-calendar-alt"></i>
               <input
                 type="number"
                 placeholder="Year of Graduation"
+                name="graduationYear"
                 min="1950"
                 max="2024"
-                required
+                value="<%= doctorDetails && doctorDetails.graduationYear ? doctorDetails.graduationYear : '' %>"
               />
+              <div class="error-message"></div>
             </div>
             <div class="input-group">
               <i class="fas fa-globe"></i>
-              <input type="text" placeholder="Country of Study" required />
+              <input
+                type="text"
+                placeholder="Country of Study"
+                name="studyCountry"
+                value="<%= doctorDetails && doctorDetails.studyCountry ? doctorDetails.studyCountry : '' %>"
+              />
+              <div class="error-message"></div>
             </div>
           </div>
 
           <div class="dropzone" id="certificationDropzone">
-            <input
-              type="file"
-              id="certificationUpload"
-              accept="image/*,application/pdf"
-              hidden
-            />
-            <div class="dropzone-content">
-              <i class="fas fa-file-upload"></i>
+            <input type="file" id="certificationUpload" name="certification" accept="image/*" hidden />
+            <div class="dropzone-content" style="display: <%= (doctorDetails && doctorDetails.certification) ? 'none' : 'flex' %>">
+              <i class="fas fa-cloud-upload-alt"></i>
               <p>Upload Certification Document</p>
-              <p class="small">
-                Supported formats: JPG, PNG, PDF (Max size: 5MB)
-              </p>
+              <p class="small">Supported formats: JPG, PNG (Max size: 5MB)</p>
             </div>
-            <div
-              class="preview-container"
-              id="certPreviewContainer"
-              style="display: none"
-            >
-              <img id="certPreviewImage" src="" alt="Certificate Preview" />
+            <div class="preview-container" id="certPreviewContainer" style="display: <%= (doctorDetails && doctorDetails.certification) ? 'block' : 'none' %>">
+              <img id="certPreviewImage" src="<%= doctorDetails.certification %>" alt="Certification Preview" style="max-width: 100%; height: auto;" />
               <div class="preview-info">
-                <span id="certFileNameDisplay"></span>
+                <span id="certFileNameDisplay">Uploaded Certification</span>
                 <button type="button" id="removeCertFile" class="remove-btn">
                   <i class="fas fa-times"></i>
                 </button>
@@ -116,58 +121,40 @@
               <i class="fas fa-clock"></i>
               <input
                 type="number"
+                name="yearsOfExperience"
                 placeholder="Years of Practice"
                 min="0"
-                required
+                value="<%= doctorDetails && doctorDetails.yearsOfExperience ? doctorDetails.yearsOfExperience : '' %>"
               />
+              <div class="error-message"></div>
+            </div>
+            <div class="input-group">
+              <i class="fas fa-hospital"></i>
+              <input
+                type="text"
+                name="previousHospital"
+                placeholder="Previous Hospital/Clinic Name"
+                value="<%= doctorDetails && doctorDetails.previousHospital ? doctorDetails.previousHospital : '' %>"
+              />
+              <div class="error-message"></div>
             </div>
           </div>
 
           <div class="dropzone" id="experienceDropzone">
-            <input
-              type="file"
-              id="experienceUpload"
-              accept="image/*,application/pdf"
-              hidden
-            />
-            <div class="dropzone-content">
-              <i class="fas fa-file-upload"></i>
+            <input type="file" id="experienceUpload" name="experience" accept="image/*" hidden />
+            <div class="dropzone-content" style="display: <%= (doctorDetails && doctorDetails.experience) ? 'none' : 'flex' %>">
+              <i class="fas fa-cloud-upload-alt"></i>
               <p>Upload Experience Certificate</p>
-              <p class="small">
-                Supported formats: JPG, PNG, PDF (Max size: 5MB)
-              </p>
+              <p class="small">Supported formats: JPG, PNG (Max size: 5MB)</p>
             </div>
-            <div
-              class="preview-container"
-              id="expPreviewContainer"
-              style="display: none"
-            >
-              <img
-                id="expPreviewImage"
-                src=""
-                alt="Experience Certificate Preview"
-              />
+            <div class="preview-container" id="expPreviewContainer" style="display: <%= (doctorDetails && doctorDetails.experience) ? 'block' : 'none' %>">
+              <img id="expPreviewImage" src="<%= doctorDetails.experience %>" alt="Experience Certificate Preview" style="max-width: 100%; height: auto;" />
               <div class="preview-info">
-                <span id="expFileNameDisplay"></span>
+                <span id="expFileNameDisplay">Uploaded Experience Certificate</span>
                 <button type="button" id="removeExpFile" class="remove-btn">
                   <i class="fas fa-times"></i>
                 </button>
               </div>
-            </div>
-          </div>
-
-          <div class="hospitals-container">
-            <div class="hospital-entry">
-              <div class="input-group">
-                <i class="fas fa-hospital"></i>
-                <input
-                  type="text"
-                  placeholder="Previous Hospital/Clinic Name"
-                />
-              </div>
-              <button type="button" class="add-hospital-btn">
-                <i class="fas fa-plus"></i> Add Another
-              </button>
             </div>
           </div>
         </div>

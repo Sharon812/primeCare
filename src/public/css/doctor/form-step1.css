@@ -393,6 +393,29 @@
   resize: vertical;
 }
 
+/* Add error styles */
+.error-message {
+  color: #ef4444;
+  font-size: 0.75rem;
+  position: absolute;
+  bottom: -20px;
+  left: 0;
+  padding-left: 3rem;
+}
+
+.input-group input.error,
+.input-group select.error,
+.input-group textarea.error {
+  border-color: #ef4444;
+  background-color: #fef2f2;
+}
+
+.input-group input.error:focus,
+.input-group select.error:focus,
+.input-group textarea.error:focus {
+  box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.2);
+}
+
 .next-btn {
   background: var(--gradient);
   color: var(--white);

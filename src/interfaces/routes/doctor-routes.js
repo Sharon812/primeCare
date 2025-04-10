@@ -5,10 +5,21 @@ import { doctorVerifyEmailController } from "../controller/doctor-controller/aut
 import { doctorStepOneFormController } from "../controller/doctor-controller/form-controller/step1-controller.js";
 import { doctorDashboardController } from "../controller/doctor-controller/dashboard-controller/dashboard-controller.js";
 import { doctorStepSecondFormController } from "../controller/doctor-controller/form-controller/step2-controller.js";
+import { doctorStepThirdFormController } from "../controller/doctor-controller/form-controller/step3-controller.js";
+import { doctorStepFourthFormController } from "../controller/doctor-controller/form-controller/step4-controller.js";
+import { sendOtpToPhoneNumber } from "../controller/doctor-controller/auth-controller/sendOtp-toPhoneNumber.js";
+import { doctorFullFormViewController } from "../controller/doctor-controller/form-controller/full-form-controller.js";
 import {
   protectDoctorRoute,
   preventLoggedDoctor,
 } from "../middlewares/auth_middleware.js";
+
+import {
+  stepTwoAuth,
+  stepThreeAuth,
+  stepFourAuth
+} from "../middlewares/form-auth-middleware.js";
+import upload from "../upload/multer-config.js";
 
 const router = express.Router();
 
@@ -58,18 +69,84 @@ router.get(
 );
 
 router.get(
+  "/send-otp-to-phone",
+  protectDoctorRoute,
+  sendOtpToPhoneNumber.sendOtpPageRender
+);
+
+router.post(
+  "/send-otp-to-phone",
+  protectDoctorRoute,
+  sendOtpToPhoneNumber.sendOtp
+);
+
+router.get(
   "/register/step1",
   protectDoctorRoute,
   doctorStepOneFormController.stepOneFormRender
 );
 
+router.post(
+  "/register/step1",
+  protectDoctorRoute,
+  upload.fields([
+    { name: "profileImage", maxCount: 1 },
+    { name: "idProof", maxCount: 1 },
+  ]),
+  doctorStepOneFormController.stepOneForm
+);
+
 router.get(
   "/register/step2",
   protectDoctorRoute,
+  stepTwoAuth,
   doctorStepSecondFormController.stepTwoFormRender
 );
 
+router.post(
+  "/register/step2",
+  protectDoctorRoute,
+  stepTwoAuth,
+  upload.fields([
+    { name: "certification", maxCount: 1 },
+    { name: "experience", maxCount: 1 },
+  ]),
+  doctorStepSecondFormController.stepTwoForm
+);
 
-router.get("/logout", doctorLoginController.logoutDoctor)
+router.get(
+  "/register/step3",
+  protectDoctorRoute,
+  stepThreeAuth,
+  doctorStepThirdFormController.stepThreeFormRender
+);
+
+router.post(
+  "/register/step3",
+  protectDoctorRoute,
+  stepThreeAuth,
+  doctorStepThirdFormController.stepThreeForm
+);
+
+router.get(
+  "/register/step4",
+  protectDoctorRoute,
+  stepFourAuth,
+  doctorStepFourthFormController.stepFourFormRender
+);
+
+router.post(
+  "/register/step4",
+  protectDoctorRoute,
+  doctorStepFourthFormController.stepFourForm
+);
+
+router.get(
+  "/register/full-form",
+  protectDoctorRoute,
+  doctorFullFormViewController.fullFormRender
+);
+
+router.get("/logout", doctorLoginController.logoutDoctor);
 
 export const doctorRoute = router;
